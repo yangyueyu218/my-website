@@ -1,0 +1,9 @@
+baseURL = 'https://www.yangyueyu.com/'
+languageCode = 'zh-cn'
+title = '杨越宇的个人空间'
+theme = 'PaperMod'
+
+[params]
+    env = "production"
+    title = "杨越宇 (Yang Yueyu)"
+    description = "欢迎来到我的个人主页"
