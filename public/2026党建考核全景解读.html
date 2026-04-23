@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年党建考核全景解读 · 鄂尔多斯供电公司</title>
+<style>
+  :root{
+    --red-primary:#A52A2A;
+    --red-deep:#7C1F1F;
+    --red-bright:#C53030;
+    --gold:#C9A961;
+    --gold-light:#E8D4A0;
+    --ink:#1A1A1A;
+    --ink-soft:#3A3A3A;
+    --paper:#FAF7F2;
+    --paper-warm:#F5EFE4;
+    --line:#D4C8B3;
+    --success:#2D6A4F;
+    --warning:#D97706;
+    --danger:#991B1B;
+    --muted:#6B6B6B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.75;
+    font-size:15px;
+  }
+
+  /* 顶部 */
+  .hero{
+    position:relative;
+    padding:60px 40px 50px;
+    background:linear-gradient(135deg,var(--red-deep) 0%,var(--red-primary) 60%,var(--red-bright) 100%);
+    color:#fff;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;inset:0;
+    background-image:
+      radial-gradient(circle at 20% 30%,rgba(255,255,255,0.08) 0%,transparent 50%),
+      radial-gradient(circle at 80% 70%,rgba(201,169,97,0.15) 0%,transparent 50%);
+    pointer-events:none;
+  }
+  .hero-mark{
+    display:inline-block;
+    padding:6px 14px;
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:2px;
+    font-size:12px;
+    letter-spacing:3px;
+    margin-bottom:20px;
+    backdrop-filter:blur(4px);
+  }
+  .hero h1{
+    font-size:38px;
+    font-weight:700;
+    letter-spacing:2px;
+    margin-bottom:12px;
+    line-height:1.3;
+  }
+  .hero-sub{
+    font-size:16px;
+    opacity:0.85;
+    max-width:720px;
+    letter-spacing:1px;
+  }
+  .hero-meta{
+    display:flex;
+    gap:30px;
+    margin-top:30px;
+    padding-top:25px;
+    border-top:1px solid rgba(255,255,255,0.2);
+    flex-wrap:wrap;
+  }
+  .hero-meta-item{font-size:13px;opacity:0.8}
+  .hero-meta-item strong{color:var(--gold-light);font-weight:600;margin-right:6px}
+
+  /* 导航 */
+  .nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(250,247,242,0.97);
+    backdrop-filter:blur(10px);
+    border-bottom:2px solid var(--red-primary);
+    padding:12px 40px;
+    display:flex;
+    gap:4px;
+    flex-wrap:wrap;
+    overflow-x:auto;
+  }
+  .nav a{
+    color:var(--ink-soft);
+    text-decoration:none;
+    padding:6px 12px;
+    font-size:13px;
+    border-radius:3px;
+    transition:all .2s;
+    white-space:nowrap;
+  }
+  .nav a:hover{background:var(--red-primary);color:#fff}
+
+  /* 容器 */
+  .container{max-width:1280px;margin:0 auto;padding:40px}
+
+  /* 章节标题 */
+  .section-title{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin:50px 0 30px;
+    padding-bottom:16px;
+    border-bottom:2px solid var(--red-primary);
+  }
+  .section-title-num{
+    display:flex;
+    align-items:center;justify-content:center;
+    width:48px;height:48px;
+    background:var(--red-primary);
+    color:#fff;
+    font-size:20px;
+    font-weight:700;
+    border-radius:2px;
+    flex-shrink:0;
+  }
+  .section-title h2{font-size:26px;color:var(--red-deep);letter-spacing:1px}
+  .section-title p{font-size:13px;color:var(--muted);margin-top:4px}
+
+  /* 核心公式卡 */
+  .formula-card{
+    background:linear-gradient(135deg,#fff 0%,var(--paper-warm) 100%);
+    border:1px solid var(--line);
+    border-left:6px solid var(--red-primary);
+    padding:28px 32px;
+    margin-bottom:30px;
+    box-shadow:0 2px 12px rgba(124,31,31,0.06);
+  }
+  .formula-card h3{font-size:16px;color:var(--red-deep);margin-bottom:16px;letter-spacing:1px}
+  .formula{
+    font-size:15px;
+    line-height:2;
+    padding:18px 20px;
+    background:#fff;
+    border:1px dashed var(--line);
+    border-radius:4px;
+    font-family:"PingFang SC",serif;
+  }
+  .formula strong{color:var(--red-primary);font-weight:600}
+  .formula-breakdown{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin-top:20px;
+  }
+  .formula-breakdown-item{
+    padding:12px 14px;
+    background:rgba(124,31,31,0.04);
+    border-radius:3px;
+    font-size:13px;
+  }
+  .formula-breakdown-item .num{
+    font-size:22px;
+    font-weight:700;
+    color:var(--red-primary);
+    display:block;
+    margin-bottom:4px;
+  }
+
+  /* 权重图 */
+  .weight-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+    margin-bottom:30px;
+  }
+  .weight-card{
+    padding:20px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-top:4px solid var(--red-primary);
+    border-radius:4px;
+    position:relative;
+    transition:all .3s;
+  }
+  .weight-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.08)}
+  .weight-card.high{border-top-color:var(--red-bright)}
+  .weight-card.mid{border-top-color:var(--gold)}
+  .weight-card.low{border-top-color:var(--muted)}
+  .weight-percent{
+    font-size:32px;
+    font-weight:700;
+    color:var(--red-primary);
+    line-height:1;
+  }
+  .weight-percent sup{font-size:15px;margin-left:2px}
+  .weight-name{
+    font-size:14px;
+    font-weight:600;
+    color:var(--ink);
+    margin:8px 0 4px;
+  }
+  .weight-dept{font-size:12px;color:var(--muted)}
+  .weight-bar{
+    height:3px;
+    background:#eee;
+    margin-top:14px;
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .weight-bar-fill{
+    height:100%;
+    background:linear-gradient(90deg,var(--red-primary),var(--red-bright));
+  }
+
+  /* 等次 */
+  .rating-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin:20px 0 30px;
+  }
+  .rating{
+    padding:20px;
+    text-align:center;
+    border-radius:4px;
+    color:#fff;
+  }
+  .rating.a{background:linear-gradient(135deg,#2D6A4F,#40916C)}
+  .rating.b{background:linear-gradient(135deg,#1E6091,#277DA1)}
+  .rating.c{background:linear-gradient(135deg,#D97706,#F59E0B)}
+  .rating.d{background:linear-gradient(135deg,#7F1D1D,#991B1B)}
+  .rating-letter{font-size:36px;font-weight:700;line-height:1}
+  .rating-label{font-size:14px;margin-top:6px;opacity:0.9}
+  .rating-range{font-size:12px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.3)}
+  .rating-consequence{font-size:11px;margin-top:8px;opacity:0.85;line-height:1.6}
+
+  /* 时间轴 */
+  .timeline{
+    position:relative;
+    padding:10px 0;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:135px;top:0;bottom:0;
+    width:2px;
+    background:linear-gradient(180deg,var(--red-primary),var(--gold),var(--red-primary));
+  }
+  .quarter{
+    position:relative;
+    padding:0 0 40px 175px;
+  }
+  .quarter-marker{
+    position:absolute;
+    left:0;top:0;
+    width:120px;
+    text-align:right;
+  }
+  .quarter-badge{
+    display:inline-block;
+    padding:8px 14px;
+    background:var(--red-primary);
+    color:#fff;
+    font-size:14px;
+    font-weight:600;
+    border-radius:2px;
+    letter-spacing:1px;
+  }
+  .quarter-badge.q2{background:var(--gold)}
+  .quarter-badge.q3{background:#1E6091}
+  .quarter-badge.q4{background:var(--red-deep)}
+  .quarter-time{font-size:11px;color:var(--muted);margin-top:6px}
+  .quarter-dot{
+    position:absolute;
+    left:128px;top:12px;
+    width:16px;height:16px;
+    background:var(--red-primary);
+    border-radius:50%;
+    border:3px solid var(--paper);
+    z-index:2;
+  }
+  .quarter-dot.q2{background:var(--gold)}
+  .quarter-dot.q3{background:#1E6091}
+  .quarter-dot.q4{background:var(--red-deep)}
+
+  .task-group{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:4px;
+    margin-bottom:12px;
+    overflow:hidden;
+  }
+  .task-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 18px;
+    background:linear-gradient(90deg,var(--paper-warm),#fff);
+    border-bottom:1px solid var(--line);
+    cursor:pointer;
+    transition:background .2s;
+  }
+  .task-header:hover{background:var(--paper-warm)}
+  .task-dept{
+    display:inline-block;
+    padding:3px 10px;
+    background:var(--red-primary);
+    color:#fff;
+    font-size:11px;
+    border-radius:2px;
+    margin-right:10px;
+  }
+  .task-dept.office{background:#6B7280}
+  .task-dept.discipline{background:#991B1B}
+  .task-dept.org{background:var(--red-primary)}
+  .task-dept.propaganda{background:#C9A961;color:var(--ink)}
+  .task-dept.inspect{background:#4B5563}
+  .task-dept.union{background:#1E6091}
+  .task-dept.youth{background:#059669}
+  .task-title{font-size:14px;font-weight:500;flex:1}
+  .task-chev{color:var(--muted);transition:transform .3s;font-size:12px}
+  .task-group.open .task-chev{transform:rotate(90deg)}
+  .task-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .4s ease,padding .3s;
+    padding:0 18px;
+  }
+  .task-group.open .task-body{
+    max-height:1500px;
+    padding:16px 18px 18px;
+  }
+  .task-row{
+    display:grid;
+    grid-template-columns:90px 1fr;
+    gap:12px;
+    padding:8px 0;
+    border-bottom:1px dashed var(--line);
+    font-size:13px;
+  }
+  .task-row:last-child{border-bottom:none}
+  .task-label{
+    color:var(--muted);
+    font-size:12px;
+    font-weight:500;
+  }
+  .task-content{color:var(--ink-soft);line-height:1.7}
+  .tag-hot{
+    display:inline-block;
+    padding:1px 8px;
+    background:var(--red-bright);
+    color:#fff;
+    font-size:10px;
+    border-radius:2px;
+    margin-left:6px;
+    vertical-align:middle;
+    font-weight:normal;
+  }
+
+  /* 差异化考核 */
+  .diff-card{
+    background:linear-gradient(135deg,#FFF8E7 0%,#fff 100%);
+    border:2px solid var(--gold);
+    padding:24px 28px;
+    border-radius:4px;
+    margin-bottom:20px;
+    position:relative;
+  }
+  .diff-card::before{
+    content:"鄂尔多斯专属";
+    position:absolute;
+    top:-12px;left:24px;
+    padding:2px 12px;
+    background:var(--gold);
+    color:var(--ink);
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:1px;
+    border-radius:2px;
+  }
+  .diff-item{
+    padding:12px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .diff-item:last-child{border-bottom:none}
+  .diff-item h4{
+    font-size:14px;
+    color:var(--red-deep);
+    margin-bottom:6px;
+    font-weight:600;
+  }
+  .diff-item h4::before{content:"◆ ";color:var(--gold)}
+  .diff-target{
+    display:inline-block;
+    padding:2px 10px;
+    background:var(--red-primary);
+    color:#fff;
+    font-size:11px;
+    border-radius:2px;
+    margin-left:8px;
+  }
+  .diff-desc{font-size:13px;color:var(--ink-soft);line-height:1.8}
+
+  /* 策略卡 */
+  .strategy-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+  }
+  .strategy-card{
+    padding:24px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:4px;
+    position:relative;
+    overflow:hidden;
+  }
+  .strategy-card::before{
+    content:"";
+    position:absolute;
+    top:0;left:0;right:0;
+    height:4px;
+    background:linear-gradient(90deg,var(--red-primary),var(--gold));
+  }
+  .strategy-icon{
+    font-size:28px;
+    width:48px;height:48px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--paper-warm);
+    border-radius:50%;
+    margin-bottom:14px;
+    color:var(--red-primary);
+    font-weight:700;
+  }
+  .strategy-card h3{
+    font-size:16px;
+    color:var(--red-deep);
+    margin-bottom:10px;
+  }
+  .strategy-card p{font-size:13px;color:var(--ink-soft);line-height:1.75}
+  .strategy-card ul{
+    margin-top:10px;
+    padding-left:20px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .strategy-card ul li{margin-bottom:6px}
+
+  /* 减分项警告 */
+  .danger-box{
+    background:linear-gradient(135deg,#FEF2F2 0%,#FEE2E2 100%);
+    border:1px solid #FECACA;
+    border-left:4px solid var(--danger);
+    padding:20px 24px;
+    border-radius:4px;
+    margin-bottom:20px;
+  }
+  .danger-box h3{
+    color:var(--danger);
+    font-size:15px;
+    margin-bottom:10px;
+  }
+  .danger-box h3::before{content:"⚠ "}
+  .danger-list{list-style:none}
+  .danger-list li{
+    padding:8px 0 8px 20px;
+    position:relative;
+    font-size:13px;
+    color:var(--ink-soft);
+    border-bottom:1px dashed #FECACA;
+  }
+  .danger-list li:last-child{border-bottom:none}
+  .danger-list li::before{
+    content:"×";
+    position:absolute;
+    left:0;top:8px;
+    color:var(--danger);
+    font-weight:700;
+  }
+
+  /* A等次密码 */
+  .a-code{
+    background:linear-gradient(135deg,var(--red-deep) 0%,var(--red-primary) 100%);
+    color:#fff;
+    padding:40px;
+    border-radius:4px;
+    margin:30px 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .a-code::before{
+    content:"A";
+    position:absolute;
+    right:-30px;top:-30px;
+    font-size:280px;
+    font-weight:900;
+    opacity:0.1;
+    line-height:1;
+  }
+  .a-code h2{
+    font-size:26px;
+    margin-bottom:8px;
+    position:relative;
+    z-index:1;
+  }
+  .a-code-sub{opacity:0.85;margin-bottom:24px;position:relative;z-index:1}
+  .a-code-items{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:16px;
+    position:relative;
+    z-index:1;
+  }
+  .a-code-item{
+    padding:16px;
+    background:rgba(255,255,255,0.08);
+    border-radius:3px;
+    backdrop-filter:blur(4px);
+    border:1px solid rgba(255,255,255,0.15);
+  }
+  .a-code-item-num{
+    font-size:14px;
+    color:var(--gold-light);
+    font-weight:600;
+    margin-bottom:8px;
+    letter-spacing:2px;
+  }
+  .a-code-item p{font-size:13px;line-height:1.8;opacity:0.95}
+
+  /* 晾晒计分 */
+  .scoring-table{
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+    box-shadow:0 2px 8px rgba(0,0,0,0.04);
+  }
+  .scoring-table th,.scoring-table td{
+    padding:12px 14px;
+    border:1px solid var(--line);
+    font-size:13px;
+    text-align:left;
+    vertical-align:top;
+  }
+  .scoring-table th{
+    background:var(--red-primary);
+    color:#fff;
+    font-weight:600;
+    letter-spacing:1px;
+  }
+  .scoring-table tr:nth-child(even){background:var(--paper-warm)}
+  .score-tier{
+    display:inline-block;
+    padding:2px 10px;
+    font-size:12px;
+    font-weight:600;
+    border-radius:2px;
+  }
+  .score-tier.good{background:#D1FAE5;color:#065F46}
+  .score-tier.fair{background:#FEF3C7;color:#92400E}
+  .score-tier.poor{background:#FEE2E2;color:#991B1B}
+
+  /* 底部 */
+  .footer{
+    margin-top:60px;
+    padding:40px;
+    background:var(--ink);
+    color:#ccc;
+    text-align:center;
+    font-size:12px;
+    letter-spacing:1px;
+  }
+  .footer p{margin-bottom:8px}
+
+  /* 小章节标题 */
+  h3.sub-title{
+    font-size:18px;
+    color:var(--red-deep);
+    margin:24px 0 14px;
+    padding-left:12px;
+    border-left:4px solid var(--red-primary);
+    letter-spacing:1px;
+  }
+
+  p.intro{
+    font-size:14px;
+    color:var(--ink-soft);
+    margin-bottom:20px;
+    line-height:1.85;
+  }
+
+  /* 注释标记 */
+  .note{
+    padding:14px 18px;
+    background:#F3F4F6;
+    border-left:3px solid var(--muted);
+    margin:16px 0;
+    font-size:13px;
+    color:var(--ink-soft);
+    border-radius:2px;
+  }
+  .note strong{color:var(--ink)}
+
+  /* 筛选按钮 */
+  .filter-bar{
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+  }
+  .filter-btn{
+    padding:6px 14px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:20px;
+    font-size:12px;
+    cursor:pointer;
+    transition:all .2s;
+    color:var(--ink-soft);
+  }
+  .filter-btn:hover{background:var(--paper-warm)}
+  .filter-btn.active{background:var(--red-primary);color:#fff;border-color:var(--red-primary)}
+
+  @media (max-width:768px){
+    .hero{padding:40px 20px 35px}
+    .hero h1{font-size:26px}
+    .container{padding:24px 16px}
+    .nav{padding:10px 16px;gap:2px}
+    .nav a{padding:5px 8px;font-size:12px}
+    .timeline::before{left:60px}
+    .quarter{padding-left:85px}
+    .quarter-marker{width:55px}
+    .quarter-dot{left:54px}
+    .rating-grid{grid-template-columns:repeat(2,1fr)}
+    .section-title h2{font-size:20px}
+    .a-code{padding:24px}
+    .a-code::before{font-size:180px}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-mark">ORDOS · POWER · 2026</div>
+  <h1>2026年党建考核全景解读</h1>
+  <p class="hero-sub">集团公司分、子公司党建考核实施细则 · 考核指标评分要点 · 季度晾晒工作方案 · 全年晾晒安排表 ——  一份服务于鄂尔多斯供电公司争创A等次的战略地图</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><strong>适用对象</strong>盟市供电公司序列（9家）</div>
+    <div class="hero-meta-item"><strong>指标体系</strong>8项一级 · 28项二级</div>
+    <div class="hero-meta-item"><strong>A等次比例</strong>约40%（约3-4家）</div>
+  </div>
+</div>
+
+<nav class="nav">
+  <a href="#overview">总体框架</a>
+  <a href="#formula">计分公式</a>
+  <a href="#weight">权重分布</a>
+  <a href="#rating">等次评定</a>
+  <a href="#timeline">季度时间轴</a>
+  <a href="#diff">鄂尔多斯差异化指标</a>
+  <a href="#liangshai">晾晒计分规则</a>
+  <a href="#strategy">争A策略</a>
+  <a href="#danger">红线与减分</a>
+  <a href="#a-code">A等次密码</a>
+</nav>
+
+<div class="container">
+
+<!-- 第一部分：总体框架 -->
+<section id="overview">
+  <div class="section-title">
+    <div class="section-title-num">1</div>
+    <div>
+      <h2>总体框架</h2>
+      <p>三个维度构成全年党建考核的基本盘</p>
+    </div>
+  </div>
+
+  <p class="intro">2026年党建考核的制度设计遵循"基本指标（90分）+ 工作成效（10分）+ 约束性减分（封顶-5分）"的结构。贯穿全年的主线是"创先争优年"，落地抓手是"定期调度、阶段性晾晒"过程管控机制，考核结果直接关联综合绩效考核、领导班子考核、干部选拔任用等重要事项。</p>
+
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <div class="strategy-icon">90</div>
+      <h3>基本指标 · 90分</h3>
+      <p>各考核部门依据上级党建考核重点、集团党建工作重点任务，结合本部门专业工作，设置代表性关键指标或重点工作项目。"一般性、过程性事务原则上不列入考核"。</p>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-icon">10</div>
+      <h3>工作成效 · 10分</h3>
+      <p>由两部分构成：阶段性晾晒情况5分（基准3分，好4-5分、较好3-4分、一般3分以下）+ 创先争优情况5分（获奖表彰、管理提升、揭榜领题等）。</p>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-icon">-5</div>
+      <h3>约束性减分 · 封顶-5分</h3>
+      <p>不占考核权重，触发后直接扣减分数。各考核部门均设置有约束性减分指标，重点覆盖违规违纪、重大失误、舆情事件、通报批评等情形。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 第二部分：计分公式 -->
+<section id="formula">
+  <div class="section-title">
+    <div class="section-title-num">2</div>
+    <div>
+      <h2>年度考核总分计算公式</h2>
+      <p>理解权重 → 锁定关键项 → 精准配置资源</p>
+    </div>
+  </div>
+
+  <div class="formula-card">
+    <h3>年度考核得分计算规则</h3>
+    <div class="formula">
+      党建工作年度考核得分（100分）=<br>
+      <strong>各项党建工作指标年度考核得分加权值（100分）× 90%</strong><br>
+      + 党组织书记抓基层党建述职评议得分（100分）× 5%<br>
+      + 党建工作民主测评得分（100分）× 3%<br>
+      + 领导小组办公室综合评价得分（2分）
+    </div>
+    <div class="formula-breakdown">
+      <div class="formula-breakdown-item">
+        <span class="num">90%</span>
+        <span>八项党建指标加权</span>
+      </div>
+      <div class="formula-breakdown-item">
+        <span class="num">5%</span>
+        <span>书记抓党建述职</span>
+      </div>
+      <div class="formula-breakdown-item">
+        <span class="num">3%</span>
+        <span>民主测评</span>
+      </div>
+      <div class="formula-breakdown-item">
+        <span class="num">2分</span>
+        <span>领导小组综合评价</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>重要提示：</strong>按百分制计算，同类单位内相邻排名得分分差应不低于0.2分，且同一类别内不得有3家及以上单位得分相同。这意味着考核结果必然呈现梯次分布，不存在"并列优秀"的可能。鄂尔多斯供电公司所在的盟市供电公司类别共9家单位（呼和浩特、包头、鄂尔多斯、乌兰察布、巴彦淖尔、锡林郭勒、乌海、阿拉善、薛家湾），A等次评定名额需从该类别中竞争。
+  </div>
+</section>
+
+<!-- 第三部分：权重分布 -->
+<section id="weight">
+  <div class="section-title">
+    <div class="section-title-num">3</div>
+    <div>
+      <h2>八项一级指标权重分布</h2>
+      <p>三大核心指标（党风廉政、组织干部、宣传统战）合计72%，是争A关键战场</p>
+    </div>
+  </div>
+
+  <div class="weight-grid">
+    <div class="weight-card high">
+      <span class="weight-percent">24<sup>%</sup></span>
+      <div class="weight-name">党风廉政建设</div>
+      <div class="weight-dept">纪委 / 派驻纪检监察组</div>
+      <div class="weight-bar"><div class="weight-bar-fill" style="width:96%"></div></div>
+    </div>
+    <div class="weight-card high">
+      <span class="weight-percent">24<sup>%</sup></span>
+      <div class="weight-name">党的组织和干部人才队伍建设</div>
+      <div class="weight-dept">党委组织部（本职工作）</div>
+      <div class="weight-bar"><div class="weight-bar-fill" style="width:96%"></div></div>
+    </div>
+    <div class="weight-card high">
+      <span class="weight-percent">24<sup>%</sup></span>
+      <div class="weight-name">意识形态及宣传思想统战工作</div>
+      <div class="weight-dept">党委宣传部 / 统战部 / 团委</div>
+      <div class="weight-bar"><div class="weight-bar-fill" style="width:96%"></div></div>
+    </div>
+    <div class="weight-card mid">
+      <span class="weight-percent">10<sup>%</sup></span>
+      <div class="weight-name">工会群众工作</div>
+      <div class="weight-dept">工会</div>
+      <div class="weight-bar"><div class="weight-bar-fill" style="width:40%"></div></div>
+    </div>
+    <div class="weight-card low">
+      <span class="weight-percent">5<sup>%</sup></span>
+      <div class="weight-name">党的领导责任落实</div>
+      <div class="weight-dept">办公室</div>
+      <div class="weight-bar"><div class="weight-bar-fill" style="width:20%"></div></div>
+    </div>
+    <div class="weight-card low">
+      <span class="weight-percent">5<sup>%</sup></span>
+      <div class="weight-name">党委巡察工作</div>
+      <div class="weight-dept">党委巡察办公室</div>
+      <div class="weight-bar"><div class="weight-bar-fill" style="width:20%"></div></div>
+    </div>
+    <div class="weight-card low">
+      <span class="weight-percent">4<sup>%</sup></span>
+      <div class="weight-name">共青团和青年工作</div>
+      <div class="weight-dept">团委</div>
+      <div class="weight-bar"><div class="weight-bar-fill" style="width:16%"></div></div>
+    </div>
+    <div class="weight-card low">
+      <span class="weight-percent">4<sup>%</sup></span>
+      <div class="weight-name">重点专项工作</div>
+      <div class="weight-dept">相关部门</div>
+      <div class="weight-bar"><div class="weight-bar-fill" style="width:16%"></div></div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>结构性判断：</strong>三大24%指标合计占比72%，决定了考核的基本盘。组织工作（党委组织部主责）作为本职业务，既是自身负责打分的指标，也是对外部门配合的考核对象，工作重心与资源投入需要重点倾斜。
+  </div>
+</section>
+
+<!-- 第四部分：等次评定 -->
+<section id="rating">
+  <div class="section-title">
+    <div class="section-title-num">4</div>
+    <div>
+      <h2>等次评定标准与结果运用</h2>
+      <p>A等次（优秀）按40%左右掌握 · 每类排名靠前且≥90分方可评A</p>
+    </div>
+  </div>
+
+  <div class="rating-grid">
+    <div class="rating a">
+      <div class="rating-letter">A</div>
+      <div class="rating-label">优秀</div>
+      <div class="rating-range">≥90分 且类别内排名靠前</div>
+      <div class="rating-consequence">党建考核正向激励 · 干部选拔任用重要依据</div>
+    </div>
+    <div class="rating b">
+      <div class="rating-letter">B</div>
+      <div class="rating-label">良好</div>
+      <div class="rating-range">≥80分 且不在A等次内</div>
+      <div class="rating-consequence">正常水平 · 需巩固优势、补齐短板</div>
+    </div>
+    <div class="rating c">
+      <div class="rating-letter">C</div>
+      <div class="rating-label">一般</div>
+      <div class="rating-range">70分（含）- 80分（不含）</div>
+      <div class="rating-consequence">约谈党组织主要负责人、专职副书记 · 责令整改</div>
+    </div>
+    <div class="rating d">
+      <div class="rating-letter">D</div>
+      <div class="rating-label">较差</div>
+      <div class="rating-range">&lt;70分</div>
+      <div class="rating-consequence">视情况对主要负责人、副书记进行组织调整</div>
+    </div>
+  </div>
+
+  <h3 class="sub-title">一票否决情形（不得评A或降档）</h3>
+  <div class="danger-box">
+    <h3>以下情形出现 · A等次无缘</h3>
+    <ul class="danger-list">
+      <li>党组织履行全面从严治党责任、落实党的建设要求不力，意识形态工作责任制、<strong>选人用人</strong>、基层党建、党风廉政建设等方面存在突出问题</li>
+      <li>企业发生<strong>重大安全生产责任事故或严重不稳定事件</strong>，给企业造成重大损失或恶劣影响</li>
+      <li>因党组织把关不严，导致企业发生<strong>重大亏损或国有资产流失事件</strong>，或造成恶劣影响</li>
+      <li>发生上级党委和集团公司党委认定的其他重大问题</li>
+    </ul>
+  </div>
+  <div class="note">
+    <strong>特别关注：</strong>"选人用人不正之风集中整治"是当前党中央、自治区党委部署推进的重点工作，"选人用人方面存在突出问题"是明确列示的一票否决事项。公司党委须高度重视、严格把关，确保整改材料规范性和整改实效性。
+  </div>
+</section>
+
+<!-- 第五部分：季度时间轴 -->
+<section id="timeline">
+  <div class="section-title">
+    <div class="section-title-num">5</div>
+    <div>
+      <h2>全年季度晾晒时间轴</h2>
+      <p>"一、三季度重点工作晾晒 · 二、四季度综合晾晒"</p>
+    </div>
+  </div>
+
+  <p class="intro">晾晒采取"一、三季度重点工作晾晒（各党群部门自行组织）+ 二、四季度综合晾晒（党建工作领导小组办公室统一发文通报）"的方式。<strong>每季度开始后15个工作日内</strong>，各党群部门须完成上一季度工作情况的晾晒——这是进入下一季度的硬截止节点。点击各项可展开查看。</p>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">全部</button>
+    <button class="filter-btn" data-filter="office">办公室</button>
+    <button class="filter-btn" data-filter="discipline">纪委</button>
+    <button class="filter-btn" data-filter="org">组织部</button>
+    <button class="filter-btn" data-filter="propaganda">宣传统战</button>
+    <button class="filter-btn" data-filter="inspect">巡察办</button>
+    <button class="filter-btn" data-filter="union">工会</button>
+    <button class="filter-btn" data-filter="youth">团委</button>
+  </div>
+
+  <div class="timeline">
+
+    <!-- 一季度 -->
+    <div class="quarter">
+      <div class="quarter-marker">
+        <div class="quarter-badge">一季度</div>
+        <div class="quarter-time">1-3月 · 重点工作晾晒</div>
+      </div>
+      <div class="quarter-dot"></div>
+
+      <div class="task-group" data-dept="office">
+        <div class="task-header"><span><span class="task-dept office">办公室</span><span class="task-title">办公室管理制度修订完善情况</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">检查制度是否按年度或实际需求定期修订，是否结合本单位业务特点和管理实际。</span></div>
+          <div class="task-row"><span class="task-label">评价来源</span><span class="task-content">日常工作掌握、制度修订记录、执行情况抽查</span></div>
+          <div class="task-row"><span class="task-label">晾晒方式</span><span class="task-content">工作群内通报</span></div>
+          <div class="task-row"><span class="task-label">应对要点</span><span class="task-content">一季度前完成年度制度修订计划，形成修订台账；避免繁琐、难以落地的条款。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="office">
+        <div class="task-header"><span><span class="task-dept office">办公室</span><span class="task-title">年度党建工作要点 + 全面从严治党主体责任清单<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">防"上下一般粗"：对比上级文件是否结合本单位业务特点细化分解；看"举措实不实"：是否有量化指标、具体载体、明确时限；看"有无针对性"：是否分析上年度考核反馈和巡察问题。</span></div>
+          <div class="task-row"><span class="task-label">评价来源</span><span class="task-content">党委会记录、文件文本、抽查核实</span></div>
+          <div class="task-row"><span class="task-label">晾晒方式</span><span class="task-content">下发工作提示函（标注共性问题）</span></div>
+          <div class="task-row"><span class="task-label">应对要点</span><span class="task-content">年度要点、两个责任清单都要做到责任到岗到人、有量化、有载体、有时限，避免照搬照抄上级文件。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="discipline">
+        <div class="task-header"><span><span class="task-dept discipline">纪委</span><span class="task-title">每季度晾晒7项（贯穿全年每季度）</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">说明</span><span class="task-content">纪委晾晒采取"每季度+四季度"双层结构，以下7项贯穿全年每个季度开展晾晒（一、二、三、四季度均涉及）。</span></div>
+          <div class="task-row"><span class="task-label">①集中整治</span><span class="task-content">"一把手"和领导班子行权履职突出问题集中整治向盟市、旗县公司级延伸推进情况。评价：是否对集中整治安排部署、细化整治重点；是否全覆盖旗县公司级开展督导；是否高质量推进"专题学习、自查自纠、建章立制"；是否形成好的机制做法。</span></div>
+          <div class="task-row"><span class="task-label">②廉洁文化</span><span class="task-content">廉洁文化三年行动各项工作安排落实情况。评价：按规定时间节点落实措施；挖掘廉洁文化特色资源；创新宣传机制；完善教育体系，推进"五进"活动；纳入领导班子述职述廉、年度考核。</span></div>
+          <div class="task-row"><span class="task-label">③政治监督</span><span class="task-content">政治监督开展情况和成效。评价：政治监督台账与实际相符、覆盖重点任务和关键对象；立足"再监督"职能定位，精准发现问题并推动长效解决；紧跟上级部署，做到靶向精准；对巡视巡察、审计、纪检监察监督发现问题整改情况开展监督；重要节假日常态化明察暗访，无发现问题避重就轻、隐瞒不报。</span></div>
+          <div class="task-row"><span class="task-label">④案管录入</span><span class="task-content">案件监督管理系统录入情况。评价：是否及时报送；数据是否准确、完整，录入率是否达100%；是否被自治区纪委监委通报。月度调度。</span></div>
+          <div class="task-row"><span class="task-label">⑤走读式谈话</span><span class="task-content">"走读式"谈话安全相关制度及谈话场所管理情况（有案件的单位）。评价：严格执行"先审批、后谈话"；方案预案完备、落实"六必知"；场所建设管理、安全防护、同步录音录像达标；"手递手"交接、跟踪回访闭环；安全责任制落实到岗到人。</span></div>
+          <div class="task-row"><span class="task-label">⑥案件质量</span><span class="task-content">案件质量情况。评价：案件评查方面是否严格落实办案"二十四字"方针；案件审核方面是否准确认定事实、精准定性量纪、规范撰写报告。</span></div>
+          <div class="task-row"><span class="task-label">⑦"三化"建设</span><span class="task-content">纪检监察工作"三化"建设年行动再集中抓两年方案落实情况。评价：是否安排部署、按方案推进；依规依纪依法提升办案质效；强化理论武装、优化队伍结构、严格监督管理；提升履职本领、深化实战练兵。月度调度。</span></div>
+          <div class="task-row"><span class="task-label">晾晒方式</span><span class="task-content">统一采取"发文通报，针对工作成效较差的个别单位发工作提示"</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">树立和践行正确政绩观学习教育<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">核查启动会议记录、工作安排、支部学习计划；审核班子及成员查摆问题清单，是否符合"五个是否"要求。</span></div>
+          <div class="task-row"><span class="task-label">应对要点</span><span class="task-content">学习教育是贯穿全年的重点专项（占比4%满分指标），一季度启动阶段的规范性直接影响全年评价。须确保启动会议、工作安排、问题清单齐备。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">坚强堡垒支部创建情况<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价标准</span><span class="task-content">对照党支部"星级化"建设评分标准是否符合创建要求；创建单位申报资料是否完善齐备。</span></div>
+          <div class="task-row"><span class="task-label">年度目标</span><span class="task-content">本年度达到堡垒支部及以上创建标准的党支部新增10%以上；到2026年底占比达95%以上。未达标减0.2-1分。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">党组织书记抓基层党建述职点评意见整改方案<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">核查要点</span><span class="task-content">整改方案是否逐条对照点评问题，整改措施是否完善，整改时限、责任分工是否明确。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">学习贯彻党的二十届四中全会精神教育培训<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">核查要点</span><span class="task-content">重点核查培训课程设置、进度安排、人员覆盖率等情况。旗县公司级管理人员、党员需实现培训全覆盖。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="propaganda">
+        <div class="task-header"><span><span class="task-dept propaganda">宣传统战</span><span class="task-title">树立和践行正确政绩观学习教育理论学习情况<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价标准</span><span class="task-content">读书班、中心组学习是否按期规范举办；干部参加覆盖率和研讨交流频次；随机抽查研讨发言材料是否结合岗位深入思考。</span></div>
+          <div class="task-row"><span class="task-label">晾晒方式</span><span class="task-content">发文通报、附印优秀研讨发言案例互学互促</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="propaganda">
+        <div class="task-header"><span><span class="task-dept propaganda">宣传统战</span><span class="task-title">铸牢中华民族共同体意识主线纳入年度工作计划情况<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价标准</span><span class="task-content">年度工作计划是否突出铸牢主线；将铸牢主线细化为安全保供、电网建设、优质服务、基层党建等具体工作措施。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="propaganda">
+        <div class="task-header"><span><span class="task-dept propaganda">宣传统战</span><span class="task-title">主题宣传、成就宣传、典型宣传工作与新闻报道策划方案<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价标准</span><span class="task-content">全年宣传报道工作计划是否紧密贴合中心工作，具有前瞻性、突出企业特色。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="inspect">
+        <div class="task-header"><span><span class="task-dept inspect">巡察办</span><span class="task-title">2026年第一轮巡察支撑保障情况</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价要点</span><span class="task-content">各单位推荐参加巡察工作人数、人才库建设情况、巡察优秀人员评价。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="inspect">
+        <div class="task-header"><span><span class="task-dept inspect">巡察办</span><span class="task-title">2025年第三轮巡察整改流程落实情况</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价要点</span><span class="task-content">整改方案是否措施空泛、避重就轻、责任不清、时限不明；是否体现建章立制、责任到人；站在政治高度不敷衍、不回避、不打折。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="union">
+        <div class="task-header"><span><span class="task-dept union">工会</span><span class="task-title">民主管理 + 经审组织 + 盟市级文体活动 + "三八"主题活动</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">4项晾晒内容</span><span class="task-content">①职代会召开、职工代表提案、厂务公开；②经审委员会选配规范、不相容岗位配置；③盟市公司级文体活动满意度；④"三八"妇女节主题活动覆盖面。</span></div>
+          <div class="task-row"><span class="task-label">标准要求</span><span class="task-content">全年组织盟市公司级文体活动不少于4次，参与人次不低于职工总数60%，满意度不低于80%。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="youth">
+        <div class="task-header"><span><span class="task-dept youth">团委</span><span class="task-title">基层团支部组织生活会 + 团费收缴使用<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">核查要点</span><span class="task-content">"智慧团建"系统录入是否按时完整；团费是否按《团费管理办法》足额、按时上缴，规范使用并提交书面报告。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 二季度 -->
+    <div class="quarter">
+      <div class="quarter-marker">
+        <div class="quarter-badge q2">二季度</div>
+        <div class="quarter-time">4-6月 · 综合晾晒</div>
+      </div>
+      <div class="quarter-dot q2"></div>
+
+      <div class="task-group" data-dept="office">
+        <div class="task-header"><span><span class="task-dept office">办公室</span><span class="task-title">蒙电"1435"党建工作"创先争优年"任务清单推进</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价标准</span><span class="task-content">节点管控：任务分解、定期调度机制、时间节点和责任人；落地实效：随机抽取2-3项重点任务实地或线上验证完成质量。</span></div>
+          <div class="task-row"><span class="task-label">晾晒方式</span><span class="task-content">结合表彰会或党建工作推进会交流学习</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="office">
+        <div class="task-header"><span><span class="task-dept office">办公室</span><span class="task-title">保密工作研究部署、教育培训、涉密人员/定密/网络保密管理</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价标准</span><span class="task-content">教育培训全员覆盖（含劳务派遣、新入职人员）；关键环节合规；建立台账。</span></div>
+          <div class="task-row"><span class="task-label">晾晒方式</span><span class="task-content">保密工作"红黄牌"警示晾晒 —— 问题严重的亮红牌，在年度保密工作会上通报并纳入考核</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="discipline">
+        <div class="task-header"><span><span class="task-dept discipline">纪委</span><span class="task-title">每季度晾晒7项持续开展（本季度继续）</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">提示</span><span class="task-content">本季度继续开展纪委"每季度晾晒"的7项内容：①行权履职集中整治、②廉洁文化三年行动、③政治监督、④案管系统录入、⑤"走读式"谈话安全、⑥案件质量、⑦"三化"建设。详细评价标准参见一季度纪委展开项。</span></div>
+          <div class="task-row"><span class="task-label">二季度重点</span><span class="task-content">二季度由党建工作领导小组办公室统一发文通报综合晾晒，各部门需将本季度纪委晾晒情况汇总报送领导小组办公室。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">学习教育进展 + 整改整治 + 建章立制<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">问题清单是否制定整改措施并立行立改；整治为突出问题小切口确定；开门教育是否务实开展；建章立制情况。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">基层党组织建设、党员队伍建设基本制度执行<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">党业融合开展情况；"三会一课"记录是否真实；组织生活是否正常开展。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">空岗配备和干部交流轮岗工作推进</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">查看长期空岗情况、干部应交流未交流情况；推动解决空岗配备、交流轮岗工作举措。</span></div>
+          <div class="task-row"><span class="task-label">年度目标</span><span class="task-content">到2026年底，空缺超过6个月重要实职岗位比例较多的减0.2-1分。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">2025年度干部考核工作进展情况</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">检查年度考核规定工作完成情况；随机抽查等次评定是否符合要求、工作程序是否规范。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">选人用人不正之风集中整治自查自纠和整改<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">集中整治安排部署、传达学习、专题研讨、组织人事部门全员教育；"八严格"纳入干部培训教育班次、警示教育；查摆问题和查摆对象是否聚焦，整改措施是否与查摆问题对应；修订完善制度情况。</span></div>
+          <div class="task-row"><span class="task-label">特别提示</span><span class="task-content">这是全年贯穿的重点专项工作，也是一票否决事项（"选人用人方面突出问题"不得评A）。公司党委须高度重视，自查自纠材料的完整性、整改销号的闭环管理直接影响年度评价。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">学习贯彻二十届四中全会精神教育培训（培训全覆盖阶段）</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">旗县公司级管理人员、党员培训全覆盖；培训方式、培训内容是否符合要求。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">干部年度培训学时信息维护</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">是否制定培训计划；是否及时组织党员干部参加网络专题培训；首课设置、党性课程安排占比&gt;20%。"数智干教"平台调取数据。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">人才培育、管理、服务工作成效（上半年）</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">各单位人才工作的具体成效；领导联系服务专家人才情况；上半年"英才兴蒙"获评情况。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="propaganda">
+        <div class="task-header"><span><span class="task-dept propaganda">宣传统战</span><span class="task-title">"揭榜领题"项目开展情况（二、四季度）</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价要素</span><span class="task-content">融合度：贴合中心工作程度；真实性：是否按计划务实开展；价值度：对中心工作高质量发展、专业考核晋位的作用，是否具有创先引领作用和推广价值。</span></div>
+          <div class="task-row"><span class="task-label">年度要求</span><span class="task-content">所属单位从题库中揭榜领题3项（详见年度宣传统战工作揭榜领题库），年终综合评分（3分）。开展年度十佳宣传统战"揭榜领题"项目成果评选。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="propaganda">
+        <div class="task-header"><span><span class="task-dept propaganda">宣传统战</span><span class="task-title">铸牢中华民族共同体意识、意识形态、统战责任制落实情况（二、四季度）<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价要素</span><span class="task-content">制度核查：制度是否及时修订、举措是否有效落地；总结提炼：典型案例、经验做法提炼；实战检验：急难险重任务中作用发挥。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="inspect">
+        <div class="task-header"><span><span class="task-dept inspect">巡察办</span><span class="task-title">自治区国资委党委第七轮巡察整改"未巡先改"工作</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价要点</span><span class="task-content">按要求查找本单位存在的类似问题和薄弱环节；逐项自查自纠、整改完善；举一反三、对号入座，剖析原因、建章立制。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="inspect">
+        <div class="task-header"><span><span class="task-dept inspect">巡察办</span><span class="task-title">2025年第一轮、第二轮巡察整改情况</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价要点</span><span class="task-content">整改责任落实、整改任务落实、干部职工群众整改满意度；是否存在虚假整改、敷衍整改、纸面整改问题。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="union">
+        <div class="task-header"><span><span class="task-dept union">工会</span><span class="task-title">工会组织建设 + "幸福蒙电家庭季" + 劳模工匠宣讲 + 文体活动 + 经审整改</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">5项晾晒</span><span class="task-content">工会会员（代表）大会、委员会换届、法人管理；"幸福蒙电家庭季"六一亲子、中高考服务；劳模工匠进班组、走访慰问；盟市级文体活动；6月底前完成工会经费审计发现问题全部整改，重大风险问题100%销号。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="youth">
+        <div class="task-header"><span><span class="task-dept youth">团委</span><span class="task-title">五四主题团日 + 企业文化雕塑作品大赛 + 宣讲活动 + 团组织全覆盖<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">4项晾晒</span><span class="task-content">按《2026年基层团组织主题团日活动指引》评价五四主题团日；雕塑作品大赛作品报送数量、质量及获奖；蒙电青年讲师团成员、青马工程学员宣讲活动；基层团组织按期换届、团青组织全覆盖。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 三季度 -->
+    <div class="quarter">
+      <div class="quarter-marker">
+        <div class="quarter-badge q3">三季度</div>
+        <div class="quarter-time">7-9月 · 重点工作晾晒</div>
+      </div>
+      <div class="quarter-dot q3"></div>
+
+      <div class="task-group" data-dept="office">
+        <div class="task-header"><span><span class="task-dept office">办公室</span><span class="task-title">领导班子成员履行"一岗双责"情况<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价标准</span><span class="task-content">班子成员定期研究、布置、检查分管领域党建工作，调研记录、讲党课课件、谈心谈话记录；抓分管业务时融入党风廉政、意识形态工作要求。</span></div>
+          <div class="task-row"><span class="task-label">晾晒方式</span><span class="task-content">在组工讲堂以"履职实例+点评"形式进行匿名或实名晾晒，展示亮点也指出"履职虚化"问题</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="office">
+        <div class="task-header"><span><span class="task-dept office">办公室</span><span class="task-title">跟踪督办机制</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价标准</span><span class="task-content">"立项-督办-反馈-销号"全链条闭环管理；督办时效；督办结果与绩效考核、评先评优挂钩。</span></div>
+          <div class="task-row"><span class="task-label">晾晒方式</span><span class="task-content">在集团公司相关会议上排名通报</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="discipline">
+        <div class="task-header"><span><span class="task-dept discipline">纪委</span><span class="task-title">每季度晾晒7项持续开展（本季度继续）</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">提示</span><span class="task-content">本季度继续开展纪委"每季度晾晒"的7项内容：①行权履职集中整治、②廉洁文化三年行动、③政治监督、④案管系统录入、⑤"走读式"谈话安全、⑥案件质量、⑦"三化"建设。详细评价标准参见一季度纪委展开项。</span></div>
+          <div class="task-row"><span class="task-label">三季度重点</span><span class="task-content">中秋等关键节点组织明察暗访；聚焦"群众身边不正之风和腐败问题集中整治"持续推进。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">学习教育讲党课、总结报告、典型经验<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">讲党课、总结报告、典型经验情况；党课主题是否符合要求，总结及亮点成效评估。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">基层党组织建设（发展党员/三支队伍/党费）<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">发展党员、三支队伍建设、党费收缴使用等制度执行；新发展党员过程是否规范、三支队伍培训学时和课程符合规定。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">年轻干部配备情况（截至9月30日数据）</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">关注年轻干部配备比例是否提升；通过"干部信息系统"调取数据，与差异化考核目标值、"十五五"干部队伍建设规划年轻干部占比比对分析。</span></div>
+          <div class="task-row"><span class="task-label">鄂尔多斯目标</span><span class="task-content">2026年底，35岁左右旗县公司级管理人员占比提高3%（与包头、乌兰察布、锡林郭勒同组，差异化考核7分）。这是三季度末数据核查的硬指标。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">选人用人专项检查反馈问题整改</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">检查干部选任全过程材料，核对会议、推荐、考察各环节原始材料和落实"凡提四必"规定情况。适用于年度被巡察单位和近年来未实地进行选人用人专项检查的单位。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">人才培育、管理、服务工作（三季度）</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">各单位人才工作的具体成效；领导联系服务专家人才情况。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="propaganda">
+        <div class="task-header"><span><span class="task-dept propaganda">宣传统战</span><span class="task-title">《民族团结进步促进法》宣贯+"两月一周"活动<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价要素</span><span class="task-content">《民族团结进步促进法》宣贯情况；民族团结政策宣传月、民族团结进步活动月、民族法治宣传周活动知晓度、参与感、满意度；创新亮点活动和经验总结。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="propaganda">
+        <div class="task-header"><span><span class="task-dept propaganda">宣传统战</span><span class="task-title">精神文明建设 + 爱企如家 + 典型选树<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价要素</span><span class="task-content">志愿服务、全民国防教育、形势政策教育；"我们的节日""道德讲堂"与爱企如家融合；典型培育、选树、宣传、引领。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="propaganda">
+        <div class="task-header"><span><span class="task-dept propaganda">宣传统战</span><span class="task-title">理论宣讲特色品牌+新时代讲习员队伍+宣讲比赛<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价要素</span><span class="task-content">围绕铸牢主线、学习教育、爱企如家宣讲活动知晓度和满意度；讲习员队伍定期轮换、进入退出机制、星级评定、点单式互派式宣讲；打造精品故事集和课件库，参加集团宣讲比赛情况。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="propaganda">
+        <div class="task-header"><span><span class="task-dept propaganda">宣传统战</span><span class="task-title">企业文化与生产经营融合、特色文化品牌、班组文化建设<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价要素</span><span class="task-content">企业文化建设与中心工作的融合；特色文化品牌活动创新性、辨识度、员工参与度；班组文化建设推进力度；企业文化成果系统化、规范化经验。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="inspect">
+        <div class="task-header"><span><span class="task-dept inspect">巡察办</span><span class="task-title">巡察工作人才库建设 + 巡察档案完善 + 2026年第二轮巡察支撑</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒要点</span><span class="task-content">①人才库建设：年轻优秀干部纳入巡察工作人才库；②档案完善：紧盯中长期任务整改、及时完善整改台账；③第二轮巡察支撑：推荐人员数量和质量。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="union">
+        <div class="task-header"><span><span class="task-dept union">工会</span><span class="task-title">三季度高密度晾晒（17项）</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">重点项目</span><span class="task-content">思想政治引领（工会主席讲思政课、"五讲"活动）；"安康杯"竞赛；文体协会和场所管理；互助保障；"蒙电暖边行"；单身职工交友联谊；职工健步行；职工之家/小家建设；乡村振兴帮扶；固定资产清查；退休职工荣休仪式；职工诉求收集；职工代表巡视；工会干部培训；职工建功立业（创新工作室、五小活动）；职工疗休养及义诊。</span></div>
+          <div class="task-row"><span class="task-label">强调</span><span class="task-content">三季度是工会工作的"主攻季"，内容涉及面最广，盟市公司级文体活动是每个季度都要开展的硬任务。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="union">
+        <div class="task-header"><span><span class="task-dept union">工会</span><span class="task-title">乡村振兴帮扶（鄂尔多斯差异化）</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">鄂尔多斯要求</span><span class="task-content">①做好乡村振兴帮扶点产业帮扶工作（1分）；②持续开展乡村振兴消费帮扶（2分）；③派驻村第一书记和驻村队员年度考核和期满考核（1分，评优秀可得满分）。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="youth">
+        <div class="task-header"><span><span class="task-dept youth">团委</span><span class="task-title">青年精神素养提升 + 迎新"三对话" + 青年纪法教育<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">核查要点</span><span class="task-content">迎接集团公司成立80周年（青年精神素养提升行动、致敬前辈、老照片AI修复展示）；迎新及"三对话"活动；《道路交通安全法》等纪法教育；在"蒙电青春"等媒体投稿展示。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 四季度 -->
+    <div class="quarter">
+      <div class="quarter-marker">
+        <div class="quarter-badge q4">四季度</div>
+        <div class="quarter-time">10-12月 · 综合晾晒 + 年终考核</div>
+      </div>
+      <div class="quarter-dot q4"></div>
+
+      <div class="task-group" data-dept="office">
+        <div class="task-header"><span><span class="task-dept office">办公室</span><span class="task-title">"第一议题"制度 + 党中央决策部署 + "1571"<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价要素</span><span class="task-content">"第一议题"学习规范；党中央、自治区党委、国资委党委、集团公司决策部署结合本单位职能分解；政治理论学习成果转化为推动改革发展、安全生产的实际成效。</span></div>
+          <div class="task-row"><span class="task-label">晾晒方式</span><span class="task-content">"三色清单"公示：绿灯（健全及时）/ 黄灯（不规范、举措不实）/ 红灯（漏学、未部署、推动不力）</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="office">
+        <div class="task-header"><span><span class="task-dept office">办公室</span><span class="task-title">"三重一大"执行 + 党委会/总经理会规范<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">评价要素</span><span class="task-content">按权责清单及议事规则执行；决策流程规范；党组织与其他治理主体权责边界清晰；会议记录、纪要规范完整。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="office">
+        <div class="task-header"><span><span class="task-dept office">办公室</span><span class="task-title">智慧档案试点建设 + 党务政务信息报送 + 基层减负<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">智慧档案：组织推进、馆库智慧基建、数字化归集、系统互联互通，实行进度公开、短板亮晒、排名公示；信息报送时效与质量；"减负指数"排名（即时通群公示后3名并附具体问题清单）。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="discipline">
+        <div class="task-header"><span><span class="task-dept discipline">纪委</span><span class="task-title">每季度晾晒7项（本季度继续）+ 四季度专项晾晒4项</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">每季度7项</span><span class="task-content">本季度继续开展"每季度晾晒"的7项内容：①行权履职集中整治、②廉洁文化三年行动、③政治监督、④案管系统录入、⑤"走读式"谈话安全、⑥案件质量、⑦"三化"建设。详细评价标准参见一季度纪委展开项。</span></div>
+          <div class="task-row"><span class="task-label">四季度专项①</span><span class="task-content">党组织书记履行第一责任人职责，班子成员履行"一岗双责"情况。评价：党委书记是否听取班子其他成员履行管党治党责任汇报；与下一级党组织书记谈心谈话是否全覆盖；班子成员党风廉政建设谈话是否分管领域人员全覆盖；是否对分管部门廉政风险点和防控措施审核把关；分管领域巡视巡察、审计整改是否按期完成。</span></div>
+          <div class="task-row"><span class="task-label">四季度专项②</span><span class="task-content">各单位各类监督贯通协调推进情况。评价：党的工作部门、法务审计财会等监督主体、其他职能部门是否开展职能监督；各监督主体是否有效进行信息沟通和工作协同形成监督合力；信息共享、线索移送等机制是否落实到位。</span></div>
+          <div class="task-row"><span class="task-label">四季度专项③</span><span class="task-content">各单位以案促改开展情况。评价：是否结合上级要求和本单位实际统筹开展；是否研究制定以案促改工作方案；是否有针对性开展警示教育、自查自纠、风险防控、建章立制；是否实现监督、整改、治理相贯通；是否在深化重点领域治理、提升管理水平方面取得成效。</span></div>
+          <div class="task-row"><span class="task-label">四季度专项④</span><span class="task-content">巩固拓展深入贯彻中央八项规定精神学习教育成果，严防"四风"问题。评价：年内是否研究作风建设；是否纳入理论中心组、"三会一课"、主题党日活动、基本培训；班子成员是否发生违反中央八项规定及"四风"问题受处分；同一单位是否发生屡查屡犯问题。</span></div>
+          <div class="task-row"><span class="task-label">评价依据</span><span class="task-content">年底考核材料、日常调研掌握、监督执纪情况分析与数据统计</span></div>
+          <div class="task-row"><span class="task-label">晾晒方式</span><span class="task-content">发文通报，针对工作成效较差的个别单位发工作提示</span></div>
+          <div class="task-row"><span class="task-label">四季度重点</span><span class="task-content">元旦、春节关键节点常态化明察暗访；纪委全年工作年度考核材料整体分析研判 —— 四季度是纪委全年工作"大汇总+大收官"阶段，既要做好11项晾晒（7+4），也要准备年度考核相关材料。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">基层党组织建设（党组织书记述职+党业融合）</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">晾晒重点</span><span class="task-content">党组织书记述职、党业融合（含书记项目、岗区队建设）工作完成情况；党组织书记述职评议报告、评定结果等，"党建+"案例，党业融合示范项目、岗区队建设成果。</span></div>
+          <div class="task-row"><span class="task-label">鄂尔多斯差异化</span><span class="task-content">鄂尔多斯与包头、巴彦淖尔、锡林郭勒同组，要求"全领域实施'党建+'工程，打造2-3个示范项目，开展党业融合工作成效评价"。这是差异化考核的重点。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="org">
+        <div class="task-header"><span><span class="task-dept org">组织部</span><span class="task-title">干部队伍建设年度评价 + 干部培训学时信息维护 + 人才工作全年成效</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">3项年终晾晒</span><span class="task-content">①制度核查（选任制度是否健全、更新及时）+ 年度评价（干部队伍建设规划落实、重要指标完成）；②旗县公司级管理人员年度培训学时是否达标、首课、党性课程&gt;20%；③全年"英才兴蒙"获评情况。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="inspect">
+        <div class="task-header"><span><span class="task-dept inspect">巡察办</span><span class="task-title">2026年第一轮、第二轮巡察整改 + 第三轮支撑保障</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">3项晾晒</span><span class="task-content">2026年第一轮、第二轮巡察整改流程（措施是否空泛、责任是否到人）；2025年第三轮巡察整改情况（虚假整改、敷衍整改、纸面整改）；2026年第三轮巡察支撑保障。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="union">
+        <div class="task-header"><span><span class="task-dept union">工会</span><span class="task-title">劳模工匠服务 + 职工素质提升 + 工会经费预算执行 + 工资集体协商调研 + 文体活动</span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">5项晾晒</span><span class="task-content">①劳模工匠典型培育选树"阶梯式"体系、兼职培训师授课；②劳动竞赛、班组微课堂、班组长大赛；③预算编制合理性、严格依据预算执行，无无预算支出/超预算开支；④工资集体协商调研；⑤第四季度盟市公司级文体活动。</span></div>
+        </div>
+      </div>
+
+      <div class="task-group" data-dept="youth">
+        <div class="task-header"><span><span class="task-dept youth">团委</span><span class="task-title">党建带团建 + 青年突击队 + 青年文明号 + 青创赛项目储备<span class="tag-hot">承接上级</span></span></span><span class="task-chev">▶</span></div>
+        <div class="task-body">
+          <div class="task-row"><span class="task-label">4项晾晒</span><span class="task-content">①落实集团公司党建带团建任务清单；②青年突击队组建（"急难险重新"任务）+ 大比武竞赛；③青年文明号创建 + "五四""十一"亮号行动；④集团第二届青创赛项目储备。</span></div>
+          <div class="task-row"><span class="task-label">鄂尔多斯差异化</span><span class="task-content">鄂尔多斯与呼和浩特、包头、乌兰察布、巴彦淖尔、锡林郭勒同组，要求围绕数据分析应用、数字机器人开发、人工智能技术应用3个类别开展项目储备，总数不少于12个，每个类别至少储备2个。</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 第六部分：鄂尔多斯差异化指标 -->
+<section id="diff">
+  <div class="section-title">
+    <div class="section-title-num">6</div>
+    <div>
+      <h2>鄂尔多斯供电公司差异化考核指标</h2>
+      <p>专属目标 · 专属分值 · 专属赛道</p>
+    </div>
+  </div>
+
+  <p class="intro">鄂尔多斯供电公司作为盟市供电公司序列的重要单位，在多项差异化指标中归入"第一梯队"考核组。这些指标既是A等次的必争之地，也是与同组单位（尤其是包头、巴彦淖尔、锡林郭勒）直接比拼的关键项目。</p>
+
+  <div class="diff-card">
+    <div class="diff-item">
+      <h4>党建与业务融合<span class="diff-target">包头、鄂尔多斯、巴彦淖尔、锡林郭勒</span></h4>
+      <p class="diff-desc"><strong>标准要求：</strong>全领域实施"党建+"工程，打造2-3个示范项目，开展党业融合工作成效评价。<br><strong>扣分规则：</strong>未按要求开展党业融合工作，减0.2-1分（二级指标"基层党组织建设"项下5分）。<br><strong>操作建议：</strong>在生产、营销、工程建设、服务、安全5大专业领域各培育一个"党建+"示范项目，形成可量化的成效评价报告，突出"党建引领业务攻坚"的典型案例。</p>
+    </div>
+    <div class="diff-item">
+      <h4>年轻干部占比<span class="diff-target">包头、鄂尔多斯、乌兰察布、锡林郭勒</span></h4>
+      <p class="diff-desc"><strong>标准要求：</strong>2026年底，35岁左右旗县公司级管理人员数量占现职旗县公司级管理人员总数的比例<strong>提高3%</strong>。<br><strong>扣分规则：</strong>无特殊原因提高不足3%的，减0.2-2分（二级指标"领导班子和干部队伍建设"7分）。<br><strong>操作建议：</strong>三季度末（9月30日）数据核查是关键节点。从本年度起即需做好配备规划，通过空岗递补、交流轮岗、新选拔等方式稳步提升。</p>
+    </div>
+    <div class="diff-item">
+      <h4>人才工程专项资金使用<span class="diff-target">呼包鄂等8家（鄂尔多斯在列）</span></h4>
+      <p class="diff-desc"><strong>标准要求：</strong>认真落实集团公司《青年拔尖人才培养选拔管理办法》，对所属的集团公司第二批青年拔尖人才在培养期结束前，合规完成培养资金使用。<br><strong>扣分规则：</strong>未达到目标要求的，减0.2-2分（二级指标"人才队伍建设"5分）。</p>
+    </div>
+    <div class="diff-item">
+      <h4>乡村振兴<span class="diff-target">包头、鄂尔多斯、乌兰察布、锡林郭勒、薛家湾</span></h4>
+      <p class="diff-desc"><strong>标准要求：</strong>①做好乡村振兴帮扶点产业帮扶工作（1分）；②持续开展乡村振兴消费帮扶工作（2分）；③派驻村第一书记和驻村队员年度考核和期满考核评为优秀等级（1分）。<br><strong>扣分规则：</strong>①已捐赠产业项目未实际运行、收益分配不合理，减0.2-1分；②未组织开展消费帮扶，减0.2-2分；③驻村干部考核未评为优秀，减0.2-1分。</p>
+    </div>
+    <div class="diff-item">
+      <h4>青年创新创意大赛项目储备<span class="diff-target">呼包鄂等6家（鄂尔多斯在列·第一梯队）</span></h4>
+      <p class="diff-desc"><strong>标准要求：</strong>围绕数据分析应用、数字机器人开发、人工智能技术应用3个类别开展项目储备，<strong>总数不少于12个，每个类别至少储备2个项目</strong>。<br><strong>扣分规则：</strong>储备项目总数不足或类别过少，减0.5-2分（二级指标"青创工程"5分）。<br><strong>操作建议：</strong>四季度是项目储备上报的关键窗口期。需提前在数据分析、数字机器人、AI应用三个方向各储备4个以上项目，形成储备清单。</p>
+    </div>
+    <div class="diff-item">
+      <h4>党风廉政建设差异化（有条件触发）<span class="diff-target">全部单位</span></h4>
+      <p class="diff-desc">巡视巡察整改（3分）、政治监督"一条线"机制（3分）、"走读式"谈话安全（3分）—— 全年未接受巡视巡察或未办案的单位不做考核。这些项目适用于本单位实际开展情况，条件触发后需严格规范操作。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 第七部分：晾晒计分规则 -->
+<section id="liangshai">
+  <div class="section-title">
+    <div class="section-title-num">7</div>
+    <div>
+      <h2>阶段性晾晒计分规则</h2>
+      <p>每个指标5分 · 八项指标合计40分的"软性战场"</p>
+    </div>
+  </div>
+
+  <p class="intro">每项一级指标的"工作成效"考核中均设置"阶段性晾晒情况"5分。8项指标合计40分（其中重点专项工作采用百分制独立评分），是争A等次中的"软性战场"——技术要求不高，但贵在全年持续性、过程规范性、问题整改的闭环管理。</p>
+
+  <table class="scoring-table">
+    <tr>
+      <th width="18%">档次</th>
+      <th width="18%">分值</th>
+      <th width="32%">核心判定标准</th>
+      <th width="32%">应对策略</th>
+    </tr>
+    <tr>
+      <td><span class="score-tier good">好（上档）</span></td>
+      <td>4-5分（含4分）</td>
+      <td>工作成效突出，问题不足较少；评价为"好"的比例<strong>原则上不超过30%</strong></td>
+      <td>主动创造亮点，申报典型案例被刊发推广；零问题或极少被通报问题；全部晾晒项目积极配合响应</td>
+    </tr>
+    <tr>
+      <td><span class="score-tier fair">较好（中档）</span></td>
+      <td>3-4分（含3分，不含4分）</td>
+      <td>工作成效与问题不足数量基本相当，或工作成效一般但无重大问题</td>
+      <td>保底档次，避免重大问题和连续性通报；被点名问题即时整改并反馈</td>
+    </tr>
+    <tr>
+      <td><span class="score-tier poor">一般（下档）</span></td>
+      <td>3分以下（不含3分）</td>
+      <td>问题不足较多，工作亮点成效较少；须有一定数量被评"一般"</td>
+      <td>重点避免 —— 此档次基本与A等次无缘</td>
+    </tr>
+  </table>
+
+  <h3 class="sub-title">创先争优情况（每项一级指标5分）</h3>
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <div class="strategy-icon">★</div>
+      <h3>获奖表彰（2分封顶）</h3>
+      <p>各部门分值不同 —— 组织部：国家级+1分；宣传统战：国家级+1.5分；工会：全国总工会+2分、自治区级+1分；各部门自治区级一般+0.5分，其他+0.1分。同一荣誉取最高分，不重复累加，封顶2分。</p>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-icon">↑</div>
+      <h3>管理提升（3分）</h3>
+      <p>突出成绩或典型经验被推广应用；党建工作管理水平提升；创新创先成果显著；工作质量同比进步显著。<br>"好"为2-3分，"较好"为1-2分。</p>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-icon">✦</div>
+      <h3>揭榜领题（宣传统战3分）</h3>
+      <p>所属单位从题库中揭榜领题<strong>3项</strong>，年终根据融合度、价值贡献度、务实有效和创新引领性综合评分。开展年度十佳宣传统战"揭榜领题"项目成果评选。</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>关键认知：</strong>晾晒档次的分布有硬性约束 ——"好"的比例原则上不超过30%，"一般"须有一定数量。这意味着盟市供电公司类别9家单位中，评"好"的最多3家左右，评"一般"的至少1-2家。"较好"是基础档，"好"需要主动争取，"一般"必须规避。
+  </div>
+</section>
+
+<!-- 第八部分：争A策略 -->
+<section id="strategy">
+  <div class="section-title">
+    <div class="section-title-num">8</div>
+    <div>
+      <h2>争A等次的战略路径</h2>
+      <p>公司党委统筹部署 · 八项指标协同发力 · 压实八个党群部门责任</p>
+    </div>
+  </div>
+
+  <p class="intro">作为公司党委，需要站在全局高度统筹部署、系统发力。党建考核不是某一个部门的考核，而是对公司党委履行管党治党主体责任、推进党的建设质效的整体性评价。公司党委要落实"党的领导责任落实、党风廉政建设、党的组织和干部人才队伍建设、意识形态及宣传思想统战、党委巡察、工会群众、共青团和青年、重点专项"八大战线整体协同，由公司党委书记、专职副书记统筹领导，党群各部门分线落实，党群工作部门牵头协调，争取在盟市供电公司类别中进入A等次。</p>
+
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <div class="strategy-icon">①</div>
+      <h3>公司党委整体谋划 · 主体责任清单化</h3>
+      <p>公司党委承担全面从严治党主体责任、党的建设主体责任。全年工作要做到"四同"：</p>
+      <ul>
+        <li>党的建设与生产经营同谋划、同部署、同推进、同考核</li>
+        <li>制定年度党建工作要点和党建工作责任清单，责任落实到岗到人</li>
+        <li>修订完善党委落实全面从严治党主体责任清单、党委及班子成员党风廉政建设责任清单</li>
+        <li>党委书记履行第一责任人职责，班子成员严格履行"一岗双责"</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <div class="strategy-icon">②</div>
+      <h3>聚焦三大24%权重指标 · 72%基本盘要稳</h3>
+      <p>党风廉政、组织干部、宣传统战三项合计权重72%。公司党委要推动三大战线整体过硬：</p>
+      <ul>
+        <li>党风廉政建设（纪委）：持续深化作风建设、反腐败斗争、一把手集中整治</li>
+        <li>党的组织和干部队伍建设（党委组织部）：强化基层党组织、干部队伍、人才队伍三位一体建设</li>
+        <li>意识形态及宣传统战（党委宣传部/统战部/团委）：守牢意识形态阵地、深化铸牢中华民族共同体意识、抓好"揭榜领题"</li>
+        <li>公司党委要定期听取三条战线工作汇报，推动形成合力</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <div class="strategy-icon">③</div>
+      <h3>把握"承接上级"标记项 · 上下联动不脱节</h3>
+      <p>标注"<span class="tag-hot">承接上级</span>"的项目直接对接自治区党委、国资委党委考核要求，是上下级联动的硬指标。公司党委要确保：</p>
+      <ul>
+        <li>严格落实"第一议题"制度和党中央决策部署、自治区党委"1571"部署</li>
+        <li>蒙电"1435"党建工作体系"创先争优年"任务清单全面落地</li>
+        <li>党的二十届四中全会精神教育培训旗县公司级管理人员、党员全覆盖</li>
+        <li>树立和践行正确政绩观学习教育扎实开展（4%百分制专项考核）</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <div class="strategy-icon">④</div>
+      <h3>差异化指标全面达标 · 鄂尔多斯6项专属任务</h3>
+      <p>公司在6项差异化指标中均属"第一梯队"考核组，每项达标都是对同类单位的直接拉开差距：</p>
+      <ul>
+        <li>全领域"党建+"工程示范项目2-3个（党组织建设5分）</li>
+        <li>35岁左右旗县公司级年轻干部占比提升3%（9月30日数据节点，7分）</li>
+        <li>青年拔尖人才培养资金合规使用（人才建设5分）</li>
+        <li>乡村振兴"产业帮扶+消费帮扶+驻村干部评优"（工会4分）</li>
+        <li>青创赛项目储备12个（团青工作2分差异化）</li>
+        <li>党风廉政差异化（巡视巡察整改、政治监督、走读式谈话）</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <div class="strategy-icon">⑤</div>
+      <h3>阶段性晾晒全过程零失分 · 争进"好"档</h3>
+      <p>每项一级指标"工作成效"5分晾晒分档评定，8项指标合计40分。"好"档原则上不超过30%（9家盟市公司中约3家），公司党委要推动党群各部门：</p>
+      <ul>
+        <li>每季度开始后<strong>15个工作日内</strong>完成上季度晾晒材料报送</li>
+        <li>问题清单即时整改并反馈销号，避免综合晾晒中被点名</li>
+        <li>主动创造特色亮点和可推广做法供集团公司提炼推广</li>
+        <li>积累典型案例素材库，便于年末集中申报创先争优</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <div class="strategy-icon">⑥</div>
+      <h3>创先争优主动出击 · 全战线申报表彰</h3>
+      <p>每项一级指标创先争优5分（获奖表彰2分+管理提升3分），8项合计40分是争A的最大增量空间：</p>
+      <ul>
+        <li>全国"两优一先"、党建典型案例、全国总工会荣誉 —— 国家级+1至2分</li>
+        <li>自治区党委、国资委党委表彰，自治区总工会荣誉 —— 自治区级+0.5至1分</li>
+        <li>十佳"揭榜领题"项目、宣讲比赛、青年文明号等集团公司级评选</li>
+        <li>职工创新成果转化产生经济效益（工会管理提升+2分）</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <div class="strategy-icon">⑦</div>
+      <h3>党委巡察与整改齐抓 · 5%权重不失分</h3>
+      <p>巡察工作占5%权重。若涉及被巡察单位要做到"三不"：</p>
+      <ul>
+        <li>不搞虚假整改、纸面整改、敷衍整改 —— 整改完成率95%以上</li>
+        <li>不干扰巡察工作 —— 约束性减分一旦触发直接封顶-5分</li>
+        <li>不长期挂账 —— 中长期整改任务明确阶段性目标并持续推动</li>
+        <li>未接受巡察的单位要做好"未巡先改"和巡察人才库建设</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <div class="strategy-icon">⑧</div>
+      <h3>书记述职与民主测评 · 8%权重不容忽视</h3>
+      <p>"党组织书记抓基层党建述职评议"占5%，"党建工作民主测评"占3%，合计8%权重。公司党委书记直接参与两项关键评价：</p>
+      <ul>
+        <li>书记述职报告要对照考核评价内容全面梳理、突出成效和问题</li>
+        <li>民主测评要通过日常作风、群众路线积累满意度</li>
+        <li>年末党委围绕考核评价内容进行全面梳理、自查自评</li>
+        <li>领导小组办公室综合评价2分要通过规范考核纪律、防止形式主义获得</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <div class="strategy-icon">⑨</div>
+      <h3>红线意识 · 一票否决绝对规避</h3>
+      <p>公司党委要牢牢守住底线，避免出现以下不得评A情形：</p>
+      <ul>
+        <li>全面从严治党责任、意识形态责任制、选人用人、基层党建、党风廉政方面存在突出问题</li>
+        <li>企业发生重大安全生产责任事故或严重不稳定事件</li>
+        <li>党组织把关不严导致重大亏损或国有资产流失</li>
+        <li>所有约束性减分项（每项指标均设，封顶-5分）要全面规避</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 第九部分：红线与减分 -->
+<section id="danger">
+  <div class="section-title">
+    <div class="section-title-num">9</div>
+    <div>
+      <h2>约束性减分项清单（封顶-5分）</h2>
+      <p>每项一级指标都设有减分项 · 触发即扣</p>
+    </div>
+  </div>
+
+  <div class="danger-box">
+    <h3>党的领导责任落实（办公室）</h3>
+    <ul class="danger-list">
+      <li>落实集团公司党委工作要求不力，造成不良影响及后果</li>
+      <li>未严格执行重要事项请示报告制度，重要事项未报送</li>
+      <li>公文、印章、档案管理出现重大失误，发生工作秘密泄露</li>
+      <li>工作落实不到位被集团公司党委及上级主管部门通报批评</li>
+    </ul>
+  </div>
+
+  <div class="danger-box">
+    <h3>党风廉政建设（纪委）</h3>
+    <ul class="danger-list">
+      <li>当年发生管理人员、员工违规违纪违法问题较上一年度上升明显</li>
+      <li>年度内纪检监察机构在办案中发生安全事故（一次扣5分）</li>
+      <li>发生安全事件造成不良影响</li>
+    </ul>
+  </div>
+
+  <div class="danger-box">
+    <h3>党的组织和干部人才队伍建设（党委组织部）</h3>
+    <ul class="danger-list">
+      <li>工作中违反组织原则出现重大失误，造成不良影响</li>
+      <li>组织部门工作人员违反自治区"七个必须、七个严禁"工作要求</li>
+      <li>党员干部培训期间出现违规聚餐饮酒等违反培训纪律和安全要求</li>
+    </ul>
+  </div>
+
+  <div class="danger-box">
+    <h3>意识形态及宣传思想统战工作（宣传部/统战部/团委）</h3>
+    <ul class="danger-list">
+      <li>落实意识形态工作责任制不力，受到上级部门通报批评（1-5分）</li>
+      <li>落实统战工作责任制不力，受到上级部门通报批评（1-5分）</li>
+      <li>落实《舆情工作预案》不力，造成重大负面舆情或处置不当导致舆情升级（1-5分）</li>
+      <li>在宣传思想文化及统战工作领域中，出现<strong>形式主义和"低级红、高级黑"问题</strong>（1-5分）</li>
+      <li>宣传思想文化及统战工作战线岗位人员，出现违规违纪违法问题（1-5分）</li>
+    </ul>
+  </div>
+
+  <div class="danger-box">
+    <h3>党委巡察工作（巡察办）</h3>
+    <ul class="danger-list">
+      <li>隐瞒不报或故意向巡察组提供虚假情况，拒绝按要求提供相关文件材料（5分）</li>
+      <li>指使、强令有关单位或人员干扰、阻挠巡察工作，对反映情况的职工群众进行威胁、打击、报复（5分）</li>
+      <li>落实巡察整改要求不到位；其他不配合或干扰巡察工作的情形（5分）</li>
+    </ul>
+  </div>
+
+  <div class="danger-box">
+    <h3>工会群众工作（工会）</h3>
+    <ul class="danger-list">
+      <li>工会业务范围内发生重大违规违纪行为（1-5分）</li>
+      <li>工会组织因工作失职失责，导致发生恶劣影响越级上诉、群体性事件（1-5分）</li>
+      <li>选派的驻村第一书记和驻村队员，受到当地通报批评影响集团公司形象（1-5分）</li>
+    </ul>
+  </div>
+
+  <div class="danger-box">
+    <h3>共青团和青年工作（团委）</h3>
+    <ul class="danger-list">
+      <li>团建活动阵地和团青工作宣传内容有<strong>错误导向</strong>，造成不良影响（1-5分）</li>
+      <li>出现与团组织工作失职直接相关的舆情事件，造成不良影响（1-5分）</li>
+      <li>违规使用团建活动经费、违规任命团干部或违规使用团旗、团徽、团歌（1-5分）</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 第十部分：A等次密码 -->
+<section id="a-code">
+  <div class="a-code">
+    <h2>A等次密码 · 鄂尔多斯供电公司党委作战手册</h2>
+    <p class="a-code-sub">站在公司党委全局视角 · 浓缩为六条核心工作纪律</p>
+
+    <div class="a-code-items">
+      <div class="a-code-item">
+        <div class="a-code-item-num">① 党委主导</div>
+        <p>公司党委书记作为第一责任人全程抓，专职副书记统筹协调，班子成员履行"一岗双责"。党建考核是对公司党委整体履职情况的评价，必须把党建工作与中心工作同谋划、同部署、同推进、同考核。</p>
+      </div>
+      <div class="a-code-item">
+        <div class="a-code-item-num">② 系统协同</div>
+        <p>八大战线整体发力：办公室、纪委、党委组织部、党委宣传部（统战部、团委）、巡察办、工会、团委各司其职，公司党委统筹。避免"部门孤岛"，推动形成考核合力。</p>
+      </div>
+      <div class="a-code-item">
+        <div class="a-code-item-num">③ 对标对表</div>
+        <p>全年保持与集团公司党委、上级党委要求同频共振。标注"※承接上级"的项目必须零失分，这类项目直接对接自治区和国资委党委考核要求，是上下联动硬指标。</p>
+      </div>
+      <div class="a-code-item">
+        <div class="a-code-item-num">④ 节奏卡点</div>
+        <p>每季度结束后15个工作日为晾晒硬截止。材料报送、台账更新、问题整改形成"立项-督办-反馈-销号"闭环，避免成为通报批评的典型。</p>
+      </div>
+      <div class="a-code-item">
+        <div class="a-code-item-num">⑤ 差异突围</div>
+        <p>鄂尔多斯作为盟市供电公司"第一梯队"，在6项差异化指标中均承担高标准要求 —— "党建+"2-3个示范项目、年轻干部占比提升3%、青创赛储备12个项目、乡村振兴三个子项、青年拔尖人才资金合规使用 —— 每项都是争A增量。</p>
+      </div>
+      <div class="a-code-item">
+        <div class="a-code-item-num">⑥ 典型引领</div>
+        <p>主动创造可推广的典型经验、特色案例、创新做法。"获奖表彰"+"管理提升"每项一级指标5分，八项合计40分，是争A的增量空间。申报国家级/自治区级表彰收益最大。</p>
+      </div>
+      <div class="a-code-item">
+        <div class="a-code-item-num">⑦ 红线意识</div>
+        <p>零舆情、零违纪、零事故、零通报。任何一项约束性减分触发都会封顶-5分，同时可能触发"一票否决"。选人用人突出问题、意识形态责任制不力、重大安全生产事故均是A等次的绝对禁区。</p>
+      </div>
+      <div class="a-code-item">
+        <div class="a-code-item-num">⑧ 民主评价</div>
+        <p>书记述职（5%权重）、民主测评（3%权重）合计8%，靠日常作风、群众路线、管党治党成效积累，不是考核冲刺可以获得。党委书记要重视与干部职工的日常沟通与责任落实。</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub-title">公司党委年度工作聚焦建议</h3>
+  <p class="intro">公司党委要按季度组织推进，分阶段压实责任，通过定期调度、专题研究、现场督导等方式推动各项工作落实落地：</p>
+
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <h3>一季度：全面启动 · 打好基础</h3>
+      <p>①公司党委审议通过年度党建工作要点、党风廉政建设责任清单、党委落实全面从严治党主体责任清单，责任落实到岗到人；②启动树立和践行正确政绩观学习教育（贯穿全年，4%百分制专项）；③推进蒙电"1435"党建工作体系"创先争优年"任务清单分解落实；④组织党组织书记抓基层党建述职点评意见整改方案制定；⑤启动党的二十届四中全会精神教育培训；⑥启动坚强堡垒支部创建；⑦保障2026年第一轮巡察（若涉及）。</p>
+    </div>
+    <div class="strategy-card">
+      <h3>二季度：压实整改 · 重点突破</h3>
+      <p>①深化选人用人不正之风集中整治自查自纠和整改（涉及一票否决项）；②推进"一把手"和领导班子行权履职突出问题集中整治；③全面落实"未巡先改"工作；④完成二十届四中全会培训旗县公司级管理人员、党员全覆盖；⑤推动"党建+"示范项目落地；⑥开展"幸福蒙电家庭季"等品牌活动；⑦五四主题团日活动组织；⑧二季度综合晾晒（领导小组办公室统一发文通报）。</p>
+    </div>
+    <div class="strategy-card">
+      <h3>三季度：数据冲刺 · 打磨亮点</h3>
+      <p>①<strong>9月30日前完成年轻干部占比提升3%关键节点</strong>（差异化7分）；②推进各项差异化指标全部达标；③迎接集团公司成立80周年系列活动；④"蒙电暖边行"、职工健步行等品牌活动；⑤"党建+"示范项目、揭榜领题项目成果集中梳理；⑥纪委关键节点（中秋等）常态化明察暗访；⑦保障2026年第二轮巡察（若涉及）；⑧人才工程专项资金合规使用核查。</p>
+    </div>
+    <div class="strategy-card">
+      <h3>四季度：决战收官 · 创先争优</h3>
+      <p>①组织党组织书记抓基层党建述职评议工作（5%权重）；②推动党建工作民主测评（3%权重）；③以案促改、监督贯通协调、八项规定专项晾晒；④年度干部队伍建设规划落实情况评估；⑤"党建+"案例库、党业融合示范成果集中发布；⑥青创赛项目储备上报（差异化12个）；⑦创先争优表彰申报材料准备（国家级/自治区级）；⑧智慧档案试点建设成效；⑨年度党建工作自查自评报告撰写；⑩四季度综合晾晒。</p>
+    </div>
+  </div>
+</section>
+
+<div class="note" style="margin-top:40px">
+  <strong>使用说明：</strong>本解读基于四份源文件全文梳理而成，涵盖考核对象、指标体系、计分规则、等次评定、季度晾晒、差异化指标、减分项目等全部内容。文件内容若随上级最新要求动态调整，以集团公司最新正式通知为准。建议配合原始文档打印使用，重要节点可加入个人工作日历提醒。
+</div>
+
+</div>
+
+<div class="footer">
+  <p>2026年党建考核全景解读 · 内部学习参考</p>
+  <p>基于集团公司党建考核实施细则（分/子公司）、评分要点（盟市供电公司）、晾晒工作方案、季度晾晒安排表编制</p>
+  <p style="opacity:0.6;margin-top:20px">ORDOS POWER SUPPLY COMPANY · PARTY COMMITTEE</p>
+</div>
+
+<script>
+  // 任务组展开收起
+  document.querySelectorAll('.task-header').forEach(h => {
+    h.addEventListener('click', () => {
+      h.parentElement.classList.toggle('open');
+    });
+  });
+
+  // 部门筛选
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.task-group').forEach(g => {
+        if (filter === 'all' || g.dataset.dept === filter) {
+          g.style.display = '';
+        } else {
+          g.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
