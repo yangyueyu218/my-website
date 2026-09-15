@@ -728,5 +728,6 @@
   "contact": {
     "available": false,
     "endpoint": ""
-  }
+  },
+  "adminUrl": ""
 }
