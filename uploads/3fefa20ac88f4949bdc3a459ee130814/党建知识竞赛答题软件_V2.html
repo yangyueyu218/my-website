@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>鄂尔多斯供电公司理论知识竞赛</title>
+<style>
+:root {
+  --red-1:#7d0012; --red-2:#b10f1d; --gold:#c7972b;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; min-height:100vh;
+  font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:radial-gradient(circle at top, rgba(255,223,151,.15), transparent 28%), linear-gradient(180deg, #8c0f18 0%, #76000f 100%);
+  color:#5d0c14;
+}
+.page {
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:18px;
+}
+.stage {
+  width:min(96vw, 1600px);
+  aspect-ratio:16/9;
+  background:linear-gradient(180deg, rgba(255,245,226,.985), rgba(248,240,231,.985));
+  border-radius:28px;
+  border:1px solid rgba(230,195,107,.55);
+  box-shadow:0 25px 60px rgba(0,0,0,.22);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.topbar {
+  padding:10px 28px 4px;
+  flex:0 0 auto;
+}
+.brand-text h1 {
+  margin:0;
+  color:var(--red-1);
+  font-size:clamp(26px, 2.2vw, 40px);
+}
+.home, .quiz {
+  padding:6px 22px 10px;
+  flex:1;
+  min-height:0;
+}
+.hero h2 {
+  margin:0 0 4px;
+  font-size:clamp(28px, 3.2vw, 52px);
+  color:var(--red-1);
+  line-height:1.05;
+}
+.settings-box {
+  margin-top:8px;
+  padding:12px;
+  border-radius:18px;
+  background:rgba(255,255,255,.45);
+  border:1px solid rgba(226,196,128,.72);
+}
+.settings-title {
+  color:#ad7a2c;
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+.settings-grid {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:10px;
+}
+.setting-item {
+  background:#fbf3ef;
+  border:1px solid #efcfc9;
+  border-radius:14px;
+  padding:10px;
+}
+.setting-item label {
+  display:block;
+  font-size:18px;
+  font-weight:700;
+  color:var(--red-1);
+  margin-bottom:6px;
+}
+.setting-item input {
+  width:100%;
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid #d6b7b1;
+  font-size:16px;
+  outline:none;
+}
+.card-grid {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:10px;
+  margin-top:10px;
+}
+.card-btn {
+  border:none; cursor:pointer; text-align:center; padding:14px 12px; border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,249,235,.98), rgba(249,236,219,.98));
+  border:1px solid rgba(226,196,128,.75); box-shadow:0 12px 28px rgba(122,16,26,.10);
+  color:var(--red-1); font-size:clamp(20px, 1.8vw, 30px); font-weight:800;
+  min-height:65px;
+}
+.quiz-head {
+  display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:10px;
+}
+.back-btn, .action-btn {
+  border:none; cursor:pointer; border-radius:14px; padding:12px 18px; font-size:18px; font-weight:700;
+}
+.back-btn { background:transparent; color:var(--red-2); }
+.type-pill {
+  padding:10px 18px; border-radius:999px; background:#f4e6df; color:var(--red-2); font-weight:700; font-size:18px;
+}
+.question-panel {
+  border:1px solid rgba(226,196,128,.72);
+  border-radius:28px; background:rgba(255,255,255,.42);
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  flex:1; min-height:0;
+  min-height:0;
+}
+.meta-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:6px;
+  flex:0 0 auto;
+}
+.question-title {
+  margin:0; color:#ad7a2c; font-size:18px; font-weight:700;
+}
+.timer-box {
+  min-width:140px;
+  text-align:center;
+  padding:10px 14px;
+  border-radius:14px;
+  background:#f8ead7;
+  border:1px solid #e5c17c;
+  color:#8c4d00;
+  font-weight:800;
+  font-size:26px;
+}
+.timer-box.danger {
+  background:#ffe1dc;
+  border-color:#e38e81;
+  color:#b32118;
+}
+.question-text {
+  font-size:clamp(24px, 2.6vw, 54px);
+  line-height:1.3; color:#5d0c14; font-weight:800; margin-bottom:14px; white-space:pre-wrap;
+  flex:0 0 auto;
+}
+.main-row {
+  display:grid;
+  grid-template-columns:minmax(0, 1fr) minmax(280px, 27%);
+  gap:16px;
+  flex:1;
+  min-height:0;
+}
+.left-col {
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+}
+.options {
+  display:flex; flex-direction:column; gap:10px; flex:1; min-height:0; overflow:auto;
+}
+.option {
+  display:flex; gap:16px; align-items:flex-start; padding:14px 16px;
+  border-radius:20px; border:1px solid #efcfc9; background:#fbf3ef;
+}
+.option-label {
+  flex:0 0 48px; height:48px; border-radius:50%; display:grid; place-items:center;
+  background:#f6dfd7; color:#b61f2d; font-size:22px; font-weight:800;
+}
+.option-text {
+  font-size:clamp(18px, 1.28vw, 26px); color:#692027; line-height:1.55; padding-top:3px; word-break:break-word;
+}
+.right-col {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  min-height:0;
+}
+.answer-box {
+  flex:1;
+  min-height:0;
+  padding:14px 16px; border-radius:18px;
+  background:linear-gradient(180deg, #fff7dc, #f8ecbf); color:#7a4c05;
+  border:1px solid #ebd285; display:none; font-size:clamp(18px, 1.2vw, 24px); line-height:1.7; white-space:pre-wrap;
+  overflow:auto;
+}
+.answer-box.placeholder {
+  display:block;
+  visibility:hidden;
+}
+.actions {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.action-btn {
+  background:linear-gradient(180deg, #d4ab4f, #b98525); color:white;
+  flex:1 1 calc(50% - 5px);
+}
+.action-btn.secondary { background:linear-gradient(180deg, #c8292f, #9b101c); }
+.action-btn.ghost { background:linear-gradient(180deg, #a5575f, #7d3138); }
+.tips {
+  position:fixed; right:16px; bottom:16px; font-size:12px; color:#fff1c8; background:rgba(92, 5, 14, .38); padding:8px 10px; border-radius:10px;
+}
+@media (max-width: 1100px) {
+  .stage { aspect-ratio:auto; min-height:100vh; width:100vw; border-radius:0; }
+  .settings-grid, .card-grid { grid-template-columns:1fr; }
+  .card-btn { min-height:120px; }
+  .question-panel { height:auto; }
+  .main-row { grid-template-columns:1fr; }
+  .right-col { order:2; }
+}
+
+/* ===== 对局竞赛 UI ===== */
+.team-select {
+  width:100%; padding:7px 10px; border-radius:10px; border:1px solid #d6b7b1;
+  font-size:15px; background:white; color:#5d0c14; font-weight:700; outline:none; cursor:pointer;
+}
+.start-match-btn {
+  width:100%; margin-top:6px; padding:8px; border-radius:10px; border:none;
+  cursor:pointer; background:linear-gradient(180deg,#b10f1d,#7d0012);
+  color:white; font-size:14px; font-weight:800; letter-spacing:1px;
+}
+.match-status-bar {
+  margin-top:8px; padding:9px 16px; border-radius:14px;
+  background:linear-gradient(135deg,rgba(183,18,34,.09),rgba(199,151,43,.09));
+  border:1px solid rgba(183,18,34,.28);
+  align-items:center; justify-content:space-between; gap:12px;
+}
+.match-status-team { flex:1; text-align:center; }
+.mstn { font-size:15px; font-weight:800; color:#7d0012; }
+.msts { font-size:24px; font-weight:900; color:#b10f1d; line-height:1; }
+.mstl { font-size:11px; color:#8c4d00; margin-top:2px; }
+.match-status-center { text-align:center; flex:0 0 auto; min-width:120px; }
+.ms-vs { font-size:18px; font-weight:900; color:#7d0012; }
+.ms-turn { font-size:12px; color:#8c4d00; font-weight:700; margin-top:4px; }
+.ms-lifeline { font-size:11px; color:#ad7a2c; margin-top:3px; }
+/* 答题区 quiz 使用 flex 列布局 */
+.quiz { display:flex; flex-direction:column; }
+/* 对战栏 */
+.match-bar {
+  display:flex; align-items:stretch; gap:10px; margin-bottom:8px; flex:0 0 auto;
+}
+.team-card {
+  flex:1; background:rgba(255,255,255,.5); border:2px solid rgba(226,196,128,.5);
+  border-radius:14px; padding:8px 14px; transition:all .25s;
+  display:flex; flex-direction:column; gap:3px;
+}
+.team-card.active-turn {
+  background:rgba(177,15,29,.1); border-color:#b10f1d;
+  box-shadow:0 0 0 3px rgba(177,15,29,.18);
+}
+.tc-name { font-size:clamp(14px,1.3vw,20px); font-weight:800; color:#7d0012; }
+.tc-score { font-size:clamp(22px,2vw,32px); font-weight:900; color:#b10f1d; line-height:1.15; }
+.tc-sub { font-size:12px; color:#8c4d00; }
+.lifeline-row { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.lifeline-dots { font-size:15px; letter-spacing:2px; }
+.lifeline-btn {
+  border:none; cursor:pointer; padding:3px 8px; border-radius:7px;
+  background:#f4e6df; color:#b10f1d; font-size:12px; font-weight:700;
+}
+.lifeline-btn:disabled { opacity:.4; cursor:not-allowed; }
+.vs-center {
+  flex:0 0 100px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:4px;
+}
+.vs-lbl { font-size:clamp(16px,1.6vw,24px); font-weight:900; color:#7d0012; }
+.turn-block { text-align:center; }
+.turn-sub { font-size:11px; color:#8c4d00; font-weight:700; display:block; }
+.turn-name { font-size:clamp(12px,1.1vw,16px); font-weight:900; color:#b10f1d; display:block; }
+.pts-hint { font-size:11px; color:#8c4d00; margin-top:2px; }
+/* 得分操作按钮 */
+.score-actions { display:flex; gap:10px; margin-top:6px; flex-wrap:wrap; }
+.action-btn.correct-btn { background:linear-gradient(180deg,#3aaa5e,#1f7a3a); flex:3; }
+.action-btn.wrong-btn   { background:linear-gradient(180deg,#c8292f,#9b101c); flex:2; }
+.action-btn.skip-btn    { background:linear-gradient(180deg,#888,#666);       flex:1; }
+
+
+/* ===== 进度 / 完成 / 首页提示 ===== */
+.progress-pill {
+  padding:6px 16px; border-radius:999px;
+  background:#fff0e0; border:1px solid #ebd285;
+  color:#7a4c05; font-weight:800; font-size:clamp(13px,1.1vw,16px);
+  white-space:nowrap;
+}
+.card-hint {
+  display:block; font-size:clamp(11px,.85vw,13px);
+  font-weight:600; color:#ad7a2c; margin-top:5px; opacity:.9;
+}
+.total-score-hint {
+  text-align:center; font-size:clamp(12px,.95vw,15px);
+  color:#7a4c05; margin-top:6px; font-weight:600;
+}
+/* 完成横幅 */
+.category-complete-banner {
+  background:linear-gradient(135deg,rgba(58,170,94,.14),rgba(31,122,58,.1));
+  border:2px solid #3aaa5e; border-radius:18px;
+  padding:14px 20px; margin-bottom:8px; flex:0 0 auto;
+  align-items:center; gap:14px; flex-wrap:wrap; justify-content:space-between;
+}
+.ccb-icon { font-size:26px; flex:0 0 auto; }
+.ccb-text { font-size:clamp(14px,1.2vw,18px); font-weight:800; color:#1a6b32; flex:1; }
+.ccb-scores { font-size:clamp(13px,1.1vw,16px); color:#5d0c14; font-weight:700; }
+.ccb-home-btn {
+  border:none; cursor:pointer; padding:10px 20px; border-radius:12px;
+  background:linear-gradient(180deg,#b10f1d,#7d0012);
+  color:white; font-size:clamp(13px,1.1vw,16px); font-weight:800;
+  white-space:nowrap; flex:0 0 auto;
+}
+
+
+/* ===== 对局历史 & 积分榜 ===== */
+.history-wrap {
+  margin-top:10px; border-radius:18px;
+  background:rgba(255,255,255,.38); border:1px solid rgba(226,196,128,.72);
+  overflow:hidden;
+}
+.history-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:9px 16px 8px; background:rgba(199,151,43,.12);
+  border-bottom:1px solid rgba(226,196,128,.55);
+}
+.history-header-title { font-size:15px; font-weight:800; color:#7d0012; }
+.save-match-btn {
+  border:none; cursor:pointer; padding:5px 14px; border-radius:8px;
+  background:linear-gradient(180deg,#c7972b,#9a6d10);
+  color:white; font-size:13px; font-weight:700;
+}
+.history-body { padding:10px 14px; }
+.history-empty { font-size:13px; color:#ad7a2c; text-align:center; padding:6px 0; }
+.history-list { display:flex; flex-direction:column; gap:5px; max-height:130px; overflow-y:auto; }
+.history-row {
+  display:flex; align-items:center; gap:10px;
+  padding:5px 10px; border-radius:9px; background:rgba(255,255,255,.55);
+  font-size:clamp(12px,.92vw,14px);
+}
+.h-num { flex:0 0 18px; color:#8c4d00; font-weight:700; font-size:12px; }
+.h-teams { flex:1; color:#5d0c14; }
+.h-win { flex:0 0 auto; font-weight:800; font-size:12px; }
+.h-win.win-a { color:#1f7a3a; }
+.h-win.win-b { color:#1f7a3a; }
+.h-win.draw   { color:#8c4d00; }
+/* 积分榜 */
+.scores-board {
+  margin-top:8px; padding:8px 10px; border-radius:12px;
+  background:rgba(199,151,43,.1); border:1px solid rgba(199,151,43,.35);
+}
+.scores-board-title { font-size:13px; font-weight:800; color:#7d0012; margin-bottom:6px; }
+.scores-chips { display:flex; flex-wrap:wrap; gap:6px; }
+.score-chip {
+  padding:4px 12px; border-radius:999px;
+  background:rgba(125,0,18,.08); border:1px solid rgba(125,0,18,.2);
+  color:#5d0c14; font-weight:800; font-size:clamp(12px,.9vw,14px);
+}
+.score-chip.rank-1 { background:rgba(199,151,43,.25); border-color:#c7972b; }
+.score-chip.rank-2 { background:rgba(180,180,180,.25); border-color:#aaa; }
+.score-chip.rank-3 { background:rgba(180,120,60,.2); border-color:#b0763c; }
+
+
+/* ===== 答案框左置模式（填空题 / 简答题）===== */
+.main-row.answer-in-left {
+  grid-template-columns: minmax(0, 1fr) minmax(200px, 19%);
+}
+/* 左列内答案占满剩余高度 */
+#leftCol .answer-box.placeholder,
+#leftCol .answer-box {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: flex-start;
+}
+#leftCol .answer-box {
+  font-size: clamp(17px, 1.45vw, 26px);
+  line-height: 1.85;
+  padding: 18px 20px;
+}
+#leftCol .answer-box.placeholder {
+  visibility: hidden;
+}
+/* 右列仅保留按钮，垂直居中 */
+.main-row.answer-in-left #rightCol {
+  justify-content: flex-end;
+}
+
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="stage">
+    <div class="topbar">
+      <div class="brand-text"><h1>鄂尔多斯供电公司理论知识竞赛</h1></div>
+    </div>
+
+    <section id="home" class="home">
+      <div class="hero"><h2>开始答题</h2></div>
+
+      <div class="settings-box" style="display:none;">
+        <div class="settings-title">倒计时设置（单位：秒）</div>
+        <div class="settings-grid">
+          <div class="setting-item">
+            <label for="timerChoice">选择题倒计时</label>
+            <input id="timerChoice" type="number" min="0" step="1" value="30">
+          </div>
+          <div class="setting-item">
+            <label for="timerBlank">填空题倒计时</label>
+            <input id="timerBlank" type="number" min="0" step="1" value="45">
+          </div>
+          <div class="setting-item">
+            <label for="timerShort">简答题倒计时</label>
+            <input id="timerShort" type="number" min="0" step="1" value="60">
+          </div>
+        </div>
+      </div>
+
+
+      <!-- 对局配置 -->
+      <div class="settings-box" style="margin-top:8px;">
+        <div class="settings-title">对局配置（6支队伍两两 PK）</div>
+        <div class="settings-grid">
+          <div class="setting-item">
+            <label for="teamASelect">队伍 A</label>
+            <select id="teamASelect" class="team-select">
+              <option>第1组</option><option>第2组</option><option>第3组</option>
+              <option>第4组</option><option>第5组</option><option>第6组</option>
+            </select>
+          </div>
+          <div class="setting-item" style="text-align:center;">
+            <label for="firstTeamSelect">先答题方</label>
+            <select id="firstTeamSelect" class="team-select" style="margin-bottom:0;">
+              <option value="A">队伍 A 先答</option>
+              <option value="B">队伍 B 先答</option>
+            </select>
+            <button class="start-match-btn" onclick="startNewMatch()">▶ 开始新对局</button>
+          </div>
+          <div class="setting-item">
+            <label for="teamBSelect">队伍 B</label>
+            <select id="teamBSelect" class="team-select">
+              <option>第1组</option><option selected>第2组</option><option>第3组</option>
+              <option>第4组</option><option>第5组</option><option>第6组</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 当前对局状态 -->
+      <div id="matchStatusBar" class="match-status-bar" style="display:none;">
+        <div class="match-status-team">
+          <div class="mstn" id="homeTeamAName">第1组</div>
+          <div class="msts" id="homeScoreA">0</div>
+          <div class="mstl">分</div>
+        </div>
+        <div class="match-status-center">
+          <div class="ms-vs">VS</div>
+          <div class="ms-turn" id="homeTurnLabel">当前: —</div>
+          <div class="ms-lifeline" id="homeLifelinesLabel"></div>
+        </div>
+        <div class="match-status-team">
+          <div class="mstn" id="homeTeamBName">第2组</div>
+          <div class="msts" id="homeScoreB">0</div>
+          <div class="mstl">分</div>
+        </div>
+      </div>
+
+      <div class="card-grid">
+        <button class="card-btn" onclick="startQuiz('选择题')">选择题<span class="card-hint">每队10题 · 每题1分 · 各队上限10分</span></button>
+        <button class="card-btn" onclick="startQuiz('填空题')">填空题<span class="card-hint">每队5题 · 每题2分 · 各队上限10分</span></button>
+        <button class="card-btn" onclick="startQuiz('简答题')">简答题<span class="card-hint">每队3题 · 每题3分 · 各队上限9分</span></button>
+      </div>
+
+      <!-- 对局历史 & 积分榜 -->
+      <div class="history-wrap" id="historyWrap">
+        <div class="history-header">
+          <span class="history-header-title">📊 对局历史 &amp; 各队积分榜</span>
+          <button class="save-match-btn" onclick="saveMatchToHistory(true)">记录本场得分</button>
+        </div>
+        <div class="history-body">
+          <div id="historyEmpty" class="history-empty">暂无对局记录，完成对局后点击「记录本场得分」或开始新对局时自动保存</div>
+          <div class="history-list" id="historyList" style="display:none;"></div>
+          <div class="scores-board" id="scoresBoard" style="display:none;">
+            <div class="scores-board-title">各队累计积分（点击「开始新对局」或「记录本场得分」后更新）</div>
+            <div class="scores-chips" id="scoreChips"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="total-score-hint">每队总分上限：<strong>29分</strong>（选择10 + 填空10 + 简答9）&nbsp;&nbsp;两队合计最高58分</div>
+    </section>
+
+    <section id="quiz" class="quiz" style="display:none;">
+      <div class="quiz-head">
+        <button class="back-btn" onclick="goHome()">← 返回首页</button>
+        <div class="type-pill" id="typePill"></div>
+        <div class="progress-pill" id="progressPill">已答 0 / 0 题</div>
+      </div>
+
+      <!-- 对战信息栏 -->
+      <div class="match-bar" id="matchBar">
+        <div class="team-card" id="teamCardA">
+          <div class="tc-name" id="cardTeamAName">第1组</div>
+          <div class="tc-score"><span id="cardScoreA">0</span><span style="font-size:.55em;font-weight:700"> 分</span></div>
+          <div class="tc-sub" style="font-weight:800;color:#7d0012;">已答 <span id="answeredByA">0</span> / <span id="teamLimitA">0</span> 题</div>
+          <div class="tc-sub">场外求助</div>
+          <div class="lifeline-row">
+            <span class="lifeline-dots" id="lifelineDotsA">●●●</span>
+            <button class="lifeline-btn" id="lifelineBtnA" onclick="useLifeline(0)">使用一次</button>
+          </div>
+        </div>
+        <div class="vs-center">
+          <div class="vs-lbl">VS</div>
+          <div class="turn-block">
+            <span class="turn-sub">本题答题方</span>
+            <span class="turn-name" id="currentTurnName">—</span>
+          </div>
+          <div class="pts-hint">答对 <span id="ptLabel" style="font-weight:900;color:#b10f1d;">1</span> 分</div>
+        </div>
+        <div class="team-card" id="teamCardB">
+          <div class="tc-name" id="cardTeamBName">第2组</div>
+          <div class="tc-score"><span id="cardScoreB">0</span><span style="font-size:.55em;font-weight:700"> 分</span></div>
+          <div class="tc-sub" style="font-weight:800;color:#7d0012;">已答 <span id="answeredByB">0</span> / <span id="teamLimitB">0</span> 题</div>
+          <div class="tc-sub">场外求助</div>
+          <div class="lifeline-row">
+            <span class="lifeline-dots" id="lifelineDotsB">●●●</span>
+            <button class="lifeline-btn" id="lifelineBtnB" onclick="useLifeline(1)">使用一次</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 答题完成横幅 -->
+      <div id="categoryCompleteBanner" class="category-complete-banner" style="display:none;">
+        <span class="ccb-icon">✅</span>
+        <div class="ccb-text">本轮 <strong id="completeBannerType">选择题</strong> 全部答完！（共 <span id="completeBannerCount">10</span> 题）</div>
+        <div class="ccb-scores" id="completeBannerScores"></div>
+        <button class="ccb-home-btn" onclick="goHome()">← 返回主页，继续下一题型</button>
+      </div>
+
+      <div class="question-panel">
+        <div class="meta-row">
+          <div class="question-title" id="questionIndex">第 1 题</div>
+          <div class="timer-box" id="timerBox">00:30</div>
+        </div>
+        <div class="question-text" id="questionText"></div>
+        <div class="main-row">
+          <div class="left-col" id="leftCol">
+            <div class="options" id="optionsBox"></div>
+          </div>
+          <div class="right-col" id="rightCol">
+            <div class="answer-box placeholder" id="answerPlaceholder">占位</div>
+            <div class="answer-box" id="answerBox"></div>
+            <div class="actions">
+              <button class="action-btn ghost" onclick="prevQuestion()">上一题</button>
+              <button class="action-btn secondary" onclick="showAnswer()">显示答案</button>
+              <button class="action-btn skip-btn" onclick="skipAndNext()">跳过（不计分）</button>
+            </div>
+            <div class="score-actions" id="scoringActions">
+              <button class="action-btn correct-btn" onclick="recordAnswer(true)">✓ 答对（+<span id="ptLabel2">1</span>分）</button>
+              <button class="action-btn wrong-btn" onclick="recordAnswer(false)">✗ 答错（不得分→下一题）</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="tips">快捷提示：可分别设置三类题目的倒计时时长</div>
+
+<script>
+const DATA = {"选择题":[{"question":"中国共产党的性质是（）","options":[{"label":"A","text":"以上都是"},{"label":"B","text":"中国特色社会主义事业的领导核心"},{"label":"C","text":"中国人民和中华民族的先锋队"},{"label":"D","text":"中国工人阶级的先锋队"}],"answer":"A"},{"question":"党的最高理想和最终目标是（）","options":[{"label":"A","text":"实现现代化"},{"label":"B","text":"实现共同富裕"},{"label":"C","text":"实现社会主义"},{"label":"D","text":"实现共产主义"}],"answer":"D"},{"question":"中国共产党的根本宗旨是（）","options":[{"label":"A","text":"维护国家稳定"},{"label":"B","text":"发展生产力"},{"label":"C","text":"实现共产主义"},{"label":"D","text":"全心全意为人民服务"}],"answer":"D"},{"question":"党的根本组织原则是（）","options":[{"label":"A","text":"少数服从多数"},{"label":"B","text":"个人服从组织"},{"label":"C","text":"集体领导"},{"label":"D","text":"民主集中制"}],"answer":"D"},{"question":"中国共产党成立于（）","options":[{"label":"A","text":"1924年"},{"label":"B","text":"1922年"},{"label":"C","text":"1921年"},{"label":"D","text":"1923年"}],"answer":"C"},{"question":"党的生日是（）","options":[{"label":"A","text":"10月1日"},{"label":"B","text":"7月23日"},{"label":"C","text":"7月1日"},{"label":"D","text":"8月1日"}],"answer":"C"},{"question":"中国共产党的初心和使命是（）","options":[{"label":"A","text":"为中国人民谋幸福，为中华民族谋复兴"},{"label":"B","text":"实现国家富强"},{"label":"C","text":"实现人民解放"},{"label":"D","text":"实现民族独立"}],"answer":"A"},{"question":"我国的根本政治制度是（）","options":[{"label":"A","text":"中国共产党领导的多党合作和政治协商制度"},{"label":"B","text":"民族区域自治制度"},{"label":"C","text":"基层群众自治制度"},{"label":"D","text":"人民代表大会制度"}],"answer":"D"},{"question":"我国的基本经济制度是（）","options":[{"label":"A","text":"社会主义市场经济体制"},{"label":"B","text":"以上都是"},{"label":"C","text":"按劳分配为主体、多种分配方式并存"},{"label":"D","text":"公有制为主体、多种所有制经济共同发展"}],"answer":"B"},{"question":"新时代我国社会主要矛盾是（）","options":[{"label":"A","text":"人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾"},{"label":"B","text":"生产力与生产关系的矛盾"},{"label":"C","text":"人民日益增长的物质文化需要同落后的社会生产之间的矛盾"},{"label":"D","text":"经济基础与上层建筑的矛盾"}],"answer":"A"},{"question":"“四个意识”是指政治意识、大局意识、核心意识、（）","options":[{"label":"A","text":"创新意识"},{"label":"B","text":"责任意识"},{"label":"C","text":"服务意识"},{"label":"D","text":"看齐意识"}],"answer":"D"},{"question":"“四个自信”是指道路自信、理论自信、制度自信、（）","options":[{"label":"A","text":"民族自信"},{"label":"B","text":"文化自信"},{"label":"C","text":"历史自信"},{"label":"D","text":"国家自信"}],"answer":"B"},{"question":"“两个维护”是指坚决维护习近平总书记党中央的核心、全党的核心地位，坚决维护（）","options":[{"label":"A","text":"人民利益"},{"label":"B","text":"党的领导"},{"label":"C","text":"国家主权"},{"label":"D","text":"党中央权威和集中统一领导"}],"answer":"D"},{"question":"党的三大优良作风是理论联系实际、密切联系群众、（）","options":[{"label":"A","text":"实事求是"},{"label":"B","text":"艰苦奋斗"},{"label":"C","text":"批评与自我批评"},{"label":"D","text":"与时俱进"}],"answer":"C"},{"question":"中国革命的三大法宝是统一战线、武装斗争、（）","options":[{"label":"A","text":"实事求是"},{"label":"B","text":"独立自主"},{"label":"C","text":"群众路线"},{"label":"D","text":"党的建设"}],"answer":"D"},{"question":"毛泽东思想的精髓是（）","options":[{"label":"A","text":"实事求是"},{"label":"B","text":"解放思想"},{"label":"C","text":"独立自主"},{"label":"D","text":"群众路线"}],"answer":"A"},{"question":"邓小平理论的精髓是（）","options":[{"label":"A","text":"改革开放"},{"label":"B","text":"一国两制"},{"label":"C","text":"解放思想、实事求是"},{"label":"D","text":"以经济建设为中心"}],"answer":"C"},{"question":"习近平新时代中国特色社会主义思想的核心要义是（）","options":[{"label":"A","text":"以人民为中心"},{"label":"B","text":"坚持和发展中国特色社会主义"},{"label":"C","text":"全面从严治党"},{"label":"D","text":"实现中华民族伟大复兴"}],"answer":"B"},{"question":"“五位一体”总体布局是指经济建设、政治建设、文化建设、社会建设、（）","options":[{"label":"A","text":"生态文明建设"},{"label":"B","text":"法治建设"},{"label":"C","text":"国防建设"},{"label":"D","text":"党的建设"}],"answer":"A"},{"question":"“四个全面”战略布局是指全面建设社会主义现代化国家、全面深化改革、全面依法治国、（）","options":[{"label":"A","text":"全面乡村振兴"},{"label":"B","text":"全面脱贫攻坚"},{"label":"C","text":"全面对外开放"},{"label":"D","text":"全面从严治党"}],"answer":"D"},{"question":"新发展理念是创新、协调、绿色、开放、（）","options":[{"label":"A","text":"高效"},{"label":"B","text":"公平"},{"label":"C","text":"法治"},{"label":"D","text":"共享"}],"answer":"D"},{"question":"新发展格局是（）","options":[{"label":"A","text":"国内大循环"},{"label":"B","text":"以国内大循环为主体、国内国际双循环相互促进"},{"label":"C","text":"以国际大循环为主体、国内国际双循环相互促进"},{"label":"D","text":"国际大循环"}],"answer":"B"},{"question":"党的基本路线的核心内容是（）","options":[{"label":"A","text":"坚持四项基本原则"},{"label":"B","text":"一个中心、两个基本点"},{"label":"C","text":"坚持改革开放"},{"label":"D","text":"以经济建设为中心"}],"answer":"B"},{"question":"四项基本原则是坚持社会主义道路、坚持人民民主专政、坚持中国共产党的领导、（）","options":[{"label":"A","text":"坚持马克思列宁主义毛泽东思想"},{"label":"B","text":"坚持科学发展观"},{"label":"C","text":"坚持改革开放"},{"label":"D","text":"坚持以经济建设为中心"}],"answer":"A"},{"question":"中国特色社会主义最本质的特征是（）","options":[{"label":"A","text":"依法治国"},{"label":"B","text":"中国共产党领导"},{"label":"C","text":"共同富裕"},{"label":"D","text":"人民当家作主"}],"answer":"B"},{"question":"中国特色社会主义制度的最大优势是（）","options":[{"label":"A","text":"中国共产党领导"},{"label":"B","text":"人民代表大会制度"},{"label":"C","text":"集中力量办大事"},{"label":"D","text":"民主集中制"}],"answer":"A"},{"question":"全面依法治国的总目标是（）","options":[{"label":"A","text":"实现科学立法、严格执法、公正司法、全民守法"},{"label":"B","text":"建设中国特色社会主义法治体系，建设社会主义法治国家"},{"label":"C","text":"维护社会公平正义"},{"label":"D","text":"保障人民权益"}],"answer":"B"},{"question":"全面从严治党的核心是（）","options":[{"label":"A","text":"反腐败斗争"},{"label":"B","text":"加强党的建设"},{"label":"C","text":"作风建设"},{"label":"D","text":"加强党的领导"}],"answer":"D"},{"question":"党的群众路线是（）","options":[{"label":"A","text":"密切联系群众"},{"label":"B","text":"一切为了群众，一切依靠群众，从群众中来，到群众中去"},{"label":"C","text":"以人民为中心"},{"label":"D","text":"全心全意为人民服务"}],"answer":"B"},{"question":"中国梦的本质是（）","options":[{"label":"A","text":"实现中华民族伟大复兴"},{"label":"B","text":"国家富强、民族振兴、人民幸福"},{"label":"C","text":"实现现代化"},{"label":"D","text":"全面建成小康社会"}],"answer":"B"},{"question":"中国共产党人的精神支柱和政治灵魂是（）","options":[{"label":"A","text":"马克思主义信仰"},{"label":"B","text":"党的领导"},{"label":"C","text":"共产主义远大理想和中国特色社会主义共同理想"},{"label":"D","text":"为人民服务"}],"answer":"C"},{"question":"党的思想建设的首要任务是（）","options":[{"label":"A","text":"开展党性教育"},{"label":"B","text":"加强理论学习"},{"label":"C","text":"坚定理想信念"},{"label":"D","text":"践行党的宗旨"}],"answer":"C"},{"question":"党的组织建设的重点是（）","options":[{"label":"A","text":"发展党员"},{"label":"B","text":"选拔任用干部"},{"label":"C","text":"提升组织力"},{"label":"D","text":"加强基层党组织建设"}],"answer":"C"},{"question":"党的作风建设的核心是（）","options":[{"label":"A","text":"艰苦奋斗"},{"label":"B","text":"保持党同人民群众的血肉联系"},{"label":"C","text":"廉洁自律"},{"label":"D","text":"反对形式主义、官僚主义"}],"answer":"B"},{"question":"党的纪律建设中，最根本、最重要的纪律是（）","options":[{"label":"A","text":"群众纪律"},{"label":"B","text":"组织纪律"},{"label":"C","text":"政治纪律"},{"label":"D","text":"廉洁纪律"}],"answer":"C"},{"question":"中国共产党的三大历史任务是推进现代化建设、完成祖国统一、（）","options":[{"label":"A","text":"实现民族复兴"},{"label":"B","text":"全面从严治党"},{"label":"C","text":"建设美丽中国"},{"label":"D","text":"维护世界和平与促进共同发展"}],"answer":"D"},{"question":"我国的国体是（）","options":[{"label":"A","text":"人民代表大会制度"},{"label":"B","text":"人民民主专政"},{"label":"C","text":"社会主义制度"},{"label":"D","text":"中国共产党领导的多党合作和政治协商制度"}],"answer":"B"},{"question":"我国的政体是（）","options":[{"label":"A","text":"人民民主专政"},{"label":"B","text":"人民代表大会制度"},{"label":"C","text":"民主集中制"},{"label":"D","text":"政治协商制度"}],"answer":"B"},{"question":"社会主义核心价值观国家层面的价值目标是（）","options":[{"label":"A","text":"富强、自由、爱国、和谐"},{"label":"B","text":"爱国、敬业、诚信、友善"},{"label":"C","text":"富强、民主、文明、和谐"},{"label":"D","text":"自由、平等、公正、法治"}],"answer":"C"},{"question":"社会主义核心价值观社会层面的价值取向是（）","options":[{"label":"A","text":"自由、爱国、公正、法治"},{"label":"B","text":"富强、民主、文明、和谐"},{"label":"C","text":"自由、平等、公正、法治"},{"label":"D","text":"爱国、敬业、诚信、友善"}],"answer":"C"},{"question":"社会主义核心价值观公民个人层面的价值准则是（）","options":[{"label":"A","text":"自由、平等、公正、法治"},{"label":"B","text":"爱国、自由、诚信、和谐"},{"label":"C","text":"富强、民主、文明、和谐"},{"label":"D","text":"爱国、敬业、诚信、友善"}],"answer":"D"},{"question":"中国特色社会主义进入新时代，我国发展新的历史方位是（）","options":[{"label":"A","text":"社会主义初级阶段"},{"label":"B","text":"中国特色社会主义新时代"},{"label":"C","text":"现代化建设阶段"},{"label":"D","text":"全面建成小康社会阶段"}],"answer":"B"},{"question":"新时代坚持和发展中国特色社会主义的总任务是（）","options":[{"label":"A","text":"实现共同富裕"},{"label":"B","text":"建设美丽中国"},{"label":"C","text":"实现社会主义现代化和中华民族伟大复兴"},{"label":"D","text":"全面建成小康社会"}],"answer":"C"},{"question":"全面建成社会主义现代化强国的战略安排分两步走，第一步是（）","options":[{"label":"A","text":"从2035年到本世纪中叶建成社会主义现代化强国"},{"label":"B","text":"从2035年到本世纪中叶实现共同富裕"},{"label":"C","text":"从2020年到2035年基本实现社会主义现代化"},{"label":"D","text":"从2020年到2035年全面建成小康社会"}],"answer":"C"},{"question":"全面建成社会主义现代化强国的战略安排分两步走，第二步是（）","options":[{"label":"A","text":"从2020年到2035年基本实现社会主义现代化"},{"label":"B","text":"从2035年到本世纪中叶实现共同富裕"},{"label":"C","text":"从2020年到2035年全面建成小康社会"},{"label":"D","text":"从2035年到本世纪中叶建成富强民主文明和谐美丽的社会主义现代化强国"}],"answer":"D"},{"question":"我国经济发展进入新常态，已由高速增长阶段转向（）","options":[{"label":"A","text":"中高速增长阶段"},{"label":"B","text":"低速增长阶段"},{"label":"C","text":"平稳增长阶段"},{"label":"D","text":"高质量发展阶段"}],"answer":"D"},{"question":"供给侧结构性改革的根本目的是（）","options":[{"label":"A","text":"去产能、去库存、去杠杆、降成本、补短板"},{"label":"B","text":"提高供给质量满足需要"},{"label":"C","text":"优化经济结构"},{"label":"D","text":"促进经济增长"}],"answer":"B"},{"question":"实施乡村振兴战略的总要求是产业兴旺、生态宜居、乡风文明、治理有效、（）","options":[{"label":"A","text":"城乡融合"},{"label":"B","text":"生活富裕"},{"label":"C","text":"农业现代化"},{"label":"D","text":"共同富裕"}],"answer":"B"},{"question":"总体国家安全观的宗旨是（）","options":[{"label":"A","text":"经济安全"},{"label":"B","text":"政治安全"},{"label":"C","text":"人民安全"},{"label":"D","text":"军事安全"}],"answer":"C"},{"question":"总体国家安全观的根本是（）","options":[{"label":"A","text":"政治安全"},{"label":"B","text":"经济安全"},{"label":"C","text":"军事安全"},{"label":"D","text":"人民安全"}],"answer":"A"},{"question":"总体国家安全观的基础是（）","options":[{"label":"A","text":"经济安全"},{"label":"B","text":"人民安全"},{"label":"C","text":"政治安全"},{"label":"D","text":"军事安全"}],"answer":"A"},{"question":"总体国家安全观的保障是（）","options":[{"label":"A","text":"政治安全"},{"label":"B","text":"人民安全"},{"label":"C","text":"军事、文化、社会安全"},{"label":"D","text":"经济安全"}],"answer":"C"},{"question":"中国外交政策的宗旨是（）","options":[{"label":"A","text":"独立自主"},{"label":"B","text":"和平共处五项原则"},{"label":"C","text":"构建人类命运共同体"},{"label":"D","text":"维护世界和平、促进共同发展"}],"answer":"D"},{"question":"中国外交政策的基本原则是（）","options":[{"label":"A","text":"构建人类命运共同体"},{"label":"B","text":"独立自主"},{"label":"C","text":"和平共处五项原则"},{"label":"D","text":"维护世界和平"}],"answer":"B"},{"question":"和平共处五项原则是互相尊重主权和领土完整、互不侵犯、互不干涉内政、平等互利、（）","options":[{"label":"A","text":"和平共处"},{"label":"B","text":"友好往来"},{"label":"C","text":"合作共赢"},{"label":"D","text":"共同发展"}],"answer":"A"},{"question":"构建人类命运共同体的核心是（）","options":[{"label":"A","text":"共同发展"},{"label":"B","text":"和平发展"},{"label":"C","text":"建设持久和平、普遍安全、共同繁荣、开放包容、清洁美丽的世界"},{"label":"D","text":"合作共赢"}],"answer":"C"},{"question":"伟大建党精神的内涵是坚持真理、坚守理想，践行初心、担当使命，不怕牺牲、英勇斗争，（）","options":[{"label":"A","text":"实事求是、与时俱进"},{"label":"B","text":"密切联系群众"},{"label":"C","text":"艰苦奋斗、自力更生"},{"label":"D","text":"对党忠诚、不负人民"}],"answer":"D"},{"question":"中国共产党的最大政治优势是（）","options":[{"label":"A","text":"理论联系实际"},{"label":"B","text":"艰苦奋斗"},{"label":"C","text":"批评与自我批评"},{"label":"D","text":"密切联系群众"}],"answer":"D"},{"question":"中国共产党执政后的最大危险是（）","options":[{"label":"A","text":"官僚主义"},{"label":"B","text":"脱离群众"},{"label":"C","text":"腐败"},{"label":"D","text":"形式主义"}],"answer":"B"},{"question":"衡量一切工作得失的根本标准是（）","options":[{"label":"A","text":"人民拥护不拥护、赞成不赞成、高兴不高兴、答应不答应"},{"label":"B","text":"是否有利于提高人民生活水平"},{"label":"C","text":"是否有利于增强综合国力"},{"label":"D","text":"是否有利于发展生产力"}],"answer":"A"},{"question":"党的二十届四中全会召开时间是（）","options":[{"label":"A","text":"2025年11月15日至18日"},{"label":"B","text":"2025年10月15日至18日"},{"label":"C","text":"2025年11月20日至23日"},{"label":"D","text":"2025年10月20日至23日"}],"answer":"D"},{"question":"党的二十届四中全会审议通过的文件是（）","options":[{"label":"A","text":"《中共中央关于全面深化改革若干重大问题的决定》"},{"label":"B","text":"《中共中央关于制定国民经济和社会发展第十四个五年规划的建议》"},{"label":"C","text":"《中共中央关于全面推进依法治国若干重大问题的决定》"},{"label":"D","text":"《中共中央关于制定国民经济和社会发展第十五个五年规划的建议》"}],"answer":"D"},{"question":"“十五五”时期经济社会发展的主题是（）","options":[{"label":"A","text":"推动高质量发展"},{"label":"B","text":"建设现代化产业体系"},{"label":"C","text":"扩大高水平对外开放"},{"label":"D","text":"实现共同富裕"}],"answer":"A"},{"question":"“十五五”时期经济社会发展的根本动力是（）","options":[{"label":"A","text":"对外开放"},{"label":"B","text":"扩大内需"},{"label":"C","text":"科技创新"},{"label":"D","text":"改革创新"}],"answer":"D"},{"question":"“十五五”时期经济社会发展必须遵循的重要原则有（）个","options":[{"label":"A","text":"8"},{"label":"B","text":"5"},{"label":"C","text":"6"},{"label":"D","text":"7"}],"answer":"C"},{"question":"“十五五”时期经济社会发展必须遵循的重要原则不包括（）","options":[{"label":"A","text":"坚持党的全面领导"},{"label":"B","text":"坚持高质量发展"},{"label":"C","text":"坚持绿色发展"},{"label":"D","text":"坚持人民至上"}],"answer":"C"},{"question":"“十五五”时期经济社会发展的根本目的是（）","options":[{"label":"A","text":"促进共同富裕"},{"label":"B","text":"满足人民日益增长的美好生活需要"},{"label":"C","text":"实现高质量发展"},{"label":"D","text":"建设现代化强国"}],"answer":"B"},{"question":"二十届四中全会提出，要加快构建（）","options":[{"label":"A","text":"新发展理念"},{"label":"B","text":"高水平社会主义市场经济体制"},{"label":"C","text":"新发展格局"},{"label":"D","text":"现代化产业体系"}],"answer":"C"},{"question":"二十届四中全会提出，要把发展经济的着力点放在（）上","options":[{"label":"A","text":"绿色经济"},{"label":"B","text":"数字经济"},{"label":"C","text":"实体经济"},{"label":"D","text":"虚拟经济"}],"answer":"C"},{"question":"二十届四中全会提出，要加快建设（）强国、质量强国、航天强国、交通强国、网络强国、数字中国","options":[{"label":"A","text":"制造"},{"label":"B","text":"人才"},{"label":"C","text":"教育"},{"label":"D","text":"科技"}],"answer":"A"},{"question":"二十届四中全会提出，要坚持把（）作为国家发展的战略支撑","options":[{"label":"A","text":"科技自立自强"},{"label":"B","text":"创新驱动发展"},{"label":"C","text":"教育优先发展"},{"label":"D","text":"人才引领驱动"}],"answer":"A"},{"question":"二十届四中全会提出，要建设（）国内市场，畅通国内大循环","options":[{"label":"A","text":"强大"},{"label":"B","text":"统一"},{"label":"C","text":"开放"},{"label":"D","text":"繁荣"}],"answer":"A"},{"question":"二十届四中全会提出，要加快构建（）社会主义市场经济体制","options":[{"label":"A","text":"高标准"},{"label":"B","text":"高质量"},{"label":"C","text":"高水平"},{"label":"D","text":"高效率"}],"answer":"C"},{"question":"二十届四中全会提出，要扩大（）对外开放，开创合作共赢新局面","options":[{"label":"A","text":"宽领域"},{"label":"B","text":"全方位"},{"label":"C","text":"高水平"},{"label":"D","text":"深层次"}],"answer":"C"},{"question":"二十届四中全会提出，要加快（）农村现代化，扎实推进乡村全面振兴","options":[{"label":"A","text":"农业"},{"label":"B","text":"城乡"},{"label":"C","text":"农民"},{"label":"D","text":"县域"}],"answer":"A"},{"question":"二十届四中全会提出，要激发全民族文化创新创造活力，繁荣发展（）","options":[{"label":"A","text":"先进文化"},{"label":"B","text":"大众文化"},{"label":"C","text":"传统文化"},{"label":"D","text":"社会主义文化"}],"answer":"D"},{"question":"二十届四中全会提出，要坚持尽力而为、量力而行，加强（）、基础性、兜底性民生建设","options":[{"label":"A","text":"均等性"},{"label":"B","text":"公平性"},{"label":"C","text":"保障性"},{"label":"D","text":"普惠性"}],"answer":"D"},{"question":"二十届四中全会提出，要促进高质量充分就业，完善（）制度","options":[{"label":"A","text":"收入分配"},{"label":"B","text":"公共服务"},{"label":"C","text":"社会治理"},{"label":"D","text":"社会保障"}],"answer":"A"},{"question":"二十届四中全会提出，要办好人民满意的教育，健全（）体系","options":[{"label":"A","text":"公共服务"},{"label":"B","text":"社会保障"},{"label":"C","text":"社会治理"},{"label":"D","text":"医疗卫生"}],"answer":"B"},{"question":"二十届四中全会提出，要加快建设（）中国，促进人口高质量发展","options":[{"label":"A","text":"美丽"},{"label":"B","text":"健康"},{"label":"C","text":"法治"},{"label":"D","text":"平安"}],"answer":"B"},{"question":"习近平总书记提出的能源安全新战略是（）","options":[{"label":"A","text":"三个革命、一个合作"},{"label":"B","text":"四个革命、一个合作"},{"label":"C","text":"五个革命、两个合作"}],"answer":"B"},{"question":"能源的饭碗必须端在（）手里","options":[{"label":"A","text":"国际市场"},{"label":"B","text":"发达国家"},{"label":"C","text":"自己"}],"answer":"C"},{"question":"能源保障和安全是须臾不可忽视的（）","options":[{"label":"A","text":"国之大者"},{"label":"B","text":"一般工作"},{"label":"C","text":"关键小事"}],"answer":"A"},{"question":"我国能源发展要坚持（）方针","options":[{"label":"A","text":"消费优先"},{"label":"B","text":"出口优先"},{"label":"C","text":"节能优先"}],"answer":"C"},{"question":"保障能源安全要加快建设（）","options":[{"label":"A","text":"能源强国"},{"label":"B","text":"能源进口国"},{"label":"C","text":"能源大国"}],"answer":"A"},{"question":"传统能源逐步退出必须坚持（）","options":[{"label":"A","text":"立即退出"},{"label":"B","text":"先破后立"},{"label":"C","text":"先立后破"}],"answer":"C"},{"question":"能源安全是（）安全的重要组成部分","options":[{"label":"A","text":"网络"},{"label":"B","text":"金融"},{"label":"C","text":"国家"}],"answer":"C"},{"question":"要构建（）的能源产业链供应链","options":[{"label":"A","text":"脆弱依赖"},{"label":"B","text":"安全稳定韧性"},{"label":"C","text":"单一封闭"}],"answer":"B"},{"question":"要推动能源消费（），抑制不合理消费","options":[{"label":"A","text":"扩张"},{"label":"B","text":"革命"},{"label":"C","text":"放松"}],"answer":"B"},{"question":"要加强能源（），实现开放条件下能源安全","options":[{"label":"A","text":"封闭发展"},{"label":"B","text":"国际合作"},{"label":"C","text":"单边行动"}],"answer":"B"},{"question":"要规划建设（）能源体系","options":[{"label":"A","text":"传统型"},{"label":"B","text":"新型"},{"label":"C","text":"粗放型"}],"answer":"B"},{"question":"能源是工业的（），是国民经济的基础","options":[{"label":"A","text":"奢侈品"},{"label":"B","text":"粮食"},{"label":"C","text":"副产品"}],"answer":"B"},{"question":"要提升能源资源（）利用水平","options":[{"label":"A","text":"粗放"},{"label":"B","text":"就地转化高效"},{"label":"C","text":"低效"}],"answer":"B"},{"question":"保障能源供应要加强产供储（）体系建设","options":[{"label":"A","text":"弃"},{"label":"B","text":"销"},{"label":"C","text":"废"}],"answer":"B"},{"question":"要推动能源结构向（）转型","options":[{"label":"A","text":"绿色低碳"},{"label":"B","text":"高碳"},{"label":"C","text":"单一化石能源"}],"answer":"A"},{"question":"能源技术要坚持（）自主可控","options":[{"label":"A","text":"全部一般"},{"label":"B","text":"次要环节"},{"label":"C","text":"关键核心"}],"answer":"C"},{"question":"要发展（）电力供应体系","options":[{"label":"A","text":"清洁低碳安全高效"},{"label":"B","text":"高污染"},{"label":"C","text":"不稳定"}],"answer":"A"},{"question":"要增强能源持续稳定供应和（）能力","options":[{"label":"A","text":"放任风险"},{"label":"B","text":"风险管控"},{"label":"C","text":"依赖外援"}],"answer":"B"},{"question":"要坚持（）与新能源多能互补","options":[{"label":"A","text":"淘汰能源"},{"label":"B","text":"闲置能源"},{"label":"C","text":"传统能源"}],"answer":"C"},{"question":"能源安全事关经济社会发展（）","options":[{"label":"A","text":"局部"},{"label":"B","text":"末端"},{"label":"C","text":"全局"}],"answer":"C"},{"question":"要把能源技术及关联产业培育成带动（）升级的新增长点","options":[{"label":"A","text":"产业"},{"label":"B","text":"浪费"},{"label":"C","text":"消耗"}],"answer":"A"},{"question":"要立足我国能源资源（）谋划能源发展","options":[{"label":"A","text":"短板"},{"label":"B","text":"劣势"},{"label":"C","text":"禀赋"}],"answer":"C"},{"question":"要加快能源领域（）改革","options":[{"label":"A","text":"放任不管"},{"label":"B","text":"体制机制"},{"label":"C","text":"倒退"}],"answer":"B"},{"question":"保障能源安全要坚持（）思维","options":[{"label":"A","text":"躺平"},{"label":"B","text":"冒险"},{"label":"C","text":"底线"}],"answer":"C"},{"question":"要推动能源（）转型，服务双碳目标","options":[{"label":"A","text":"绿色低碳"},{"label":"B","text":"高碳粗放"},{"label":"C","text":"无序扩张"}],"answer":"A"},{"question":"作风问题本质上是（）问题","options":[{"label":"A","text":"党性"},{"label":"B","text":"能力"},{"label":"C","text":"方法"}],"answer":"A"},{"question":"作风建设核心是（）关系问题","options":[{"label":"A","text":"上下级"},{"label":"B","text":"部门间"},{"label":"C","text":"党同人民群众"}],"answer":"C"},{"question":"抓作风建设要从（）做起","options":[{"label":"A","text":"中央政治局"},{"label":"B","text":"普通群众"},{"label":"C","text":"基层"}],"answer":"A"},{"question":"中央八项规定是改进作风的（）","options":[{"label":"A","text":"最高标准"},{"label":"B","text":"第一步"},{"label":"C","text":"最后一步"}],"answer":"B"},{"question":"作风建设是攻坚战，也是（）","options":[{"label":"A","text":"速决战"},{"label":"B","text":"一阵风"},{"label":"C","text":"持久战"}],"answer":"C"},{"question":"党的作风关系党的（），关系人心向背","options":[{"label":"A","text":"规模"},{"label":"B","text":"形象"},{"label":"C","text":"经费"}],"answer":"B"},{"question":"纠治“四风”重点整治形式主义、（）","options":[{"label":"A","text":"官僚主义"},{"label":"B","text":"实干作风"},{"label":"C","text":"创新作风"}],"answer":"A"},{"question":"作风建设永远在（）","options":[{"label":"A","text":"终点"},{"label":"B","text":"停顿"},{"label":"C","text":"路上"}],"answer":"C"},{"question":"抓作风要坚持以上率下、（）","options":[{"label":"A","text":"敷衍了事"},{"label":"B","text":"一抓到底"},{"label":"C","text":"层层递减"}],"answer":"B"},{"question":"改进作风要（）并举、扶正祛邪","options":[{"label":"A","text":"立破"},{"label":"B","text":"妥协"},{"label":"C","text":"放任"}],"answer":"A"},{"question":"作风建设要经常抓、见（）","options":[{"label":"A","text":"表面"},{"label":"B","text":"短期"},{"label":"C","text":"常态"}],"answer":"C"},{"question":"要以优良党风带动（）民风","options":[{"label":"A","text":"社风"},{"label":"B","text":"歪风"},{"label":"C","text":"奢靡风"}],"answer":"A"},{"question":"衡量党性强弱的根本尺子是（）二字","options":[{"label":"A","text":"公私"},{"label":"B","text":"名利"},{"label":"C","text":"得失"}],"answer":"A"},{"question":"抓作风要返璞归真、（）","options":[{"label":"A","text":"固本培元"},{"label":"B","text":"讲究形式"},{"label":"C","text":"追求排场"}],"answer":"A"},{"question":"要坚持纠“四风”和（）并举","options":[{"label":"A","text":"纵旧风"},{"label":"B","text":"树新风"},{"label":"C","text":"养歪风"}],"answer":"B"},{"question":"落实中央八项规定精神要（）、久久为功","options":[{"label":"A","text":"松紧随意"},{"label":"B","text":"一阵风"},{"label":"C","text":"常抓不懈"}],"answer":"C"},{"question":"领导干部要带头（）作风","options":[{"label":"A","text":"放任"},{"label":"B","text":"转变"},{"label":"C","text":"维持旧"}],"answer":"B"},{"question":"作风建设要标本兼治，用（）固化成果","options":[{"label":"A","text":"运动"},{"label":"B","text":"制度"},{"label":"C","text":"口号"}],"answer":"B"},{"question":"要教育党员干部做到公私分明、（）","options":[{"label":"A","text":"先公后私"},{"label":"B","text":"先私后公"},{"label":"C","text":"损公肥私"}],"answer":"A"},{"question":"要坚决反对（）、享乐主义、奢靡之风","options":[{"label":"A","text":"实事求是"},{"label":"B","text":"形式主义"},{"label":"C","text":"真抓实干"}],"answer":"B"},{"question":"作风建设要深入抓、见（）","options":[{"label":"A","text":"声势"},{"label":"B","text":"实效"},{"label":"C","text":"形式"}],"answer":"B"},{"question":"执政党不注重作风建设，就有失去（）危险","options":[{"label":"A","text":"权力"},{"label":"B","text":"职位"},{"label":"C","text":"民心"}],"answer":"C"},{"question":"改进作风不能简单就事论事，要抓住（）根本","options":[{"label":"A","text":"能力"},{"label":"B","text":"党性"},{"label":"C","text":"关系"}],"answer":"B"},{"question":"要把作风建设要求融入（）工作","options":[{"label":"A","text":"表面"},{"label":"B","text":"突击"},{"label":"C","text":"日常"}],"answer":"C"},{"question":"抓作风建设要持久抓、见（）","options":[{"label":"A","text":"假象"},{"label":"B","text":"长效"},{"label":"C","text":"短期"}],"answer":"B"},{"question":"内蒙古要筑牢我国北方重要（）屏障","options":[{"label":"A","text":"生态安全"},{"label":"B","text":"贸易"},{"label":"C","text":"工业"}],"answer":"A"},{"question":"内蒙古要筑牢祖国（）安全稳定屏障","options":[{"label":"A","text":"东疆"},{"label":"B","text":"北疆"},{"label":"C","text":"南疆"}],"answer":"B"},{"question":"新时代党的民族工作主线是（）","options":[{"label":"A","text":"文化差异"},{"label":"B","text":"经济发展"},{"label":"C","text":"铸牢中华民族共同体意识"}],"answer":"C"},{"question":"内蒙古是国家重要能源和（）基地","options":[{"label":"A","text":"低端制造"},{"label":"B","text":"加工出口"},{"label":"C","text":"战略资源"}],"answer":"C"},{"question":"内蒙古是我国向北开放重要（）","options":[{"label":"A","text":"桥头堡"},{"label":"B","text":"终点"},{"label":"C","text":"障碍"}],"answer":"A"},{"question":"内蒙古发展要坚持（）、绿色发展导向","options":[{"label":"A","text":"生态优先"},{"label":"B","text":"开发优先"},{"label":"C","text":"破坏优先"}],"answer":"A"},{"question":"要把现代（）经济这篇文章做好","options":[{"label":"A","text":"能源"},{"label":"B","text":"房地产"},{"label":"C","text":"低端加工"}],"answer":"A"},{"question":"民族团结是我国各族人民的（）","options":[{"label":"A","text":"一般工作"},{"label":"B","text":"生命线"},{"label":"C","text":"负担"}],"answer":"B"},{"question":"建设亮丽内蒙古，共圆（）","options":[{"label":"A","text":"伟大中国梦"},{"label":"B","text":"地方梦"},{"label":"C","text":"个人梦"}],"answer":"A"},{"question":"内蒙古要构建体现特色优势的（）产业体系","options":[{"label":"A","text":"传统化"},{"label":"B","text":"粗放化"},{"label":"C","text":"现代化"}],"answer":"C"},{"question":"要加强战略资源保护性开发、（）利用","options":[{"label":"A","text":"高质化"},{"label":"B","text":"浪费式"},{"label":"C","text":"粗放式"}],"answer":"A"},{"question":"要推动农牧业转型发展，大力发展（）农牧业","options":[{"label":"A","text":"耗水型"},{"label":"B","text":"污染型"},{"label":"C","text":"生态"}],"answer":"C"},{"question":"内蒙古要积极参与共建“一带一路”和（）经济走廊","options":[{"label":"A","text":"中日韩"},{"label":"B","text":"中蒙俄"},{"label":"C","text":"中美欧"}],"answer":"B"},{"question":"要守好这方碧绿、这片蔚蓝、这份（）","options":[{"label":"A","text":"纯净"},{"label":"B","text":"荒芜"},{"label":"C","text":"污染"}],"answer":"A"},{"question":"要支持和扶持（）等非物质文化遗产","options":[{"label":"A","text":"外来文化"},{"label":"B","text":"低俗文化"},{"label":"C","text":"《格萨（斯）尔》"}],"answer":"C"},{"question":"内蒙古要在联通国内国际（）中发挥更大作用","options":[{"label":"A","text":"单循环"},{"label":"B","text":"双循环"},{"label":"C","text":"封闭循环"}],"answer":"B"},{"question":"保障和改善民生是内蒙古一切工作的（）和落脚点","options":[{"label":"A","text":"终点"},{"label":"B","text":"出发点"},{"label":"C","text":"负担"}],"answer":"B"},{"question":"内蒙古要探索（）地区转型发展新路径","options":[{"label":"A","text":"资源型"},{"label":"B","text":"荒废"},{"label":"C","text":"无资源"}],"answer":"A"},{"question":"要引导各族群众树立正确的国家观、历史观、民族观、（）","options":[{"label":"A","text":"文化观"},{"label":"B","text":"狭隘观"},{"label":"C","text":"地方观"}],"answer":"A"},{"question":"内蒙古要抓好农畜产品精深加工和（）品牌","options":[{"label":"A","text":"普通劣质"},{"label":"B","text":"绿色有机"},{"label":"C","text":"污染型"}],"answer":"B"},{"question":"要坚定不移走生态优先、（）之路","options":[{"label":"A","text":"无序发展"},{"label":"B","text":"绿色发展"},{"label":"C","text":"黑色发展"}],"answer":"B"},{"question":"内蒙古要巩固发展（）的民族关系","options":[{"label":"A","text":"隔阂"},{"label":"B","text":"平等团结互助和谐"},{"label":"C","text":"对立"}],"answer":"B"},{"question":"要把祖国北疆这道风景线建设得更加（）","options":[{"label":"A","text":"荒芜"},{"label":"B","text":"亮丽"},{"label":"C","text":"暗淡"}],"answer":"B"},{"question":"内蒙古要坚持发展和（）并重","options":[{"label":"A","text":"安全"},{"label":"B","text":"冒险"},{"label":"C","text":"浪费"}],"answer":"A"},{"question":"要深化民族团结进步（）","options":[{"label":"A","text":"对立"},{"label":"B","text":"教育"},{"label":"C","text":"隔阂"}],"answer":"B"},{"question":"内蒙古要稳步优化农牧业区域布局和（）结构","options":[{"label":"A","text":"生产"},{"label":"B","text":"浪费"},{"label":"C","text":"闲置"}],"answer":"A"},{"question":"要增强忧患意识，有效防范（）领域风险隐患","options":[{"label":"A","text":"文化工作"},{"label":"B","text":"经济工作"},{"label":"C","text":"民族工作"}],"answer":"C"},{"question":"内蒙古要加强能源资源（）深加工","options":[{"label":"A","text":"就地"},{"label":"B","text":"异地"},{"label":"C","text":"出口"}],"answer":"A"},{"question":"要完整、准确、全面贯彻（）理念","options":[{"label":"A","text":"粗放发展"},{"label":"B","text":"旧发展"},{"label":"C","text":"新发展"}],"answer":"C"},{"question":"内蒙古要奋力书写中国式现代化（）新篇章","options":[{"label":"A","text":"外地"},{"label":"B","text":"外国"},{"label":"C","text":"内蒙古"}],"answer":"C"}],"填空题":[{"question":"中国共产党是中国____阶级的先锋队，同时是中国人民和中华民族的先锋队。","answer":"工人"},{"question":"党的最高理想和最终目标是实现____。","answer":"共产主义"},{"question":"党的根本宗旨是____。","answer":"全心全意为人民服务"},{"question":"中国共产党人的初心和使命是为中国人民谋____，为中华民族谋____。","answer":"幸福；复兴"},{"question":"中国共产党以马克思列宁主义、毛泽东思想、邓小平理论、三个代表重要思想、科学发展观、____作为自己的行动指南。","answer":"习近平新时代中国特色社会主义思想"},{"question":"中国特色社会主义最本质的特征是____。","answer":"中国共产党领导"},{"question":"中国特色社会主义制度的最大优势是____。","answer":"中国共产党领导"},{"question":"党的最大政治优势是____。","answer":"密切联系群众"},{"question":"党执政后的最大危险是____。","answer":"脱离群众"},{"question":"衡量一切工作得失的根本标准是人民____、____、____、____。","answer":"拥护不拥护；赞成不赞成；高兴不高兴；答应不答应"},{"question":"党的根本组织原则是____。","answer":"民主集中制"},{"question":"四个服从中，最重要的是____和____。","answer":"个人服从组织；全党服从中央"},{"question":"党的三大优良作风是理论联系实际、密切联系群众、____。","answer":"批评与自我批评"},{"question":"党的纪律中，最根本、最重要的纪律是____。","answer":"政治纪律"},{"question":"对党员的纪律处分有警告、严重警告、撤销党内职务、留党察看、____五种。","answer":"开除党籍"},{"question":"党的思想路线是一切从实际出发，理论联系实际，____，在实践中检验真理和发展真理。","answer":"实事求是"},{"question":"党的群众路线是一切为了群众，一切依靠群众，____，____。","answer":"从群众中来；到群众中去"},{"question":"中国革命的三大法宝是统一战线、武装斗争、____。","answer":"党的建设"},{"question":"党的思想建设的首要任务是坚定____。","answer":"理想信念"},{"question":"党风廉政建设的两个责任是指党委负____责任，纪委负____责任。","answer":"主体；监督"},{"question":"新时代我国社会主要矛盾是人民日益增长的____需要和____的发展之间的矛盾。","answer":"美好生活；不平衡不充分"},{"question":"四个意识是指政治意识、大局意识、核心意识、____。","answer":"看齐意识"},{"question":"四个自信是指道路自信、理论自信、制度自信、____。","answer":"文化自信"},{"question":"两个维护是指坚决维护习近平总书记党中央的核心、全党的核心地位，坚决维护____。","answer":"党中央权威和集中统一领导"},{"question":"五位一体总体布局包括经济建设、政治建设、文化建设、社会建设、____。","answer":"生态文明建设"},{"question":"四个全面战略布局包括全面建设社会主义现代化国家、全面深化改革、全面依法治国、____。","answer":"全面从严治党"},{"question":"新发展理念是创新、协调、绿色、开放、____。","answer":"共享"},{"question":"新发展格局是以____为主体、国内国际双循环相互促进。","answer":"国内大循环"},{"question":"党的基本路线的核心内容是____、____。","answer":"一个中心；两个基本点"},{"question":"四项基本原则包括坚持社会主义道路、坚持人民民主专政、坚持中国共产党的领导、____。","answer":"坚持马克思列宁主义毛泽东思想"},{"question":"中国梦的本质是国家富强、____、人民幸福。","answer":"民族振兴"},{"question":"全面依法治国的总目标是建设中国特色社会主义____，建设社会主义法治国家。","answer":"法治体系"},{"question":"全面从严治党的核心是加强____。","answer":"党的领导"},{"question":"伟大建党精神的内涵是坚持真理、坚守理想，践行初心、担当使命，不怕牺牲、英勇斗争，____。","answer":"对党忠诚、不负人民"},{"question":"我国的根本政治制度是____。","answer":"人民代表大会制度"},{"question":"我国的基本经济制度包括公有制为主体、多种所有制经济共同发展，按劳分配为主体、多种分配方式并存，____。","answer":"社会主义市场经济体制"},{"question":"社会主义核心价值观国家层面的价值目标是富强、民主、____、和谐。","answer":"文明"},{"question":"社会主义核心价值观社会层面的价值取向是自由、平等、____、法治。","answer":"公正"},{"question":"社会主义核心价值观公民个人层面的价值准则是爱国、敬业、____、友善。","answer":"诚信"},{"question":"总体国家安全观的宗旨是____，根本是____。","answer":"人民安全；政治安全"},{"question":"中国特色社会主义进入了____，这是我国发展新的历史方位。","answer":"新时代"},{"question":"新时代坚持和发展中国特色社会主义的总任务是实现社会主义现代化和____。","answer":"中华民族伟大复兴"},{"question":"全面建成社会主义现代化强国分两步走，第一步是到2035年基本实现____。","answer":"社会主义现代化"},{"question":"全面建成社会主义现代化强国分两步走，第二步是到本世纪中叶建成____的社会主义现代化强国。","answer":"富强民主文明和谐美丽"},{"question":"我国经济发展已由高速增长阶段转向____阶段。","answer":"高质量发展"},{"question":"供给侧结构性改革的三去一降一补是指去产能、去库存、去杠杆、降成本、____。","answer":"补短板"},{"question":"乡村振兴战略的总要求是产业兴旺、生态宜居、乡风文明、治理有效、____。","answer":"生活富裕"},{"question":"我国的国体是____。","answer":"人民民主专政"},{"question":"我国的政体是____。","answer":"人民代表大会制度"},{"question":"中国外交政策的宗旨是维护世界和平、____。","answer":"促进共同发展"},{"question":"和平共处五项原则包括互相尊重主权和领土完整、互不侵犯、互不干涉内政、平等互利、____。","answer":"和平共处"},{"question":"构建人类命运共同体的目标是建设持久和平、普遍安全、共同繁荣、开放包容、____的世界。","answer":"清洁美丽"},{"question":"马克思列宁主义揭示了人类社会历史发展的____。","answer":"规律"},{"question":"毛泽东思想的精髓是____。","answer":"实事求是"},{"question":"邓小平理论的精髓是解放思想、____。","answer":"实事求是"},{"question":"三个代表重要思想的核心是代表中国先进生产力的发展要求，代表中国先进文化的前进方向，代表____。","answer":"中国最广大人民的根本利益"},{"question":"科学发展观的第一要义是发展，核心是____。","answer":"以人为本"},{"question":"习近平新时代中国特色社会主义思想的核心要义是坚持和发展____。","answer":"中国特色社会主义"},{"question":"实现中华民族伟大复兴的中国梦，必须走中国道路、弘扬中国精神、____。","answer":"凝聚中国力量"},{"question":"中国道路就是____。","answer":"中国特色社会主义道路"},{"question":"党的二十届四中全会于2025年____月____日至____日在北京举行。","answer":"10；20；23"},{"question":"二十届四中全会由____主持，习近平总书记发表了重要讲话。","answer":"中央政治局"},{"question":"二十届四中全会审议通过的核心文件是关于制定国民经济和社会发展____的建议。","answer":"第十五个五年规划"},{"question":"二十届四中全会召开的关键背景是我国即将胜利完成____主要目标任务。","answer":"十四五"},{"question":"十五五时期经济社会发展的主题是____。","answer":"推动高质量发展"},{"question":"十五五时期经济社会发展的根本动力是____。","answer":"改革创新"},{"question":"十五五时期经济社会发展的根本目的是满足人民日益增长的____。","answer":"美好生活需要"},{"question":"二十届四中全会强调，要坚持以____为中心，扎实推进全体人民共同富裕。","answer":"人民至上"},{"question":"二十届四中全会提出，要加快构建____，畅通国内大循环。","answer":"新发展格局"},{"question":"二十届四中全会提出，要把发展经济的着力点放在____上。","answer":"实体经济"},{"question":"二十届四中全会提出，要加快建设制造强国、质量强国、航天强国、交通强国、网络强国、____。","answer":"数字中国"},{"question":"二十届四中全会提出，要坚持把____作为国家发展的战略支撑。","answer":"科技自立自强"},{"question":"二十届四中全会提出，要建设____国内市场，夯实国内大循环基础。","answer":"强大"},{"question":"二十届四中全会提出，要加快构建____社会主义市场经济体制。","answer":"高水平"},{"question":"二十届四中全会提出，要扩大____对外开放，开创合作共赢新局面。","answer":"高水平"},{"question":"二十届四中全会提出，要加快____农村现代化，扎实推进乡村全面振兴。","answer":"农业"},{"question":"二十届四中全会提出，要激发全民族文化创新创造活力，繁荣发展____。","answer":"社会主义文化"},{"question":"二十届四中全会提出，要加强普惠性、基础性、____民生建设。","answer":"兜底性"},{"question":"二十届四中全会提出，要促进高质量充分就业，完善____制度。","answer":"收入分配"},{"question":"二十届四中全会提出，要办好人民满意的教育，健全____体系。","answer":"医疗卫生"},{"question":"二十届四中全会提出，要加快建设____中国，促进人口高质量发展。","answer":"健康"},{"question":"二十届四中全会提出，要加快经济社会发展全面____转型，建设美丽中国。","answer":"绿色"},{"question":"二十届四中全会提出，要牢固树立和践行绿水青山就是金山银山的理念。","answer":"绿水青山就是金山银山"},{"question":"二十届四中全会提出，要以____为牵引，协同推进降碳、减污、扩绿、增长。","answer":"碳达峰碳中和"},{"question":"二十届四中全会提出，十五五时期高质量发展要取得____成效。","answer":"显著"},{"question":"二十届四中全会提出，十五五时期科技自立自强水平要____。","answer":"大幅提高"},{"question":"二十届四中全会提出，要进一步全面深化改革，取得____。","answer":"新突破"},{"question":"二十届四中全会提出，十五五时期社会文明程度要____。","answer":"明显提升"},{"question":"二十届四中全会提出，十五五时期人民生活品质要____。","answer":"不断提高"},{"question":"二十届四中全会提出，十五五时期美丽中国建设要取得____。","answer":"新的重大进展"},{"question":"二十届四中全会提出，十五五时期国家安全屏障要____。","answer":"更加巩固"},{"question":"二十届四中全会提出，要坚持和加强党中央____领导。","answer":"集中统一"},{"question":"二十届四中全会提出，要推进社会主义____建设。","answer":"民主法治"},{"question":"二十届四中全会提出，要巩固壮大____根基，建设现代化产业体系。","answer":"实体经济"},{"question":"二十届四中全会提出，要坚决破除阻碍全国统一大市场建设的____。","answer":"卡点堵点"},{"question":"二十届四中全会提出，要破除地方保护和____。","answer":"市场分割"},{"question":"二十届四中全会提出，要以做强国内大循环提升扩大高水平对外开放的____。","answer":"自主性"},{"question":"二十届四中全会提出，要以拓展国际循环增强国内改革发展的____。","answer":"活力"},{"question":"二十届四中全会强调，要树立和践行正确____，坚持从实际出发、按规律办事。","answer":"政绩观"},{"question":"二十届四中全会指出，为民造福是党员干部的____。","answer":"最大政绩"},{"question":"习近平总书记提出的能源安全新战略是四个革命、____。","answer":"一个合作"},{"question":"能源的饭碗必须端在____手里。","answer":"自己"},{"question":"能源保障和安全事关国计民生，是须臾不可忽视的____。","answer":"国之大者"},{"question":"我国能源发展要坚持____优先方针。","answer":"节能"},{"question":"保障能源安全要加快建设能源____。","answer":"强国"},{"question":"传统能源逐步退出必须坚持先____后破。","answer":"立"},{"question":"能源安全是____安全的重要组成部分。","answer":"国家"},{"question":"要构建安全稳定____的能源产业链供应链。","answer":"韧性"},{"question":"要推动能源____革命，抑制不合理消费。","answer":"消费"},{"question":"要加强能源____合作，实现开放条件下能源安全。","answer":"国际"},{"question":"要规划建设____型能源体系。","answer":"新型"},{"question":"能源是工业的____，是国民经济的基础。","answer":"粮食"},{"question":"要提升能源资源____转化利用水平。","answer":"就地高效"},{"question":"保障能源供应要加强产供储____体系建设。","answer":"销"},{"question":"要推动能源结构向____转型。","answer":"绿色低碳"},{"question":"能源技术要坚持____核心技术自主可控。","answer":"关键"},{"question":"要发展清洁低碳安全高效的____供应体系。","answer":"电力"},{"question":"要增强能源持续稳定供应和____管控能力。","answer":"风险"},{"question":"作风问题本质上是____问题。","answer":"党性"},{"question":"作风建设核心是党同____群众的关系问题。","answer":"人民"},{"question":"中央八项规定是改进作风的____。","answer":"第一步"},{"question":"作风建设是攻坚战，也是____战。","answer":"持久"},{"question":"党的作风关系党的____，关系人心向背。","answer":"形象"},{"question":"纠治四风重点整治形式主义、____主义。","answer":"官僚"},{"question":"作风建设永远在____。","answer":"路上"},{"question":"抓作风要坚持以上率下、一抓____。","answer":"到底"},{"question":"改进作风要____破并举、扶正祛邪。","answer":"立"},{"question":"作风建设要经常抓、见____。","answer":"常态"},{"question":"要以优良党风带动____民风。","answer":"社风"},{"question":"衡量党性强弱的根本尺子是____二字。","answer":"公私"},{"question":"抓作风要返璞归真、固本____。","answer":"培元"},{"question":"要坚持纠四风和树____并举。","answer":"新风"},{"question":"领导干部要带头____作风。","answer":"转变"},{"question":"抓作风建设要持久抓、见____。","answer":"长效"},{"question":"内蒙古要筑牢我国北方重要____安全屏障。","answer":"生态"},{"question":"内蒙古要筑牢祖国____安全稳定屏障。","answer":"北疆"},{"question":"新时代党的民族工作主线是铸牢中华民族____意识。","answer":"共同体"},{"question":"内蒙古是国家重要____和战略资源基地。","answer":"能源"},{"question":"内蒙古是我国向北开放重要____。","answer":"桥头堡"},{"question":"内蒙古发展要坚持____优先、绿色发展导向。","answer":"生态"},{"question":"要把现代____经济这篇文章做好。","answer":"能源"},{"question":"民族团结是我国各族人民的____线。","answer":"生命"},{"question":"建设亮丽内蒙古，共圆____中国梦。","answer":"伟大"},{"question":"内蒙古要构建体现特色优势的____代化产业体系。","answer":"现"},{"question":"要守好这方碧绿、这片蔚蓝、这份____。","answer":"纯净"},{"question":"保障和改善民生是内蒙古一切工作的____点和落脚点。","answer":"出发"},{"question":"要坚定不移走生态优先、____发展之路。","answer":"绿色"},{"question":"内蒙古要巩固发展平等团结____和谐的民族关系。","answer":"互助"},{"question":"要把祖国北疆这道风景线建设得更加____。","answer":"亮丽"},{"question":"内蒙古要奋力书写中国式现代化____新篇章。","answer":"内蒙古"}],"简答题":[{"question":"中国共产党的性质是什么？","answer":"中国共产党是中国工人阶级的先锋队，同时是中国人民和中华民族的先锋队，是中国特色社会主义事业的领导核心。"},{"question":"中国共产党的初心和使命是什么？","answer":"为中国人民谋幸福，为中华民族谋复兴。"},{"question":"“四个意识”具体内容是什么？","answer":"政治意识、大局意识、核心意识、看齐意识。"},{"question":"“四个自信”具体内容是什么？","answer":"道路自信、理论自信、制度自信、文化自信。"},{"question":"“两个维护”具体内容是什么？","answer":"坚决维护习近平总书记党中央的核心、全党的核心地位，坚决维护党中央权威和集中统一领导。"},{"question":"党的三大优良作风是什么？","answer":"理论联系实际、密切联系群众、批评与自我批评。"},{"question":"“五位一体”总体布局是什么？","answer":"经济建设、政治建设、文化建设、社会建设、生态文明建设。"},{"question":"“四个全面”战略布局是什么？","answer":"全面建设社会主义现代化国家、全面深化改革、全面依法治国、全面从严治党。"},{"question":"伟大建党精神的内涵是什么？","answer":"坚持真理、坚守理想，践行初心、担当使命，不怕牺牲、英勇斗争，对党忠诚、不负人民。"},{"question":"“十五五”时期必须遵循的重要原则有哪些？","answer":"坚持党的全面领导、坚持人民至上、坚持高质量发展、坚持全面深化改革、坚持有效市场和有为政府相结合、坚持统筹发展和安全。"},{"question":"简述中国共产党的性质与行动指南","answer":"中国共产党是中国工人阶级的先锋队，同时是中国人民和中华民族的先锋队，是中国特色社会主义事业的领导核心，代表中国先进生产力的发展要求，代表中国先进文化的前进方向，代表中国最广大人民的根本利益。党的行动指南是马克思列宁主义、毛泽东思想、邓小平理论、“三个代表”重要思想、科学发展观、习近平新时代中国特色社会主义思想。"},{"question":"简述党的初心和使命及新时代我国社会主要矛盾","answer":"党的初心和使命是为中国人民谋幸福，为中华民族谋复兴。新时代我国社会主要矛盾是人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾。"},{"question":"简述“四个意识”“四个自信”“两个维护”的内容","answer":""},{"question":"简述党的三大优良作风与中国革命三大法宝","answer":""},{"question":"简述“五位一体”总体布局与“四个全面”战略布局","answer":""},{"question":"简述新发展理念、新发展格局与高质量发展的关系","answer":"新发展理念是创新、协调、绿色、开放、共享；新发展格局是以国内大循环为主体、国内国际双循环相互促进。高质量发展是“十五五”时期经济社会发展的主题，必须完整、准确、全面贯彻新发展理念，加快构建新发展格局，推动经济实现质的有效提升和量的合理增长。"},{"question":"简述中国特色社会主义最本质的特征与最大政治优势","answer":"中国特色社会主义最本质的特征是中国共产党领导；党的最大政治优势是密切联系群众。"},{"question":"简述党的群众路线与党的根本宗旨","answer":""},{"question":"简述中国梦的本质与伟大建党精神的内涵","answer":""},{"question":"简述党的基本路线的核心内容与四项基本原则","answer":""},{"question":"简述习近平新时代中国特色社会主义思想的核心要义","answer":"核心是“十个明确”“十四个坚持”“十三个方面成就”。“十个明确”回答新时代坚持和发展什么样的中国特色社会主义；“十四个坚持”是新时代坚持和发展中国特色社会主义的基本方略。"},{"question":"简述“两个确立”的决定性意义","answer":"确立习近平同志党中央的核心、全党的核心地位，确立习近平新时代中国特色社会主义思想的指导地位，是新时代最重大的政治成果，对新时代党和国家事业发展、对推进中华民族伟大复兴历史进程具有决定性意义。"},{"question":"简述党的根本组织原则与民主集中制的基本要求","answer":"党的根本组织原则是民主集中制。基本要求：党员个人服从党的组织，少数服从多数，下级组织服从上级组织，全党各个组织和全体党员服从党的全国代表大会和中央委员会。"},{"question":"简述党的纪律主要内容与党的纪律处分类型","answer":""},{"question":"简述社会主义核心价值观的基本内容","answer":""},{"question":"简述中国式现代化的中国特色","answer":"中国式现代化是人口规模巨大的现代化，是全体人民共同富裕的现代化，是物质文明和精神文明相协调的现代化，是人与自然和谐共生的现代化，是走和平发展道路的现代化。"},{"question":"简述全面从严治党的核心要求与总基调","answer":"核心是加强党的领导，基础在全面，关键在严，要害在治。总基调是严的基调不动摇，一体推进不敢腐、不能腐、不想腐。"},{"question":"简述新时代党的建设总要求","answer":"坚持和加强党的全面领导，坚持党要管党、全面从严治党，以加强党的长期执政能力建设、先进性和纯洁性建设为主线，以党的政治建设为统领，以坚定理想信念宗旨为根基，以调动全党积极性、主动性、创造性为着力点，全面推进党的政治建设、思想建设、组织建设、作风建设、纪律建设，把制度建设贯穿其中，深入推进反腐败斗争，不断提高党的建设质量。"},{"question":"简述“一国两制”的基本内涵","answer":"在一个中国的前提下，国家主体坚持社会主义制度，香港、澳门、台湾保持原有的资本主义制度长期不变，按照这个原则推进和实现祖国和平统一。"},{"question":"简述构建人类命运共同体的核心内涵","answer":"坚持对话协商、共建共享、合作共赢、交流互鉴、绿色低碳，建设持久和平、普遍安全、共同繁荣、开放包容、清洁美丽的世界。"},{"question":"简述二十届四中全会关于市场经济体制与对外开放的部署","answer":"加快构建高水平社会主义市场经济体制；扩大高水平对外开放，主动对接国际高标准经贸规则，拓展双向投资合作空间。"},{"question":"22 简述二十届四中全会关于绿色发展与共同富裕的要求","answer":"加快经济社会发展全面绿色转型，建设美丽中国；加大保障和改善民生力度，扎实推进全体人民共同富裕。"},{"question":"简述二十届四中全会关于统筹发展和安全的部署","answer":"坚持统筹发展和安全，加强重点领域国家安全能力建设，以新安全格局保障新发展格局，有效防范化解各类风险挑战。"},{"question":"简述二十届四中全会关于区域协调发展与乡村振兴的要求","answer":"优化区域经济布局，促进区域协调发展，发挥重点区域增长极作用；全面推进乡村振兴，加快农业农村现代化，夯实中国式现代化的基础。"},{"question":"简述贯彻落实二十届四中全会精神的实践要求","answer":"深刻领悟“两个确立”的决定性意义，增强“四个意识”、坚定“四个自信”、做到“两个维护”；完整准确全面贯彻新发展理念，加快构建新发展格局；以钉钉子精神抓落实，把《建议》目标转化为施工图，形成推动中国式现代化建设的强大合力。"}]};
+let currentType = null, currentQuestion = null, deck = [], counter = 0;
+let historyStack = [];
+let futureStack = [];
+let countdownSeconds = 0;
+let timerHandle = null;
+let beeped = false;
+let audioCtx = null;
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function getTimerSetting(type) {
+  const map = {
+    '选择题': document.getElementById('timerChoice'),
+    '填空题': document.getElementById('timerBlank'),
+    '简答题': document.getElementById('timerShort')
+  };
+  const value = parseInt(map[type]?.value || '0', 10);
+  return Number.isFinite(value) && value > 0 ? value : 0;
+}
+
+function formatTime(total) {
+  const m = Math.floor(total / 60);
+  const s = total % 60;
+  return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+
+function updateTimerUI() {
+  const box = document.getElementById('timerBox');
+  box.textContent = formatTime(countdownSeconds);
+  if (countdownSeconds <= 10) box.classList.add('danger');
+  else box.classList.remove('danger');
+}
+
+function stopTimer() {
+  if (timerHandle) {
+    clearInterval(timerHandle);
+    timerHandle = null;
+  }
+}
+
+function beep() {
+  try {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = 880;
+    gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.35);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.36);
+  } catch (e) {}
+}
+
+function startTimer() {
+  stopTimer();
+  countdownSeconds = getTimerSetting(currentType);
+  beeped = false;
+  updateTimerUI();
+  if (countdownSeconds <= 0) return;
+  timerHandle = setInterval(() => {
+    if (countdownSeconds > 0) {
+      countdownSeconds -= 1;
+      updateTimerUI();
+      if (countdownSeconds === 0 && !beeped) {
+        beeped = true;
+        beep();
+        stopTimer();
+      }
+    }
+  }, 1000);
+}
+
+function startQuiz(type) {
+  // 若尚未开始对局，自动以当前选择初始化
+  if (!matchActive) {
+    teamAName = document.getElementById('teamASelect').value;
+    teamBName = document.getElementById('teamBSelect').value;
+    currentTurn = (document.getElementById('firstTeamSelect').value === 'A') ? 0 : 1;
+    scoreA = 0; scoreB = 0; lifelineA = 3; lifelineB = 3;
+    matchActive = true;
+  }
+  currentType = type;
+  deck = shuffle(DATA[type] || []);
+  counter = 0;
+  historyStack = [];
+  futureStack = [];
+  currentQuestion = null;
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('quiz').style.display = 'flex';
+  document.getElementById('typePill').textContent = type;
+  // 重置本轮各队答题计数
+  answeredByA = 0; answeredByB = 0;
+  const _banner = document.getElementById('categoryCompleteBanner');
+  if (_banner) _banner.style.display = 'none';
+  const _sa = document.getElementById('scoringActions');
+  if (_sa) _sa.style.display = 'flex';
+  nextQuestion();
+  updateMatchBar();
+  updateProgressDisplay();
+}
+
+function nextQuestion() {
+  if (!currentType) return;
+  if (currentQuestion) {
+    historyStack.push({...currentQuestion, _counter: counter});
+  }
+  if (futureStack.length) {
+    currentQuestion = futureStack.pop();
+    counter = currentQuestion._counter || (counter + 1);
+  } else {
+    if (!deck.length) deck = shuffle(DATA[currentType] || []);
+    currentQuestion = deck.pop();
+    counter += 1;
+  }
+  renderQuestion();
+  startTimer();
+}
+
+function prevQuestion() {
+  if (!historyStack.length) return;
+  if (currentQuestion) futureStack.push({...currentQuestion, _counter: counter});
+  currentQuestion = historyStack.pop();
+  counter = currentQuestion._counter || Math.max(1, counter - 1);
+  renderQuestion();
+  startTimer();
+}
+
+function renderQuestion() {
+  const q = currentQuestion;
+  document.getElementById('questionIndex').textContent = '第 ' + counter + ' 题';
+  document.getElementById('questionText').textContent = q ? q.question : '';
+  document.getElementById('answerBox').textContent = q ? ('答案：' + q.answer) : '';
+  document.getElementById('answerBox').style.display = 'none';
+  document.getElementById('answerPlaceholder').style.display = 'block';
+
+  // ── 按题型切换答案框位置 ──
+  const leftCol  = document.getElementById('leftCol');
+  const rightCol = document.getElementById('rightCol');
+  const ansBox   = document.getElementById('answerBox');
+  const ansPhld  = document.getElementById('answerPlaceholder');
+  const mainRow  = document.querySelector('.main-row');
+
+  if (currentType !== '选择题') {
+    // 填空题 / 简答题：答案框放到左侧大区域
+    mainRow.classList.add('answer-in-left');
+    if (!leftCol.contains(ansBox)) {
+      leftCol.appendChild(ansPhld);
+      leftCol.appendChild(ansBox);
+    }
+  } else {
+    // 选择题：答案框还原到右侧
+    mainRow.classList.remove('answer-in-left');
+    if (!rightCol.contains(ansBox)) {
+      const actionsDiv = rightCol.querySelector('.actions');
+      rightCol.insertBefore(ansPhld, actionsDiv);
+      rightCol.insertBefore(ansBox, actionsDiv);
+    }
+  }
+
+  const optionsBox = document.getElementById('optionsBox');
+  optionsBox.innerHTML = '';
+  if (currentType === '选择题' && q && q.options) {
+    q.options.forEach(opt => {
+      const item = document.createElement('div');
+      item.className = 'option';
+      item.innerHTML = '<div class="option-label">' + escapeHtml(opt.label) + '</div><div class="option-text">' + escapeHtml(opt.text) + '</div>';
+      optionsBox.appendChild(item);
+    });
+  }
+}
+
+function showAnswer() {
+  document.getElementById('answerPlaceholder').style.display = 'none';
+  document.getElementById('answerBox').style.display = 'block';
+}
+
+function goHome() {
+  stopTimer();
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('home').style.display = 'block';
+  currentType = null;
+  currentQuestion = null;
+  counter = 0;
+  historyStack = [];
+  futureStack = [];
+  countdownSeconds = 0;
+  updateTimerUI();
+  updateHomeMatchStatus();
+  updateMatchHistoryDisplay();
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text || '';
+  return div.innerHTML;
+}
+
+
+
+// ============================================================
+//  对局历史 & 积分榜
+// ============================================================
+let matchHistory = [];          // [{teamA, teamB, scoreA, scoreB, time}]
+let teamTotalScores = {};       // {'第1组': 45, ...}
+let lastSavedMatchId = -1;      // 防止重复保存同一场
+
+function saveMatchToHistory(manual = false) {
+  // 防止重复保存
+  if (matchHistory.length > 0 && matchHistory.length - 1 === lastSavedMatchId && !manual) return;
+  if (!matchActive) {
+    if (manual) alert('当前没有进行中的对局。');
+    return;
+  }
+  if (manual && lastSavedMatchId === matchHistory.length - 1 + 1) return; // 已保存过
+
+  const entry = {
+    teamA: teamAName,
+    teamB: teamBName,
+    scoreA: scoreA,
+    scoreB: scoreB,
+    time: new Date().toLocaleTimeString('zh-CN', {hour:'2-digit', minute:'2-digit'})
+  };
+
+  // 手动保存时检查是否已是最新记录（避免重复）
+  if (matchHistory.length > 0) {
+    const last = matchHistory[matchHistory.length - 1];
+    if (last.teamA === entry.teamA && last.teamB === entry.teamB &&
+        last.scoreA === entry.scoreA && last.scoreB === entry.scoreB && !manual) return;
+  }
+
+  matchHistory.push(entry);
+  lastSavedMatchId = matchHistory.length - 1;
+
+  // 累计各队总分
+  teamTotalScores[entry.teamA] = (teamTotalScores[entry.teamA] || 0) + entry.scoreA;
+  teamTotalScores[entry.teamB] = (teamTotalScores[entry.teamB] || 0) + entry.scoreB;
+
+  updateMatchHistoryDisplay();
+  if (manual) alert('✅ 本场记录已保存！\n' + entry.teamA + '：' + entry.scoreA + ' 分　｜　' + entry.teamB + '：' + entry.scoreB + ' 分');
+}
+
+function updateMatchHistoryDisplay() {
+  const emptyEl  = document.getElementById('historyEmpty');
+  const listEl   = document.getElementById('historyList');
+  const boardEl  = document.getElementById('scoresBoard');
+  const chipsEl  = document.getElementById('scoreChips');
+  if (!listEl) return;
+
+  if (matchHistory.length === 0) {
+    if (emptyEl)  emptyEl.style.display = 'block';
+    listEl.style.display  = 'none';
+    if (boardEl) boardEl.style.display = 'none';
+    return;
+  }
+
+  if (emptyEl) emptyEl.style.display = 'none';
+  listEl.style.display  = 'flex';
+  if (boardEl) boardEl.style.display = 'block';
+
+  // 历史列表
+  listEl.innerHTML = matchHistory.map((m, i) => {
+    let winText, winClass;
+    if (m.scoreA > m.scoreB)       { winText = m.teamA + ' 胜';  winClass = 'win-a'; }
+    else if (m.scoreB > m.scoreA)  { winText = m.teamB + ' 胜';  winClass = 'win-b'; }
+    else                           { winText = '平局';            winClass = 'draw';  }
+    return '<div class="history-row">' +
+      '<span class="h-num">' + (i+1) + '</span>' +
+      '<span class="h-teams">' + m.teamA + ' <strong>' + m.scoreA + '</strong> 分 &nbsp;VS&nbsp; <strong>' + m.scoreB + '</strong> 分 ' + m.teamB + '　<span style="font-size:11px;color:#8c4d00;">' + m.time + '</span></span>' +
+      '<span class="h-win ' + winClass + '">' + winText + '</span>' +
+      '</div>';
+  }).join('');
+
+  // 积分榜（按总分降序）
+  if (chipsEl) {
+    const sorted = Object.entries(teamTotalScores).sort((a, b) => b[1] - a[1]);
+    chipsEl.innerHTML = sorted.map(([team, score], idx) => {
+      const medal = idx === 0 ? '🥇 ' : (idx === 1 ? '🥈 ' : (idx === 2 ? '🥉 ' : ''));
+      const rankClass = idx < 3 ? 'rank-' + (idx + 1) : '';
+      return '<span class="score-chip ' + rankClass + '">' + medal + team + '：' + score + ' 分</span>';
+    }).join('');
+  }
+}
+
+// ============================================================
+//  题目数量限制 & 进度追踪（每队各答 X 题）
+// ============================================================
+const TEAM_LIMITS = {'选择题': 10, '填空题': 5, '简答题': 3};
+let answeredByA = 0, answeredByB = 0;
+
+function getTeamLimit() {
+  return TEAM_LIMITS[currentType] || 999;
+}
+
+function isCategoryComplete() {
+  const lim = getTeamLimit();
+  return answeredByA >= lim && answeredByB >= lim;
+}
+
+function canCurrentTeamAnswer() {
+  const lim = getTeamLimit();
+  return currentTurn === 0 ? (answeredByA < lim) : (answeredByB < lim);
+}
+
+function updateProgressDisplay() {
+  const lim = getTeamLimit();
+  const total = answeredByA + answeredByB;
+  const el = document.getElementById('progressPill');
+  if (el) el.textContent = '共已答 ' + total + ' / ' + (lim * 2) + ' 题';
+  // 各队卡片已答数
+  const se = (id, v) => { const e = document.getElementById(id); if(e) e.textContent = v; };
+  se('answeredByA', answeredByA);
+  se('answeredByB', answeredByB);
+  se('teamLimitA', lim);
+  se('teamLimitB', lim);
+}
+
+function showCategoryComplete() {
+  const banner = document.getElementById('categoryCompleteBanner');
+  if (banner) banner.style.display = 'flex';
+  const sa = document.getElementById('scoringActions');
+  if (sa) sa.style.display = 'none';
+  const typeEl = document.getElementById('completeBannerType');
+  if (typeEl) typeEl.textContent = currentType;
+  const cntEl = document.getElementById('completeBannerCount');
+  if (cntEl) cntEl.textContent = getTeamLimit() + '（每队）';
+  const scoresEl = document.getElementById('completeBannerScores');
+  if (scoresEl) {
+    scoresEl.textContent = teamAName + '：' + scoreA + ' 分　｜　' + teamBName + '：' + scoreB + ' 分';
+  }
+}
+
+// ============================================================
+//  对局竞赛状态
+// ============================================================
+let matchActive = false;
+let teamAName = '第1组', teamBName = '第2组';
+let scoreA = 0, scoreB = 0;
+let currentTurn = 0;   // 0 = 队伍A，1 = 队伍B
+let lifelineA = 3, lifelineB = 3;
+
+function getQuestionPoints() {
+  return {'选择题': 1, '填空题': 2, '简答题': 3}[currentType] || 1;
+}
+
+function startNewMatch() {
+  // 自动保存上一场成绩（若已有对局且未重复保存）
+  if (matchActive) {
+    const newA = document.getElementById('teamASelect').value;
+    const newB = document.getElementById('teamBSelect').value;
+    const isDifferentMatch = (newA !== teamAName || newB !== teamBName ||
+                              scoreA > 0 || scoreB > 0);
+    if (isDifferentMatch) saveMatchToHistory(false);
+  }
+  teamAName = document.getElementById('teamASelect').value;
+  teamBName = document.getElementById('teamBSelect').value;
+  currentTurn = (document.getElementById('firstTeamSelect').value === 'A') ? 0 : 1;
+  scoreA = 0; scoreB = 0;
+  lifelineA = 3; lifelineB = 3;
+  answeredByA = 0; answeredByB = 0;
+  matchActive = true;
+  updateHomeMatchStatus();
+  updateMatchHistoryDisplay();
+  alert('✅ 新对局已开始！\n\n' + teamAName + '  VS  ' + teamBName +
+        '\n先答题方：' + (currentTurn === 0 ? teamAName : teamBName));
+}
+
+function updateHomeMatchStatus() {
+  const bar = document.getElementById('matchStatusBar');
+  if (!bar) return;
+  if (matchActive) {
+    bar.style.display = 'flex';
+    document.getElementById('homeTeamAName').textContent = teamAName;
+    document.getElementById('homeTeamBName').textContent = teamBName;
+    document.getElementById('homeScoreA').textContent = scoreA;
+    document.getElementById('homeScoreB').textContent = scoreB;
+    document.getElementById('homeTurnLabel').textContent =
+      '当前答题方：' + (currentTurn === 0 ? teamAName : teamBName);
+    document.getElementById('homeLifelinesLabel').textContent =
+      teamAName + ' 求助剩 ' + lifelineA + ' 次 ｜ ' +
+      teamBName + ' 求助剩 ' + lifelineB + ' 次';
+  } else {
+    bar.style.display = 'none';
+  }
+}
+
+function updateMatchBar() {
+  const pts = getQuestionPoints();
+  const mkDots = n => '●'.repeat(n) + '○'.repeat(3 - n);
+
+  const setEl = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
+
+  setEl('cardTeamAName', teamAName);
+  setEl('cardTeamBName', teamBName);
+  setEl('cardScoreA', scoreA);
+  setEl('cardScoreB', scoreB);
+  setEl('lifelineDotsA', mkDots(lifelineA));
+  setEl('lifelineDotsB', mkDots(lifelineB));
+  setEl('ptLabel',  pts);
+  setEl('ptLabel2', pts);
+  setEl('currentTurnName', matchActive ? (currentTurn === 0 ? teamAName : teamBName) : '—');
+
+  const btnA = document.getElementById('lifelineBtnA');
+  const btnB = document.getElementById('lifelineBtnB');
+  if (btnA) btnA.disabled = (lifelineA <= 0);
+  if (btnB) btnB.disabled = (lifelineB <= 0);
+
+  const cardA = document.getElementById('teamCardA');
+  const cardB = document.getElementById('teamCardB');
+  if (cardA) cardA.classList.toggle('active-turn', matchActive && currentTurn === 0);
+  if (cardB) cardB.classList.toggle('active-turn', matchActive && currentTurn === 1);
+}
+
+/** 答对：加分 → 记录该队已答 → 换方 → 下一题（两队都答完才结束） */
+function recordAnswer(correct) {
+  if (isCategoryComplete()) return;
+  if (!canCurrentTeamAnswer()) return; // 该队已达到题数上限
+  if (matchActive && correct) {
+    const pts = getQuestionPoints();
+    if (currentTurn === 0) scoreA += pts;
+    else scoreB += pts;
+  }
+  // 记录该队已答题数
+  if (currentTurn === 0) answeredByA++;
+  else answeredByB++;
+  if (matchActive) currentTurn = 1 - currentTurn;
+  // 若新的当前方已答完、对方还没答完，自动跳回对方继续
+  if (!isCategoryComplete() && !canCurrentTeamAnswer()) {
+    currentTurn = 1 - currentTurn;
+  }
+  updateMatchBar();
+  updateHomeMatchStatus();
+  updateProgressDisplay();
+  if (isCategoryComplete()) {
+    showCategoryComplete();
+  } else {
+    nextQuestion();
+  }
+}
+
+/** 跳过：该队本题不计分，计入已答数，换方，下一题 */
+function skipAndNext() {
+  if (isCategoryComplete()) return;
+  if (!canCurrentTeamAnswer()) {
+    // 当前方已答完，切到对方
+    currentTurn = 1 - currentTurn;
+    if (!canCurrentTeamAnswer()) return;
+  }
+  if (currentTurn === 0) answeredByA++;
+  else answeredByB++;
+  if (matchActive) currentTurn = 1 - currentTurn;
+  if (!isCategoryComplete() && !canCurrentTeamAnswer()) {
+    currentTurn = 1 - currentTurn;
+  }
+  updateMatchBar();
+  updateProgressDisplay();
+  if (isCategoryComplete()) {
+    showCategoryComplete();
+  } else {
+    nextQuestion();
+  }
+}
+
+/** 使用场外求助 */
+function useLifeline(team) {
+  if (team === 0 && lifelineA > 0) { lifelineA--; }
+  else if (team === 1 && lifelineB > 0) { lifelineB--; }
+  updateMatchBar();
+  updateHomeMatchStatus();
+}
+
+
+updateTimerUI();
+</script>
+</body>
+</html>

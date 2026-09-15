@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鄂尔多斯供电公司报账指南</title>
+<style>
+:root{
+  --green:#2e9e7b; --green-dark:#1f7a5e; --green-deep:#166a50;
+  --mint:#e8f5ef; --mint2:#d7ede2; --sky:#cfe8ee; --sky2:#eaf6f8;
+  --ink:#1d3b32; --grey:#5b7268; --orange:#e8622a; --card:#ffffff;
+  --radius:16px; --shadow:0 4px 18px rgba(31,122,94,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei","Source Han Sans CN",sans-serif;color:var(--ink);background:linear-gradient(180deg,var(--sky2) 0%,#f4faf7 40%,#f7fbf9 100%);line-height:1.7}
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;background:linear-gradient(165deg,#bfe3ea 0%,#d8efe9 45%,#eef8f2 100%);padding:46px 20px 0;text-align:center}
+.hero .org{display:inline-block;background:rgba(255,255,255,.75);border-radius:12px;padding:8px 18px;font-size:14px;color:var(--green-dark);font-weight:700;letter-spacing:1px;box-shadow:var(--shadow)}
+.hero .bubble{display:inline-block;margin-top:26px;border:2px solid var(--green);color:var(--green-dark);border-radius:999px;padding:4px 22px;font-size:15px;font-weight:600;background:rgba(255,255,255,.6)}
+.hero h1{margin-top:14px;font-size:clamp(30px,6vw,52px);color:var(--green);letter-spacing:4px;font-weight:900}
+.hero .sub{display:inline-block;margin:18px 0 30px;background:var(--green);color:#fff;font-size:16px;letter-spacing:6px;padding:7px 34px;border-radius:6px 20px 6px 20px;font-weight:700}
+.hero .dept{color:var(--green-dark);letter-spacing:8px;font-size:14px;padding-bottom:26px}
+.hero svg.scene{display:block;width:100%;height:110px;margin-top:6px}
+.plane{position:absolute;right:8%;top:34px;opacity:.85}
+@media(max-width:640px){.plane{display:none}}
+/* ---------- NAV ---------- */
+nav{position:sticky;top:0;z-index:50;background:#fffffff2;backdrop-filter:blur(6px);box-shadow:0 2px 10px rgba(31,122,94,.12)}
+.nav-in{max-width:1060px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:10px 12px}
+.tabbtn{flex:0 0 auto;border:none;background:transparent;font-size:15px;font-weight:700;color:var(--grey);padding:9px 18px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:.2s}
+.tabbtn.active{background:var(--green);color:#fff;box-shadow:0 3px 10px rgba(46,158,123,.35)}
+.tabbtn:hover:not(.active){background:var(--mint)}
+/* ---------- LAYOUT ---------- */
+main{max-width:1060px;margin:0 auto;padding:26px 16px 60px}
+section.tab{display:none}
+section.tab.show{display:block;animation:fade .3s}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.headline{display:flex;align-items:center;gap:10px;margin:26px 0 14px}
+.headline .flag{background:var(--green);color:#fff;font-weight:800;font-size:18px;padding:7px 26px 7px 18px;border-radius:4px;clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%)}
+.headline small{color:var(--grey);font-size:13px}
+/* ---------- SEARCH ---------- */
+.searchbar{display:flex;gap:10px;margin:4px 0 8px}
+.searchbar input{flex:1;border:2px solid var(--mint2);border-radius:999px;padding:11px 20px;font-size:15px;outline:none;background:#fff}
+.searchbar input:focus{border-color:var(--green)}
+.hint{font-size:13px;color:var(--grey);margin:6px 4px 0}
+/* ---------- SCENARIO CARDS ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:14px}
+.scard{background:var(--card);border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow);cursor:pointer;border:2px solid transparent;transition:.2s;position:relative}
+.scard:hover{border-color:var(--green);transform:translateY(-3px)}
+.scard .ico{font-size:28px}
+.scard h3{font-size:17px;margin:8px 0 4px;color:var(--green-deep)}
+.scard p{font-size:13px;color:var(--grey)}
+.scard .go{position:absolute;right:14px;top:16px;color:var(--green);font-weight:800}
+/* ---------- FLOW OVERVIEW ---------- */
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 4px}
+.flow .node{background:var(--mint);border:1.5px solid var(--mint2);border-radius:12px;padding:10px 14px;font-size:13.5px;font-weight:600;color:var(--green-deep);flex:1 1 120px;text-align:center;display:flex;align-items:center;justify-content:center}
+.flow .arr{align-self:center;color:var(--green);font-weight:900}
+/* ---------- ACCORDION ---------- */
+.acc{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin:12px 0;overflow:hidden}
+.acc-h{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none}
+.acc-h .num{flex:0 0 34px;height:34px;border-radius:50%;background:var(--green);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:16px}
+.acc-h h3{font-size:16.5px;color:var(--ink);flex:1}
+.acc-h .tag{font-size:12px;background:var(--mint);color:var(--green-dark);border-radius:999px;padding:2px 10px;font-weight:700;white-space:nowrap}
+.acc-h .chev{color:var(--green);transition:.25s;font-size:14px}
+.acc.open .chev{transform:rotate(90deg)}
+.acc-b{display:none;padding:0 20px 18px 66px;font-size:14.5px}
+.acc.open .acc-b{display:block}
+@media(max-width:560px){.acc-b{padding-left:20px}}
+.acc-b ol{padding-left:20px;display:grid;gap:7px}
+.acc-b ul{padding-left:20px;display:grid;gap:5px}
+.acc-b b,.acc-b strong{color:var(--green-deep)}
+.kbd{display:inline-block;background:#eef6f2;border:1px solid var(--mint2);border-bottom-width:2px;border-radius:6px;padding:0 8px;font-weight:700;color:var(--green-deep);font-size:13px}
+.warn{border:1.5px dashed var(--orange);background:#fff7f2;border-radius:12px;padding:12px 16px;margin:12px 0;color:#b34715;font-size:13.5px}
+.warn b{color:var(--orange)}
+.tip{background:var(--mint);border-radius:12px;padding:12px 16px;margin:12px 0;font-size:13.5px;color:var(--green-deep)}
+/* ---------- TABLES ---------- */
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);font-size:14px;margin:12px 0}
+th{background:var(--green);color:#fff;text-align:left;padding:10px 14px;font-size:14px}
+td{padding:10px 14px;border-bottom:1px solid var(--mint2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:#f6fbf8}
+/* ---------- CONTACTS ---------- */
+.contact{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:14px}
+.ccard{background:linear-gradient(150deg,var(--green) 0%,var(--green-dark) 100%);color:#fff;border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+.ccard h4{font-size:14px;opacity:.85;font-weight:600;margin-bottom:6px}
+.ccard .v{font-size:17px;font-weight:800;letter-spacing:.5px}
+.ccard .v small{font-size:12px;font-weight:400;opacity:.9}
+/* ---------- FOOTER ---------- */
+footer{background:linear-gradient(180deg,#eaf6f0,#d9efe4);text-align:center;padding:34px 16px 40px;color:var(--green-dark);font-size:13px;margin-top:20px}
+footer .logo{font-weight:900;font-size:16px;letter-spacing:2px}
+.printbtn{position:fixed;right:18px;bottom:18px;background:var(--green);color:#fff;border:none;border-radius:999px;padding:11px 20px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(46,158,123,.4);z-index:60}
+mark{background:#ffe9a8;border-radius:3px;padding:0 2px}
+.nores{display:none;text-align:center;color:var(--grey);padding:30px 0}
+@media print{nav,.printbtn,.searchbar,.hint{display:none}section.tab{display:block!important}.acc-b{display:block!important}.hero{padding-top:20px}}
+</style>
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<div class="hero">
+  <svg class="plane" width="120" height="60" viewBox="0 0 120 60" fill="none"><path d="M5 45 Q60 5 115 12" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="5 6" fill="none"/><path d="M95 6 l18 6 -14 8 -5 -5 -8 2 3 -6z" fill="#ffffff"/></svg>
+  <div class="org">内蒙古电力集团 · 鄂尔多斯供电公司</div><br>
+  <div class="bubble">鄂电 “财知道” 教你</div>
+  <h1>鄂尔多斯供电公司报账指南</h1>
+  <div class="sub">商旅报销 · 服务类费用入账 一站式手册</div>
+  <div class="dept">财 务 资 产 部</div>
+  <svg class="scene" viewBox="0 0 1200 110" preserveAspectRatio="none">
+    <path d="M0 70 Q200 20 420 62 T820 55 T1200 62 V110 H0 Z" fill="#bfe0cf"/>
+    <path d="M0 88 Q300 55 620 84 T1200 82 V110 H0 Z" fill="#8fcbae"/>
+    <path d="M0 102 Q350 80 700 100 T1200 96 V110 H0 Z" fill="#2e9e7b"/>
+    <g stroke="#ffffff" stroke-width="3" opacity=".8"><line x1="150" y1="30" x2="150" y2="72"/><line x1="150" y1="30" x2="136" y2="18"/><line x1="150" y1="30" x2="164" y2="18"/><line x1="150" y1="30" x2="150" y2="12"/></g>
+    <g stroke="#ffffff" stroke-width="3" opacity=".8"><line x1="230" y1="42" x2="230" y2="78"/><line x1="230" y1="42" x2="216" y2="30"/><line x1="230" y1="42" x2="244" y2="30"/><line x1="230" y1="42" x2="230" y2="24"/></g>
+    <g fill="#ffffff" opacity=".9"><rect x="930" y="62" width="150" height="14" rx="7"/><rect x="1075" y="60" width="40" height="16" rx="8"/></g>
+  </svg>
+</div>
+
+<!-- ================= NAV ================= -->
+<nav><div class="nav-in">
+  <button class="tabbtn active" data-tab="home">🏠 报账导航</button>
+  <button class="tabbtn" data-tab="travel">✈️ 日常商旅报销</button>
+  <button class="tabbtn" data-tab="service">📄 服务类费用入账</button>
+  <button class="tabbtn" data-tab="ref">🔍 速查 · 联系方式</button>
+</div></nav>
+
+<main>
+
+<!-- ================= TAB 首页 ================= -->
+<section class="tab show" id="tab-home">
+  <div class="searchbar"><input id="q" type="search" placeholder="🔍 输入关键词搜索全部流程，如：改签 / 服务编码 / ME51N / 酒店退订 / 跨年 …"></div>
+  <div class="hint">搜索会自动展开并高亮所有相关步骤。</div>
+
+  <div class="headline"><div class="flag">我要报账，从哪开始？</div><small>点击卡片直达对应流程</small></div>
+  <div class="grid">
+    <div class="scard" onclick="goto('travel','t-dl')"><span class="go">→</span><div class="ico">📲</div><h3>第一次用商旅平台</h3><p>下载安装 APP、首次登录、初始密码、绑定手机号</p></div>
+    <div class="scard" onclick="goto('travel','t-sq')"><span class="go">→</span><div class="ico">📝</div><h3>我要出差</h3><p>办理出差申请单 → 审批通过后订票、订酒店</p></div>
+    <div class="scard" onclick="goto('travel','t-hc')"><span class="go">→</span><div class="ico">🚄</div><h3>订火车票 / 机票 / 汽车票 / 酒店</h3><p>关联出差申请单在线预订，平台垫付无需自付</p></div>
+    <div class="scard" onclick="goto('travel','t-bx')"><span class="go">→</span><div class="ico">💰</div><h3>出差回来要报销</h3><p>系统自动生成差旅报销单，ERP 端 / 手机端均可提交</p></div>
+    <div class="scard" onclick="goto('service','s-rz')"><span class="go">→</span><div class="ico">🧾</div><h3>报服务类费用（有合同）</h3><p>ME51N → ZMM0059 → ME21N → 服务确认 四步入账</p></div>
+    <div class="scard" onclick="goto('service','s-ht')"><span class="go">→</span><div class="ico">✍️</div><h3>ECP 签服务类合同</h3><p>中标后合同签订、电子签章、推送 ERP 全流程</p></div>
+    <div class="scard" onclick="goto('service','s-bm')"><span class="go">→</span><div class="ico">🔢</div><h3>查服务编码</h3><p>ZMM0030 查询服务主数据，编码/科目对照</p></div>
+    <div class="scard" onclick="goto('service','s-kn')"><span class="go">→</span><div class="ico">📅</div><h3>跨年业务</h3><p>跨年资金预算申报、跨期分期付款操作要点</p></div>
+  </div>
+
+  <div class="headline"><div class="flag">两条报账主线</div></div>
+  <div class="acc open">
+    <div class="acc-h" onclick="tg(this)"><div class="num">A</div><h3>日常商旅（出差差旅费）</h3><span class="tag">商旅APP + ERP</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <div class="flow">
+        <div class="node">下载安装商旅APP</div><div class="arr">→</div>
+        <div class="node">办理出差申请单</div><div class="arr">→</div>
+        <div class="node">审批通过后订票/订酒店</div><div class="arr">→</div>
+        <div class="node">出差返回</div><div class="arr">→</div>
+        <div class="node">系统自动生成报销单</div><div class="arr">→</div>
+        <div class="node">补助/附件/提交审批</div>
+      </div>
+      <div class="tip">💡 商旅平台预订的车票、机票、酒店由平台垫付，个人无需自付；行程结束后 1-2 个工作日报销单自动生成，补齐补助和附件即可提交。</div>
+    </div>
+  </div>
+  <div class="acc open">
+    <div class="acc-h" onclick="tg(this)"><div class="num">B</div><h3>服务类费用（合同类业务入账）</h3><span class="tag">ECP + ERP + 法务系统</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <div class="flow">
+        <div class="node">查服务编码<br>ZMM0030</div><div class="arr">→</div>
+        <div class="node">采购申请<br>CJ20N / 工单 / ME51N</div><div class="arr">→</div>
+        <div class="node">技术规范上传(ECP)<br>+ ZMM0059 提报</div><div class="arr">→</div>
+        <div class="node">ECP 合同签订<br>电子签章</div><div class="arr">→</div>
+        <div class="node">ME21N<br>采购订单</div><div class="arr">→</div>
+        <div class="node">服务确认<br>ZMMW001 付款</div>
+      </div>
+      <div class="tip">💡 资料适用场景速览见「服务类费用入账」页开头的对照表；涉及跨年的业务在采购申请环节即勾选“涉及跨年资金”。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TAB 商旅 ================= -->
+<section class="tab" id="tab-travel">
+  <div class="headline"><div class="flag">① 手机端下载与安装</div><small>来源：鄂电“财知道”【手机端下载篇】</small></div>
+
+  <div class="acc" id="t-dl">
+    <div class="acc-h" onclick="tg(this)"><div class="num">1</div><h3>下载 APP（所有系统）</h3><span class="tag">商旅平台APP</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <ol>
+        <li><b>方法一：</b>打开网址 <span class="kbd">https://ydbxshlptzs.impc.com.cn/index/index.html</span> 或扫描宣传资料中的二维码下载；也可进入公众号，找到右下角“商旅平台”，点击“APP 下载”。</li>
+        <li><b>方法二：</b>请已安装同事分享——在 APP 右下角“我的”界面点击右上角分享按钮，选择“分享链接”（自动复制下载链接）或“分享二维码”（扫码下载）。</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-h" onclick="tg(this)"><div class="num">2</div><h3>安装 APP（Android / 苹果 iOS）</h3><span class="tag">首次安装</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <p><b>Android：</b></p>
+      <ol>
+        <li>用系统浏览器打开下载页面，点击【Android 下载安装】。</li>
+        <li>系统提示“是否允许浏览器安装应用”→ 点【允许】。</li>
+        <li>弹出继续安装界面时选择<b>“继续安装”</b>（不要选“查找类似应用”），输入锁屏密码验证后开始安装。</li>
+        <li>安装成功后点击“完成”或“打开”登录即可。</li>
+      </ol>
+      <p style="margin-top:10px"><b>苹果 iOS：</b></p>
+      <ol>
+        <li>用系统浏览器（Safari）打开下载页面，点击【iOS 下载安装】→ 提示“ydbxshlptzs.impc.com.cn 要安装商旅平台”→ 点【安装】。</li>
+        <li>首次安装会提示“未受信任的企业级开发者”，需到 <span class="kbd">设置 - 通用 - 设备管理（VPN与设备管理）</span> 中添加信任。</li>
+        <li>点击开发者 <b>“Mocha Software Co.,Ltd”</b> → 点【信任】→ 再次点击【信任】确认。之后即可正常打开 APP。</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-h" onclick="tg(this)"><div class="num">3</div><h3>首次登录及初始密码</h3><span class="tag">账号密码</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <ol>
+        <li>首次使用需用<b>员工编号</b>登录 APP，默认密码为 <span class="kbd">Ydbxshlpt + 身份证号后8位</span>。输入时可点击后面的图标查看明文密码，可勾选“记住密码”。</li>
+        <li>首次使用需<b>绑定手机号</b>（用于后期预订交通票和酒店）：身份证号自动带入，输入要绑定的手机号、获取验证码及默认密码后，点击“绑定手机号”。</li>
+        <li>登录成功后，可在 <span class="kbd">我的 - 设置 - 手势密码</span> 中设置手势密码方便再次登录。</li>
+        <li>忘记密码：点击【忘记密码】，用短信验证码重置。</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="headline"><div class="flag">② 出行预定</div><small>来源：鄂电“财知道”【出行预定篇】</small></div>
+
+  <div class="acc" id="t-sq">
+    <div class="acc-h" onclick="tg(this)"><div class="num">1</div><h3>办理出差申请单</h3><span class="tag">订票前必办</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <ol>
+        <li>打开商旅 APP，点击首页【出差申请单】，点击加号发起出差申请。</li>
+        <li>填写基本信息：工作流类型（出差申请单或项目差旅出差申请单）、出差事由、住宿标准（不清楚可以不填）、预计金额（预估花费金额，与实际不一致不影响报销）、差旅类型、<b>交通工具</b>（决定后续可订的车票、机票类型，务必准确选择）、差旅标准等（带 * 为必填项）。<b>制单日期需早于启程日期。</b></li>
+        <li>继续添加行程信息：可为单人或多人添加单个或多个行程。</li>
+        <li>出差人通过人员树逐级选择，系统最多展示 100 条数据；如列表中没有要查找的人，可按人员姓名直接搜索。</li>
+        <li>填写好基本信息和行程后，选择审核人，提交审批。已审批的出差申请单在<b>工作台-已完成</b>中可查看，审批通过即可订交通票和酒店。</li>
+      </ol>
+      <div class="warn"><b>特别注意：</b><br>① 行程需<b>中转</b>的，先在其他平台提前查看确定中转方案，再返回商旅 APP 填写出差申请单，填写时行程中必须包含中转的地点。<br>② 出差申请单包含多个行程且无票按实际行程安排填写启程和返程时间时，所有行程需填写一个时间段。当两段行程出差日期出现冲突时，系统会给出提示，点击确认即可。<br>例：8月30日–9月2日，呼和浩特→广东东莞，中转广州：行程1 呼和浩特-广州；行程2 广州-东莞；两段行程起止时间均填 8月30日–9月2日。</div>
+    </div>
+  </div>
+
+  <div class="acc" id="t-hc">
+    <div class="acc-h" onclick="tg(this)"><div class="num">2</div><h3>预定火车票</h3><span class="tag">支持候补/改签/退票</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <ol>
+        <li>点击【火车票】进入预订首页，点击【关联出差申请】选择审批通过的出差申请单（只能订申请单填写的出差地点、日期区间和出差人员范围内的车票，否则只能查询无法下单）。选择出差申请单时，目前最多同时可为 <b>30 人</b>订购火车票。</li>
+        <li>点击【火车票查询】查看车次列表；预订时会进行差标校验，<b>超出差标的无法预订</b>。可根据【出发站】【到达站】切换出发/到达站（想订申请单填写地点下辖地区的站点，切换站点即可）；顶部日历可修改出行日期。</li>
+        <li>根据车次和余票选择座位等级点【预订】；动车和高铁可在线选座，勾选乘车人后系统弹出选座服务（起标不可选）。</li>
+        <li>选好座位后点【提交订单】，占座成功后弹“确认订单”界面，在规定时间内确认订单即可下单成功。<b>火车票由商旅平台垫付，无需用户自付。</b></li>
+        <li>点【查看订单】可查看发车时间、票价及座位号；“已出票”的订单可进行<b>改签</b>和<b>退票</b>。</li>
+      </ol>
+      <div class="warn"><b>注：</b>火车票下单时每人每天可取消 3 次；改签下单每人每天可取消 2 次。</div>
+      <div class="tip">🎫 <b>候补：</b>商旅 APP 支持候补火车票。关联出差单后点【火车票查询】，选择候补车次点“候补”→ 确认候补下单 → 点【下一步】提交候补订单。候补订单在【我的】-【订单】右上角“候补订单”里查看，候补成功后系统自动购票。</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-h" onclick="tg(this)"><div class="num">3</div><h3>预定机票</h3><span class="tag">退改签同火车票</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <ol>
+        <li>点击【机票】进入机票预订首页，点击【关联出差申请】关联审批通过、交通工具为飞机票的出差申请单，点击【搜索机票】查询所有可订机票。</li>
+        <li>在航班列表页点击对应航班，进入舱位列表页选择舱位；可按时间早晚或票价高低排序筛选。</li>
+        <li>选好舱位后点【预订】跳转到机票预订页下单；提交订单后，订单状态显示“已出票”即预订成功。</li>
+        <li>改签/退票操作步骤参考火车票：点【退票】阅读退票规则，填写退票信息，选择<b>自愿/非自愿</b>（自愿=出差任务调整取消改期或个人原因；非自愿=天气原因航班取消或航空公司通知取消）。</li>
+      </ol>
+      <div class="warn"><b>注：</b>自愿和非自愿退票产生的退票费有区别，请根据实际情况选择。</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-h" onclick="tg(this)"><div class="num">4</div><h3>预定汽车票</h3><span class="tag">需取纸质票</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <ol>
+        <li>点击【汽车票】进入预订首页，点击【搜索汽车票】跳到汽车票列表页，选定车次后点【预订】。</li>
+        <li>预订页包含所选汽车票票面信息、票价，选择乘车人后提交订单。</li>
+        <li>预订成功后点【查看订单】或在【我的订单】查看详情、退改（退改操作参考火车票）。</li>
+      </ol>
+      <div class="warn"><b>注意：</b>通过商旅预定的汽车票，需自行在汽车站取得<b>纸质车票</b>，报销时交予财务。商旅平台无法预定过路车票，需线下自行购票乘车。</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-h" onclick="tg(this)"><div class="num">5</div><h3>酒店预订</h3><span class="tag">多人同订/退订</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <ol>
+        <li>点击【酒店】进入酒店预订首页，点击【关联出差申请】选定预订时间范围，根据关键字或酒店类型筛选全部酒店或<b>协议酒店</b>。</li>
+        <li>在酒店信息列表页按酒店类型、品牌、区域位置、价格、差标等条件筛选；点击任意一条进入酒店详情页，查看图片、特色服务及房型列表。</li>
+        <li>点击选择的房型后，跳转到酒店预订页面，确认关联出差申请单的信息无误后，点击【提交订单】预订成功。</li>
+        <li>系统支持<b>多人预订酒店并在线选择同住一间房</b>：在酒店预订页根据不同房间数量选择不同的入住人，最多入住人数不超过出差申请单里的人数，每个房间最多入住 2 人，最多可选 10 人。</li>
+        <li>退订：预订成功后点【查看订单】/【我的订单】，如该订单未入住可退订。点击【我要退订】，选择退订原因、填写退订说明、上传相关附件（最多三张），提交后酒店退订成功。</li>
+      </ol>
+      <div class="warn"><b>注意：</b>① 培训差旅目前不可预定酒店（办理出差申请单时，因培训组织方已提前预定酒店，选择培训差旅类型无法预定）。② 如已预订酒店但行程有变需提前返程，需及时完成酒店退订才可返程，<b>酒店退订时间不可晚于返程时间</b>。③ 如需预定超出标准的酒店，可自行线上支付超标部分金额。④ 酒店预订关联出差申请单最多可选 10 人。</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-h" onclick="tg(this)"><div class="num">6</div><h3>出行预定注意事项</h3><span class="tag">务必阅读</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <ul>
+        <li>通过商旅平台 APP 预订的<b>机票无需自行打印飞机行程单、火车票无需自行打印报销凭证</b>等；如确有需要必须持票乘机（车），请妥善保管相关凭证，并在出行结束后及时将发票交由财务部门。</li>
+        <li>预定汽车票需乘车时在车站取纸质票，返回后将纸质票交予财务部门报销。</li>
+        <li>办理出差申请单时，因培训组织方已提前预定酒店，目前选择培训差旅类型无法预定酒店。</li>
+        <li>已预订酒店但行程有变需提前返程的，需及时完成酒店退订才可返程，退订时间不可晚于返程时间。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="headline"><div class="flag">③ 返回报销</div><small>来源：鄂电“财知道”【返回报销篇】</small></div>
+
+  <div class="acc" id="t-bx">
+    <div class="acc-h" onclick="tg(this)"><div class="num">1</div><h3>ERP 端报销（推荐附件较多时使用）</h3><span class="tag">zmmw011o</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <ol>
+        <li>行程结束后，系统会自动生成对应的<b>“差旅报销单”</b>推送至本单位报账员 ERP 账号（如自己为报账员则为本人账号）。登录 ERP，进入 <span class="kbd">zmmw011o</span> 付款申请平台，将左上角<b>“报销审核人”切换为“报销申请人”</b>。</li>
+        <li>在右侧“交通工具与相关票据订(费)查询——差旅报销待提交”中找到系统生成的差旅报销单，<b>双击数字</b>进入。</li>
+        <li>双击想要提交的工作流编号进入报销单。</li>
+        <li><b>核对出差人信息：</b>商旅预定的车票、机票和酒店费用系统已自动带入，核对即可。出发和返程时间按实际情况填写（如提前返程需修改返程时间）。个人需根据出差天数、出差类型填写<b>伙食补助和交通补助</b>。如存在线下预定的车票、机票或酒店，点击“新增行”，将线下预定的金额填在对应空格中。填写完报销金额后核对收款账户信息，无误后点保存。</li>
+        <li><b>电子影像上传：</b>上传对应差旅类型所需附件（如通知、公出、线下发票等）。附件需为 <b>PDF 版</b>，发票也可传 <b>OFD 版</b>。上传后保存返回报销单界面，根据上传影像数量填写附件张数，保存后提交。</li>
+        <li><b>超标处理：</b>如线下预定的车票或酒店超标，在“发票是否超标”处选“是”，在对应车票或酒店处填<b>限额报销金额</b>，但税额需填写实际发生金额对应的税额；然后在进项税转出界面，将超出标准部分的税额做<b>进项税转出</b>。</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-h" onclick="tg(this)"><div class="num">2</div><h3>手机端报销（商旅APP）</h3><span class="tag">简单单据适用</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <div class="tip">💡 出差行程结束后 1-2 个工作日，“我的草稿”会自动生成差旅报销单，填写补助、收款信息并上传文件，提交审核后即可完成差旅报销。</div>
+      <ol>
+        <li>选择底部【工作台】→ 右上角选择【草稿】→ 在“我的草稿”里选中相应差旅报销单。</li>
+        <li><b>基本信息</b>系统直接生成，检查确认即可。</li>
+        <li>在行项中填写补助、收款金额等信息：在“<b>住宿伙食补助</b>”页签填写伙食补助和交通补助；在“<b>收款信息</b>”页签填写除商旅预定费用以外个人应收到的金额（如补助费用）。</li>
+        <li>如有线下订票或住宿费：点击<b>添加行项</b>补充报销信息——在新增“行项2”的“行程信息”里填写出差人、出差地点、日期等基本信息；在“住宿伙食补助”页签填写线下发生的住宿费、伙食补助和交通补助；若存在线下交通费，在“城市间交通费”页签填写；“收款信息”页签填写除商旅预定费用以外个人应收金额（包括线下发生的费用）。</li>
+        <li>选择【附件列表】→ 点击“添加附件”上传与本次出差相关的通知文件等附件。</li>
+        <li>点击【提交】→ 选择“本单位负责人”“财务票据审核”“财务复核”“费用会计”审核人 → 点击“提交”，完成报销单提报。</li>
+      </ol>
+      <div class="warn"><b>注意事项：</b>商旅产生的费用均可在商旅 APP 和 ERP 系统报销，但如果存在出差申请单以外的其他影像附件（特别是有线下的发票），通过手机商旅端上传影像提交报销后，如最初影像上传存在问题<b>不易修改和替换</b>，所以建议<b>报销附件较多的单据选择 ERP 系统进行报销</b>。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TAB 服务类 ================= -->
+<section class="tab" id="tab-service">
+  <div class="headline"><div class="flag">资料适用场景对照</div><small>来源：5月财务工作18号通知</small></div>
+  <table>
+    <tr><th style="width:36%">资料 / 流程</th><th>适用场景</th></tr>
+    <tr><td>① ECP系统服务类合同签订指引</td><td>项目中标后，在 ECP 系统完成服务类合同签订、电子签章及 ERP 系统推送全流程操作</td></tr>
+    <tr><td>② ERP系统深化应用服务编码查询指引</td><td>通过 ZMM0030 事务代码，按服务分类精准查询对应服务编码</td></tr>
+    <tr><td>③ ERP系统深化应用服务采购流程指引</td><td>规范服务类业务采购申请的创建、提报等操作流程</td></tr>
+    <tr><td>④ 服务类费用入账流程操作手册（有合同）</td><td>针对未在 ECP 系统签订合同的服务类业务，明确费用入账全流程操作规范</td></tr>
+    <tr><td>⑤ 跨年业务操作手册</td><td>统一规范跨年资金预算申报、跨期分期付款等各类跨年业务的办理标准与操作流程</td></tr>
+    <tr><td>⑥ 服务主数据</td><td>提供采购订单创建所需的服务编码、总账科目、费用类别对应关系（约 2.5 万条），作为业务入账核心参考依据</td></tr>
+  </table>
+
+  <div class="headline"><div class="flag">操作流程详解</div></div>
+
+  <div class="acc" id="s-bm">
+    <div class="acc-h" onclick="tg(this)"><div class="num">1</div><h3>服务编码查询</h3><span class="tag">ZMM0030</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <ol>
+        <li>ERP 进入 <span class="kbd">ZMM0030</span>，选择“查询服务主数据”。</li>
+        <li>服务大类填 <span class="kbd">90</span>，中类、小类按实际情况选择。</li>
+        <li>点击执行，即可查看分类下的服务编码。</li>
+      </ol>
+      <div class="tip">💡 也可直接查阅《服务主数据》表格（含服务编码、总账科目、费用类别对应关系），通过“服务短文本”关键字检索获取编码。</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-h" onclick="tg(this)"><div class="num">2</div><h3>服务采购申请（三种方式）+ 技术规范上传与提报</h3><span class="tag">CJ20N / 工单 / ME51N</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <p><b>方式一：项目工程服务申请</b>（技改、基建等工程项目服务采购）</p>
+      <ol>
+        <li>进入 <span class="kbd">CJ20N</span>，在相应费用科目下创建服务采购。</li>
+        <li>填写项目名称、采购组织、采购组，回车完成录入。</li>
+        <li>填写服务编码、数量和总价，点击返回。</li>
+        <li>选择预留/采购申请方式为“立即”，保存；再次打开可查看采购申请号。</li>
+      </ol>
+      <p style="margin-top:8px"><b>方式二：工单服务申请</b>（大修、中小修项目服务采购）</p>
+      <ol>
+        <li>下达预算工单。</li>
+        <li>服务需求维护：根据工单编号（在“已下达”中查找）维护具体信息。<b>服务编码和费用科目有关联，要提前确定服务编码的选择</b>，正确填写服务编码和对应费用科目，填写完毕保存。</li>
+      </ol>
+      <p style="margin-top:8px"><b>方式三：成本中心服务申请</b>（其他服务采购）</p>
+      <ol>
+        <li><span class="kbd">ME51N</span> 选择“其它服务采购申请”。</li>
+        <li>A列选 <b>K成本中心</b>，I列选 <b>D服务</b>，短文本填项目名称，交货日期按实际填写，物料组选 <b>G90服务</b>，工厂选 <b>1310鄂尔多斯供电公司</b>，PGr选 <b>F01其它服务采购组</b>，申请人选择到申请部门。</li>
+        <li>填写服务编号、数量和总价（<b>注意：因系统显示存在问题，“数量”栏填单价/金额，“总价”栏填数量</b>）。</li>
+        <li>回车后选择费用科目（用服务编码的总账科目搜索帮助选择对应科目），输入申请单位对应的成本中心，保存采购申请。</li>
+      </ol>
+      <p style="margin-top:8px"><b>技术规范上传（ECP）→ 三种方式流程一致：</b></p>
+      <ol>
+        <li>登录新一代电子商务平台（ECP），选择采购标准账号。</li>
+        <li>技术规范管理 - 技术规范书编制 - 新建 → 填表保存。</li>
+        <li>选中新建条目 → 编制技术规范书 → 创建技术规范书 → 物料编码处输入对应<b>服务编号</b> → 输入技术规范书名称并保存。</li>
+        <li>点击“不引用范本”，上传编制好的技术规范书 → 选中条目提交审批。</li>
+        <li>技术规范书审批：选中单体工程 → 审核技术规范书 → 选中条目（可多选）→ 审批通过。</li>
+      </ol>
+      <p style="margin-top:8px"><b>发起采购申请提报（ZMM0059）：</b></p>
+      <ol>
+        <li><span class="kbd">ZMM0059</span> 填写工厂、采购申请、申请者，采购类型注意选择<b>服务</b>，点击执行。</li>
+        <li>维护采购批次编号、电商平台技术规范书 ID（若无可能是刚上传未同步，等待约 10 分钟再查看）、总承包项目、交货地点、建议交货日期、费用编号；<b>单一来源项目</b>还需维护单源直接采购拟成交供应商、统一社会信用代码。</li>
+        <li>维护完毕选中条目，提交审批，按服务流程发起审批。</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="acc" id="s-ht">
+    <div class="acc-h" onclick="tg(this)"><div class="num">3</div><h3>ECP 系统服务类合同签订（中标后）</h3><span class="tag">ECP→ERP→法务→电子签章</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <p><b>阶段一：ECP 合同起草与审批</b></p>
+      <ol>
+        <li><b>查阅招采信息：</b>与招标代理公司或物资部门核实中标信息已推送 ECP，在“服务类合同管理-合同签订管理-标准合同签订-中标结果管理（主管）”找到对应招标采购信息。</li>
+        <li><b>分配中标结果：</b>点击采购项目编号进入明细，选择包件 → 中标结果分配 → 选择签订合同人员。</li>
+        <li><b>生成合同草稿：</b>“合同起草-生成合同草稿”中选择合同 → 中标结果生成合同草稿。<b>注意：</b>可选“按工程项目合并生成”或“按需求单位合并生成”——如五个项目施工均为同一单位，选“按需求单位合并生成”即可；若选“按工程项目合并生成”会生成 5 个合同。</li>
+        <li><b>查看草稿：</b>在“合同起草-合同工作区”查看待起草合同。ECP 中合同分为合同协议书、通用条款、专用条款三部分，仅<b>专用条款</b>可自行维护。</li>
+        <li><b>维护专用条款：</b>进入“物资部合同模板管理-维护服务类合同专用条款”（无权限联系 ECP 运维开通）→ 新增 → 维护名称、年度 → 选“直接创建合同专用条款”并关联通用合同模板 → 保存并下一步。</li>
+        <li><b>上传专用条款：</b>本地选择文件上传 → 生成合同专用条款。<b>注意：</b>① 付款支付比例内容按货物类设计，<b>不需要修改支付比例</b>，实际支付按合同约定执行即可；② 专用条款需连同合同其他相关附件一并上传，廉洁协议书系统自动生成无需手动上传。</li>
+        <li><b>启用专用条款：</b>在同目录选择刚创建的专用条款，点击启用（无内容可点右侧查询刷新）。</li>
+        <li><b>合同起草：</b>在合同工作区可修改合同名称、更换模板、更换专用条款（关联上一步启用的条款）→ 点击“合同起草”。</li>
+        <li><b>信息核对：</b>核对买方信息 → 下一步 → 点“查看”核对合同信息及文档 → 下一步。（初次使用无买方信息见下一步）</li>
+        <li><b>买方信息维护：</b>“物资类合同管理-基础信息维护-买方信息维护”→ 新增维护后保存。</li>
+        <li><b>合同送审：</b>依次选择全部审批人 → 结束分配。</li>
+        <li><b>供应商确认：</b>合同到审批环节后需供应商先登录 ECP 确认；在合同工作区“流转中合同”可查看状态。</li>
+        <li><b>合同审批：</b>审批人在“标准合同签订-合同审批标准”下按顺序审批。</li>
+        <li><b>推送 ERP：</b>审批完成后经办人在“流转中合同”选中合同 → “重置合同信息同步ERP”。</li>
+      </ol>
+      <p style="margin-top:8px"><b>阶段二：ERP 生成采购订单</b></p>
+      <ol>
+        <li>登录 ERP 进入物资二期 <span class="kbd">ZMMSTART</span> → 合同管理 → 合同签订 → 生成采购订单。</li>
+        <li>填写标红内容，其中<b>电子商务合同号</b>为 ECP 的“合同标识符”字段（例 EEDS20260000708）→ 执行。</li>
+        <li>维护“采购组织”“采购组”（按实际选择）→ 生成采购订单。<b>注意：</b>按需求单位合并生成的会出现多行，需核对无遗漏并<b>全选统一生成同一个采购订单</b>。</li>
+      </ol>
+      <p style="margin-top:8px"><b>阶段三：法务系统维护与审批</b></p>
+      <ol>
+        <li>ERP 生成订单后自动推送合同至法务系统。登录法务系统 →“合同起草管理-合同维护”→ 点击修改，按要求维护合同信息并执行审批流程。（<b>用谁的 ECP 账号发起，合同就推送到谁的法务系统账号</b>）</li>
+        <li>审批完成后在“合同审批管理-我的送审”选中合同 → 导出正文、导出审批单 → 将流程推送至 ECP（触发后台推送）。</li>
+      </ol>
+      <p style="margin-top:8px"><b>阶段四：电子签名签章</b></p>
+      <ol>
+        <li>ECP 合同工作区“待生效合同”中选中“未启动电子签章”的合同 → 启动电子签章。</li>
+        <li>先选<b>签名人</b>（我公司法人授权的各单位相关领导）→ 再选<b>签章人</b>（法务部门人员）→ 结束分配 → 流程推送供应商签章签名。</li>
+        <li>供应商完成后，我方签名人登录个人 ECP 账号，在“标准合同签订-合同协议书签章”点击电子签名 → 定位签名位置 → 弹出二维码 → 用<b>中招互联APP</b>扫码完成电子签名/签章。完成后合同办理流程全部完毕。</li>
+      </ol>
+      <div class="tip">📱 <b>中招互联APP注册及激活码：</b>签名人本人手机下载“中招互联APP”，完成实名人脸验证，在“我的单位”申请加入“内蒙古（电力）集团有限责任公司鄂尔多斯供电分公司”，通过物资部门微信群“中招互联APP注册群”申请激活码，在 APP“我-激活码”中输入激活后方可扫码签字。</div>
+    </div>
+  </div>
+
+  <div class="acc" id="s-rz">
+    <div class="acc-h" onclick="tg(this)"><div class="num">4</div><h3>服务类费用入账（有合同）四步走</h3><span class="tag">ME51N→ZMM0059→ME21N→ZMMW001</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <div class="flow">
+        <div class="node">① ME51N<br>建采购申请</div><div class="arr">→</div>
+        <div class="node">② ZMM0059<br>提报审批工作流</div><div class="arr">→</div>
+        <div class="node">③ ME21N<br>建采购订单</div><div class="arr">→</div>
+        <div class="node">④ ZMMW001<br>服务确认</div>
+      </div>
+      <p><b>第一步：建立采购申请 <span class="kbd">ME51N</span></b></p>
+      <ol>
+        <li>下拉框选择“其他服务采购申请”。</li>
+        <li>上方表格：“A”列输 <b>K</b>（成本中心）；“I”列输 <b>D</b>（服务）；短文本按实际业务填摘要；物料组输 <b>G90</b>（自动出现“服务”）；工厂输 <b>1310</b>（鄂尔多斯供电公司）；采购组输 <b>F01</b>（其他服务采购组）；申请人选择本单位/部门（可记录代码直接输入）。</li>
+        <li>下方表格：服务编码可按“服务短文本”<b>关键字检索</b>，或查《服务主数据》直接获取；短文本填摘要；<b>“数量”填发票金额，“总价”填数量（服务类一般为 1）——因系统原因，数量和金额要反着填！</b></li>
+        <li>弹出表格：总账科目点右侧按钮 → 绿色“√”选择正确会计科目（公司党建经费唯一科目为“其他应付款/党建工作经费”）；成本中心可按短文本关键字（不确定部分用 * 代替）检索或直接输入编码。</li>
+        <li>保存，<b>记录左下角出现的“采购申请编号”</b>。</li>
+      </ol>
+      <p style="margin-top:8px"><b>第二步：提报审批工作流 <span class="kbd">ZMM0059</span></b></p>
+      <ol>
+        <li>工厂输 <b>1310</b>；采购申请输入刚生成的申请号；申请者选本单位；勾选采购类型“<b>服务</b>”；执行。</li>
+        <li>新界面输入：采购申请批次编号 <b>1000005687</b>（2026年固定不变）；交货地点及交货方式 <b>00_服务专用交货</b>；建议交货日期按实际填写；打“√”后提交审批，选择“下级审批人”确认。</li>
+        <li>经部门负责人、财务人员审批。</li>
+      </ol>
+      <p style="margin-top:8px"><b>第三步：创建采购订单 <span class="kbd">ME21N</span></b></p>
+      <ol>
+        <li>选择“其他服务采购订单”→ 参考“采购申请”，输入采购申请编号执行。</li>
+        <li>将行项“10”拖入小车图标；组织数据：采购组织 <b>13F1</b>（鄂尔多斯供电公司服务采购组织）、采购组 <b>F01</b>、公司代码 <b>1500</b>（内蒙古电力（集团）有限责任公司）、供应商据实填写、检查交货日期；下方“发票”页签选择正确税码（均为进项税）。</li>
+        <li>客户数据：据实填写经法系统合同编号、合同名称、合同签订日期、中标时间、合同总金额（<b>开口合同填写报账金额</b>）。</li>
+        <li>交付/开票：付款条款填 <b>Z004</b>（待资金到位后按合同价一次性付款）→ 保存，左下角显示采购订单号（如 4500004498）。</li>
+      </ol>
+      <p style="margin-top:8px"><b>第四步：服务确认 <span class="kbd">ZMMW001</span></b></p>
+      <ol>
+        <li>选择“<b>1-55 其他服务确认</b>”，执行。</li>
+        <li>预制：输入采购订单号、附件张数、经办人电话；“本次确认金额”填发票金额；“本次确认描述”填摘要；如之前有预付款需冲销，点选对应预付款项；按类别上传影像，<b>发票要影像识别和验真</b>。</li>
+        <li>提交审批：选择是否上传发票；“是否同步提交付款”选<b>是</b>则同步发起付款申请、本月即可付款；选<b>否</b>则本月不付款，后续付款需单独手动创建经费预算申请单。</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="acc" id="s-kn">
+    <div class="acc-h" onclick="tg(this)"><div class="num">5</div><h3>跨年业务操作要点</h3><span class="tag">涉及跨年资金</span><span class="chev">▶</span></div>
+    <div class="acc-b">
+      <ol>
+        <li><b>ME51N 采购申请：</b>按常规输入科目分配类别 K、项目类别 D、短文本、交货日期（如 2027.12.31）、物料组 G90、工厂 1310、采购组 F01、服务编码、数量【即金额】、总价【即数量】；切换到“客户数据”页签，<b>勾选“涉及跨年资金”</b>，录入当年预算金额。保存生成采购申请，此时预算占用金额为当年预算。</li>
+        <li><b>ZMM0059 需求提报：</b>输入工厂、采购申请、创建日期、申请者，采购类型选“服务”。跨年业务的当年预算金额会显示在 ALV 表里供审批人审核参考；批量维护完数据后提交审批生成工作流。</li>
+        <li><b>ME21N 生成采购订单：</b>生成订单时客户数据会显示各年度预算占用金额（ZMMHT007 生成的采购订单同样显示）。</li>
+        <li><b>服务确认：</b>① 当年服务确认时，过账日期为本年度日期；② 下一年度<b>第一次</b>服务确认时，“当年不含税预算金额”可编辑且<b>必输</b>（明确下一年度实际总预算金额并以此作为预算占用金额）；下一年度第二次及以后服务确认时该字段不可编辑。</li>
+        <li>其他环节：无变化。</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TAB 速查 ================= -->
+<section class="tab" id="tab-ref">
+  <div class="headline"><div class="flag">事务代码速查</div></div>
+  <table>
+    <tr><th style="width:22%">事务代码</th><th>用途</th><th style="width:26%">所属流程</th></tr>
+    <tr><td><b>ZMM0030</b></td><td>查询服务主数据 / 服务编码</td><td>服务编码查询</td></tr>
+    <tr><td><b>CJ20N</b></td><td>项目工程服务采购申请（技改、基建）</td><td>服务采购</td></tr>
+    <tr><td><b>ME51N</b></td><td>创建其他服务采购申请（成本中心）</td><td>服务采购 / 费用入账 / 跨年</td></tr>
+    <tr><td><b>ZMM0059</b></td><td>采购申请审批工作流提报</td><td>服务采购 / 费用入账 / 跨年</td></tr>
+    <tr><td><b>ME21N</b></td><td>创建采购订单</td><td>费用入账 / 跨年</td></tr>
+    <tr><td><b>ZMMW001</b></td><td>服务确认（1-55 其他服务确认）</td><td>费用入账</td></tr>
+    <tr><td><b>ZMMSTART</b></td><td>物资二期：ECP 合同生成采购订单</td><td>ECP 合同签订</td></tr>
+    <tr><td><b>zmmw011o</b></td><td>付款申请平台（差旅报销单提交）</td><td>商旅返回报销（ERP端）</td></tr>
+  </table>
+
+  <div class="headline"><div class="flag">常用固定参数</div></div>
+  <table>
+    <tr><th style="width:34%">参数</th><th>取值</th></tr>
+    <tr><td>科目分配类别 A</td><td><b>K</b>（成本中心）</td></tr>
+    <tr><td>项目类别 I</td><td><b>D</b>（服务）</td></tr>
+    <tr><td>物料组</td><td><b>G90</b>（服务）</td></tr>
+    <tr><td>工厂</td><td><b>1310</b> 鄂尔多斯供电公司</td></tr>
+    <tr><td>采购组</td><td><b>F01</b> 其他服务采购组</td></tr>
+    <tr><td>采购组织</td><td><b>13F1</b> 鄂尔多斯供电公司服务采购组织</td></tr>
+    <tr><td>公司代码</td><td><b>1500</b> 内蒙古电力（集团）有限责任公司</td></tr>
+    <tr><td>付款条款</td><td><b>Z004</b> 待资金到位后按合同价一次性付款</td></tr>
+    <tr><td>采购申请批次编号</td><td><b>1000005687</b>（2026年固定不变）</td></tr>
+    <tr><td>交货地点及交货方式</td><td><b>00_服务专用交货</b></td></tr>
+    <tr><td>商旅APP下载地址</td><td>https://ydbxshlptzs.impc.com.cn/index/index.html</td></tr>
+    <tr><td>商旅APP初始密码</td><td><b>Ydbxshlpt + 身份证号后8位</b>（员工编号登录）</td></tr>
+  </table>
+  <div class="warn"><b>提醒：</b>ME51N 录入服务类采购申请时，因系统原因<b>“数量”栏填金额、“总价”栏填数量</b>（服务类一般为 1），请勿填反。</div>
+
+  <div class="headline"><div class="flag">联系方式</div></div>
+  <div class="contact">
+    <div class="ccard"><h4>商旅系统运维</h4><div class="v">即时通搜索<br>“商旅平台技术支持”</div></div>
+    <div class="ccard"><h4>商旅平台业务及功能维护热线</h4><div class="v">0471-6228840</div></div>
+    <div class="ccard"><h4>火车、飞机、汽车、酒店预订问题服务热线</h4><div class="v">400-111-2699</div></div>
+    <div class="ccard"><h4>商旅报销问题咨询（二级单位）</h4><div class="v">刘 佳 0477-8596188<br>孙丽媛 0477-8696189</div></div>
+    <div class="ccard"><h4>商旅报销问题咨询（机关单位）</h4><div class="v">德格晋 0477-8596189</div></div>
+    <div class="ccard"><h4>新增和变更商旅权限</h4><div class="v">安永德 0477-8596065</div></div>
+  </div>
+
+  <div class="headline"><div class="flag">原始资料索引</div><small>详细截图请查阅对应原文件</small></div>
+  <table>
+    <tr><th style="width:30%">文件夹</th><th>文件</th></tr>
+    <tr><td rowspan="3">日常商旅</td><td>鄂电“财知道”教你轻松搞定商旅【手机端下载篇】.pdf</td></tr>
+    <tr><td>鄂电“财知道”教你轻松搞定商旅【出行预定篇】.pdf</td></tr>
+    <tr><td>鄂电“财知道”教你轻松搞定商旅【返回报销篇】.pdf</td></tr>
+    <tr><td rowspan="7">其他报销流程</td><td>关于发布服务类费用入账及跨年业务操作手册的通知.docx</td></tr>
+    <tr><td>1.ECP系统服务类合同签订指引.doc</td></tr>
+    <tr><td>2.ERP系统深化应用服务编码查询指引.docx</td></tr>
+    <tr><td>3.ERP系统深化应用服务采购流程指引.docx</td></tr>
+    <tr><td>4.服务类费用入账流程操作手册（有合同）.docx</td></tr>
+    <tr><td>5.跨年业务操作手册.docx</td></tr>
+    <tr><td>6.服务主数据.xlsx（服务编码 / 总账科目 / 费用类别对照，约 2.5 万条）</td></tr>
+  </table>
+</section>
+
+<div class="nores" id="nores">未找到相关内容，请换个关键词试试～</div>
+</main>
+
+<footer>
+  <div class="logo">内蒙古电力集团 · 鄂尔多斯供电公司</div>
+  <div style="margin-top:6px">财务资产部 · 鄂电“财知道” | 本指南根据公司发布的操作手册与宣传资料整理，如有更新以最新通知为准</div>
+</footer>
+
+<button class="printbtn" onclick="window.print()">🖨 打印 / 存PDF</button>
+
+<script>
+// ---- tabs ----
+const tabs=document.querySelectorAll('.tabbtn');
+function showTab(id){
+  tabs.forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
+  document.querySelectorAll('section.tab').forEach(s=>s.classList.toggle('show',s.id==='tab-'+id));
+  window.scrollTo({top:0});
+}
+tabs.forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+function goto(tab,anchor){
+  showTab(tab);
+  const el=document.getElementById(anchor);
+  if(el){el.classList.add('open');setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),80);}
+}
+// ---- accordion ----
+function tg(h){h.parentElement.classList.toggle('open');}
+// ---- search ----
+const q=document.getElementById('q');
+let all=[...document.querySelectorAll('.acc')];
+function clearMarks(root){root.querySelectorAll('mark').forEach(m=>m.replaceWith(m.textContent));root.normalize();}
+q.addEventListener('input',()=>{
+  const kw=q.value.trim().toLowerCase();
+  const nores=document.getElementById('nores');
+  all.forEach(a=>{clearMarks(a);a.style.display='';});
+  document.querySelectorAll('section.tab').forEach(s=>s.querySelectorAll('.headline,.grid,table,.searchbar,.hint').forEach(e=>e.style.display=''));
+  if(!kw){nores.style.display='none';return;}
+  // show all sections during search
+  document.querySelectorAll('section.tab').forEach(s=>s.classList.add('show'));
+  tabs.forEach(b=>b.classList.remove('active'));
+  let hits=0;
+  all.forEach(a=>{
+    const txt=a.textContent.toLowerCase();
+    if(txt.includes(kw)){
+      a.style.display='';a.classList.add('open');hits++;
+      // highlight
+      const walker=document.createTreeWalker(a,NodeFilter.SHOW_TEXT);
+      const nodes=[];let n;
+      while(n=walker.nextNode()){if(n.textContent.toLowerCase().includes(kw))nodes.push(n);}
+      nodes.forEach(node=>{
+        const frag=document.createDocumentFragment();
+        let text=node.textContent,idx;
+        while((idx=text.toLowerCase().indexOf(kw))>-1){
+          frag.appendChild(document.createTextNode(text.slice(0,idx)));
+          const m=document.createElement('mark');m.textContent=text.slice(idx,idx+kw.length);frag.appendChild(m);
+          text=text.slice(idx+kw.length);
+        }
+        frag.appendChild(document.createTextNode(text));
+        node.parentNode.replaceChild(frag,node);
+      });
+    }else{a.style.display='none';}
+  });
+  nores.style.display=hits?'none':'block';
+});
+q.addEventListener('search',()=>{if(!q.value){document.querySelectorAll('section.tab').forEach(s=>s.classList.remove('show'));showTab('home');}});
+</script>
+</body>
+</html>

@@ -1,0 +1,732 @@
+{
+  "version": 2,
+  "profile": {
+    "name": "杨越宇",
+    "description": "永远对世界抱有好奇。",
+    "socials": [
+      {
+        "name": "B 站",
+        "url": "",
+        "qr": "uploads/21802c99199f4e89a5bf4ecace7a111a/bilibili-qr.jpg",
+        "qrCrop": {
+          "x": 0.29360967184801384,
+          "y": 0.24142857142857144,
+          "w": 0.41450777202072536,
+          "h": 0.34285714285714286
+        }
+      },
+      {
+        "name": "公众号",
+        "url": "",
+        "qr": "uploads/da707bc14ca94bd2827cad3cd475600a/wechat-qr.jpg"
+      },
+      {
+        "name": "抖音",
+        "url": "",
+        "qr": "uploads/205ce11dff344c7a92b7a2dfe9059b2c/douyin-qr.jpg",
+        "qrCrop": {
+          "x": 0.16,
+          "y": 0.13095238095238096,
+          "w": 0.68,
+          "h": 0.45535714285714285
+        }
+      }
+    ],
+    "portrait": "uploads/0b7dafb84710447e9f8edb299582c47d/yang-yueyu-portrait.png"
+  },
+  "entries": [
+    {
+      "id": "w-dashboard",
+      "type": "work",
+      "category": "精选项目",
+      "title": "经营分析看板",
+      "description": "收入、订单与渠道趋势。",
+      "tags": [
+        "BI Dashboard",
+        "数据分析"
+      ],
+      "visual": "dashboard",
+      "number": "01",
+      "detail": "一个经营分析看板的展示示例：围绕收入、订单与渠道表现组织信息，让使用者先看到结果，再按问题逐步深入。",
+      "process": "从使用者最关心的问题开始，确定指标与口径，再用趋势、对比和筛选串联信息。",
+      "learn": "把“数据都放上去”改成“每一块信息都回答一个问题”，并为读者留下继续探索的入口。",
+      "status": "published",
+      "sample": true,
+      "date": "2026-09-15",
+      "updatedAt": "2026-09-15T07:45:52.030162+00:00",
+      "attachments": [],
+      "links": [],
+      "project": {
+        "entry": "uploads/demo-dashboard/index.html",
+        "entries": [
+          "uploads/demo-dashboard/index.html"
+        ]
+      },
+      "body": "<h2>一个可以操作的看板</h2><p>这是用于体验网站功能的示例作品。切换观察维度，或点击柱形查看当月数值。看板的样式和交互来自同目录里的 CSS 与 JavaScript 文件。</p>",
+      "coverImage": "",
+      "extractionCode": "",
+      "email": "",
+      "format": "html",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": true,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": ""
+    },
+    {
+      "id": "w-organize",
+      "type": "work",
+      "category": "工作实践",
+      "title": "文件整理助手",
+      "description": "按规则分类文件，整理前先预览。",
+      "tags": [
+        "Python",
+        "效率工具"
+      ],
+      "visual": "organize",
+      "number": "02",
+      "detail": "一个文件整理工具的概念示例：先预览分类结果，再把散落的文件按用途归档。",
+      "process": "选择文件夹，设定图片、文档、压缩包等分类规则，查看预览后再执行整理。",
+      "learn": "工具应该让人放心：操作前说明将发生什么，操作后告诉使用者改了什么。",
+      "status": "published",
+      "sample": true,
+      "date": "2026-09-15",
+      "updatedAt": "2026-09-15T07:45:52.031606+00:00",
+      "attachments": [],
+      "links": [],
+      "body": "",
+      "coverImage": "",
+      "project": {
+        "entry": "",
+        "entries": []
+      },
+      "extractionCode": "",
+      "email": "",
+      "format": "text",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": true,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": ""
+    },
+    {
+      "id": "w-chart",
+      "type": "work",
+      "category": "生活实验",
+      "title": "生活记录可视化",
+      "description": "看看时间都花在了哪里。",
+      "tags": [
+        "生活记录",
+        "可视化"
+      ],
+      "visual": "chart",
+      "number": "03",
+      "detail": "一个生活记录的可视化示例：把阅读、运动与休闲的时间整理成图表，观察一周的生活节奏。",
+      "process": "记录每天的活动与时长，再按用途分类，比较占比与变化。",
+      "learn": "记录可以帮助自己发现日常习惯，调整时间安排，而不只是追求更高的效率。",
+      "status": "published",
+      "sample": true,
+      "date": "2026-09-15",
+      "updatedAt": "2026-09-15T07:45:52.032201+00:00",
+      "attachments": [],
+      "links": [],
+      "body": "",
+      "coverImage": "",
+      "project": {
+        "entry": "",
+        "entries": []
+      },
+      "extractionCode": "",
+      "email": "",
+      "format": "text",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": true,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": ""
+    },
+    {
+      "id": "r-obsidian",
+      "type": "discover",
+      "category": "软件工具",
+      "title": "Obsidian",
+      "description": "把零散笔记连接起来，慢慢长出自己的知识网络。",
+      "tags": [
+        "笔记",
+        "个人使用免费"
+      ],
+      "icon": "O",
+      "bg": "#e9e2f4",
+      "fg": "#786397",
+      "url": "https://obsidian.md/",
+      "download": "https://obsidian.md/download",
+      "detail": "适合把教程草稿、项目复盘和日常灵感放在一起。支持本地 Markdown 文件与笔记之间的链接。Obsidian 本体不是开源软件；个人使用费用和附加服务以官网为准。",
+      "status": "published",
+      "sample": false,
+      "date": "2026-09-15",
+      "updatedAt": "2026-09-15T04:15:24.542103+00:00",
+      "attachments": [],
+      "links": [
+        {
+          "label": "访问官网",
+          "url": "https://obsidian.md/"
+        },
+        {
+          "label": "官方下载",
+          "url": "https://obsidian.md/download"
+        }
+      ],
+      "body": "",
+      "coverImage": "",
+      "project": {
+        "entry": "",
+        "entries": []
+      },
+      "extractionCode": "",
+      "email": "",
+      "format": "link",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": ""
+    },
+    {
+      "id": "r-sharex",
+      "type": "discover",
+      "category": "软件工具",
+      "title": "ShareX",
+      "description": "截图、录屏、标注，让教程里的每一步更清楚。",
+      "tags": [
+        "开源",
+        "Windows"
+      ],
+      "icon": "S",
+      "bg": "#e1e9ec",
+      "fg": "#456d7f",
+      "url": "https://getsharex.com/",
+      "download": "https://getsharex.com/downloads",
+      "detail": "免费开源的截图与录屏工具，适合制作图文教程的操作截图和简短演示。前往官方页面选择需要的版本。",
+      "status": "published",
+      "sample": false,
+      "date": "2026-09-15",
+      "updatedAt": "2026-09-15T04:15:24.542164+00:00",
+      "attachments": [],
+      "links": [
+        {
+          "label": "访问官网",
+          "url": "https://getsharex.com/"
+        },
+        {
+          "label": "官方下载",
+          "url": "https://getsharex.com/downloads"
+        }
+      ],
+      "body": "",
+      "coverImage": "",
+      "project": {
+        "entry": "",
+        "entries": []
+      },
+      "extractionCode": "",
+      "email": "",
+      "format": "link",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": ""
+    },
+    {
+      "id": "r-appinn",
+      "type": "discover",
+      "category": "网站精选",
+      "title": "小众软件",
+      "description": "在小而实用的软件里，找到解决日常问题的新办法。",
+      "tags": [
+        "软件发现",
+        "中文"
+      ],
+      "icon": "小",
+      "bg": "#e7edda",
+      "fg": "#708253",
+      "url": "https://www.appinn.com/",
+      "detail": "这里有软件介绍、体验文章和获取入口。适合带着具体需求寻找实用工具。",
+      "status": "published",
+      "sample": false,
+      "date": "2026-09-15",
+      "updatedAt": "2026-09-15T04:15:24.542235+00:00",
+      "attachments": [],
+      "links": [
+        {
+          "label": "访问网站",
+          "url": "https://www.appinn.com/"
+        }
+      ],
+      "body": "",
+      "coverImage": "",
+      "project": {
+        "entry": "",
+        "entries": []
+      },
+      "extractionCode": "",
+      "email": "",
+      "format": "link",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": ""
+    },
+    {
+      "id": "r-hellogithub",
+      "type": "discover",
+      "category": "网站精选",
+      "title": "HelloGitHub",
+      "description": "发现有趣、好用，也适合入门的开源项目。",
+      "tags": [
+        "开源项目",
+        "中文"
+      ],
+      "icon": "H",
+      "bg": "#e5e8e3",
+      "fg": "#343c30",
+      "url": "https://hellogithub.com/",
+      "detail": "通过中文介绍了解开源项目的用途，再前往作者的仓库、官网或发布页进一步探索。",
+      "status": "published",
+      "sample": false,
+      "date": "2026-09-15",
+      "updatedAt": "2026-09-15T04:15:24.542268+00:00",
+      "attachments": [],
+      "links": [
+        {
+          "label": "访问网站",
+          "url": "https://hellogithub.com/"
+        }
+      ],
+      "body": "",
+      "coverImage": "",
+      "project": {
+        "entry": "",
+        "entries": []
+      },
+      "extractionCode": "",
+      "email": "",
+      "format": "link",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": ""
+    },
+    {
+      "id": "import-3b4b50de194b8327",
+      "type": "work",
+      "category": "工作实践",
+      "title": "2026 党建考核全景解读",
+      "description": "党建考核内容的交互式全景解读。",
+      "tags": [
+        "考核解读",
+        "交互网页"
+      ],
+      "format": "html",
+      "project": {
+        "entry": "uploads/ebecac6d89d44b289374e3dce1df532d/2026党建考核全景解读_6.html",
+        "entries": [
+          "uploads/ebecac6d89d44b289374e3dce1df532d/2026党建考核全景解读_6.html"
+        ]
+      },
+      "date": "2026-09-15",
+      "status": "published",
+      "sample": false,
+      "body": "",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": "",
+      "coverImage": "uploads/83921df26a234083a309dd5592b777f6/import-3b4b50de194b8327.jpg",
+      "attachments": [],
+      "links": [],
+      "extractionCode": "",
+      "email": "",
+      "updatedAt": "2026-09-15T08:43:56.349471+00:00"
+    },
+    {
+      "id": "import-3c6a1c1ee093b012",
+      "type": "work",
+      "category": "工作实践",
+      "title": "鄂尔多斯授课足迹图",
+      "description": "在地图上记录党建授课足迹。",
+      "tags": [
+        "地图",
+        "数据可视化"
+      ],
+      "format": "html",
+      "project": {
+        "entry": "uploads/cbb220e4c0664a28b3c07d92d0063e51/ordos_map_1.html",
+        "entries": [
+          "uploads/cbb220e4c0664a28b3c07d92d0063e51/ordos_map_1.html"
+        ]
+      },
+      "date": "2026-09-15",
+      "status": "published",
+      "sample": false,
+      "body": "",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": "",
+      "coverImage": "uploads/093aeaa1275c40be888230e86b2584a2/import-3c6a1c1ee093b012.jpg",
+      "attachments": [],
+      "links": [],
+      "extractionCode": "",
+      "email": "",
+      "updatedAt": "2026-09-15T08:43:56.351780+00:00"
+    },
+    {
+      "id": "import-96a56c377527003a",
+      "type": "work",
+      "category": "工作实践",
+      "title": "你来比划我来猜",
+      "description": "围绕党建理论热词展开的限时互动游戏。",
+      "tags": [
+        "互动游戏",
+        "限时挑战"
+      ],
+      "format": "html",
+      "project": {
+        "entry": "uploads/0aff20dbbada4f3da7f1b306fb39bcd6/你来比划我来猜_限时版.html",
+        "entries": [
+          "uploads/0aff20dbbada4f3da7f1b306fb39bcd6/你来比划我来猜_限时版.html"
+        ]
+      },
+      "date": "2026-09-15",
+      "status": "published",
+      "sample": false,
+      "body": "",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": "",
+      "coverImage": "uploads/aca8d47eb92f4fefbd63a9883f37f751/import-96a56c377527003a.jpg",
+      "attachments": [],
+      "links": [],
+      "extractionCode": "",
+      "email": "",
+      "updatedAt": "2026-09-15T08:43:56.352407+00:00"
+    },
+    {
+      "id": "import-c2d374142bf3870f",
+      "type": "work",
+      "category": "工作实践",
+      "title": "理论知识竞赛",
+      "description": "用于理论知识竞赛的互动答题网页。",
+      "tags": [
+        "知识竞赛",
+        "答题工具"
+      ],
+      "format": "html",
+      "project": {
+        "entry": "uploads/3fefa20ac88f4949bdc3a459ee130814/党建知识竞赛答题软件_V2.html",
+        "entries": [
+          "uploads/3fefa20ac88f4949bdc3a459ee130814/党建知识竞赛答题软件_V2.html"
+        ]
+      },
+      "date": "2026-09-15",
+      "status": "published",
+      "sample": false,
+      "body": "",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": "",
+      "coverImage": "uploads/4a01d1612de54e5093023829d182b321/import-c2d374142bf3870f.jpg",
+      "attachments": [],
+      "links": [],
+      "extractionCode": "",
+      "email": "",
+      "updatedAt": "2026-09-15T08:43:56.353201+00:00"
+    },
+    {
+      "id": "import-f4c722037140d80e",
+      "type": "work",
+      "category": "工作实践",
+      "title": "备用人选积分分析看板",
+      "description": "备用人选积分的可视化分析，展示数据已脱敏。",
+      "tags": [
+        "BI 看板",
+        "脱敏数据"
+      ],
+      "format": "html",
+      "project": {
+        "entry": "uploads/9f50bc82c62a49afb26b92db350f87d9/备用人选积分分析看板_脱敏版.html",
+        "entries": [
+          "uploads/9f50bc82c62a49afb26b92db350f87d9/备用人选积分分析看板_脱敏版.html"
+        ]
+      },
+      "date": "2026-09-15",
+      "status": "published",
+      "sample": false,
+      "body": "",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": "",
+      "coverImage": "uploads/6366bfc60c434824b11aa69ca96273d8/import-f4c722037140d80e.jpg",
+      "attachments": [],
+      "links": [],
+      "extractionCode": "",
+      "email": "",
+      "updatedAt": "2026-09-15T08:43:56.353776+00:00"
+    },
+    {
+      "id": "import-8793cbac55e52d8a",
+      "type": "work",
+      "category": "工作实践",
+      "title": "鄂尔多斯供电公司报账指南",
+      "description": "整理报账流程与相关指引，便于查阅。",
+      "tags": [
+        "工作指南",
+        "交互网页"
+      ],
+      "format": "html",
+      "project": {
+        "entry": "uploads/84d5386eb57c429c987324ba04ffc350/鄂尔多斯供电公司报账指南.html",
+        "entries": [
+          "uploads/84d5386eb57c429c987324ba04ffc350/鄂尔多斯供电公司报账指南.html"
+        ]
+      },
+      "date": "2026-09-15",
+      "status": "published",
+      "sample": false,
+      "body": "",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": "",
+      "coverImage": "uploads/1c583e882dc04f7fa24579cea5e5dd80/import-8793cbac55e52d8a.jpg",
+      "attachments": [],
+      "links": [],
+      "extractionCode": "",
+      "email": "",
+      "updatedAt": "2026-09-15T08:43:56.354676+00:00"
+    },
+    {
+      "id": "import-915dca456699fec3",
+      "type": "work",
+      "category": "生活实验",
+      "title": "认识钟表小课堂",
+      "description": "用互动时钟练习认识时间。",
+      "tags": [
+        "亲子学习",
+        "互动课堂"
+      ],
+      "format": "html",
+      "project": {
+        "entry": "uploads/5f4593d4528a4a43a483cc1e0fc41108/认识钟表小课堂.html",
+        "entries": [
+          "uploads/5f4593d4528a4a43a483cc1e0fc41108/认识钟表小课堂.html"
+        ]
+      },
+      "date": "2026-09-15",
+      "status": "published",
+      "sample": false,
+      "body": "",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": "",
+      "coverImage": "uploads/4940df3c044d4c3eac10f6f535639439/import-915dca456699fec3.jpg",
+      "attachments": [],
+      "links": [],
+      "extractionCode": "",
+      "email": "",
+      "updatedAt": "2026-09-15T08:43:56.355213+00:00"
+    },
+    {
+      "id": "import-9d5257e50e98851e",
+      "type": "work",
+      "category": "精选项目",
+      "title": "线上党校",
+      "description": "鄂尔多斯供电公司线上党校展示页。",
+      "tags": [
+        "网站设计",
+        "线上党校"
+      ],
+      "format": "html",
+      "project": {
+        "entry": "uploads/bb76de4b2a7d450d9f3b99f8418a7645/erdos-party-school-showcase.html",
+        "entries": [
+          "uploads/bb76de4b2a7d450d9f3b99f8418a7645/erdos-party-school-showcase.html"
+        ]
+      },
+      "date": "2026-09-15",
+      "status": "published",
+      "sample": false,
+      "body": "",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": "",
+      "coverImage": "uploads/ee48af7faaf047a6883486f99d67e4b9/import-9d5257e50e98851e.jpg",
+      "attachments": [],
+      "links": [],
+      "extractionCode": "",
+      "email": "",
+      "updatedAt": "2026-09-15T08:43:56.355794+00:00"
+    },
+    {
+      "id": "import-dc32ca95560a06ec",
+      "type": "work",
+      "category": "精选项目",
+      "title": "党委组织部待办平台",
+      "description": "党委组织部工作待办平台演示。",
+      "tags": [
+        "工作平台",
+        "产品演示"
+      ],
+      "format": "html",
+      "project": {
+        "entry": "uploads/6cae22830168486f879d7236bb8f1dd1/zugong-demo.html",
+        "entries": [
+          "uploads/6cae22830168486f879d7236bb8f1dd1/zugong-demo.html"
+        ]
+      },
+      "date": "2026-09-15",
+      "status": "published",
+      "sample": false,
+      "body": "",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": "",
+      "coverImage": "uploads/bbf03866161e409a992972a38e6bd91a/import-dc32ca95560a06ec.jpg",
+      "attachments": [],
+      "links": [],
+      "extractionCode": "",
+      "email": "",
+      "updatedAt": "2026-09-15T08:43:56.356361+00:00"
+    },
+    {
+      "id": "import-2ab4bf09bd41de3e",
+      "type": "thought",
+      "category": "随想手记",
+      "title": "AI 如何为工作减负增效",
+      "description": "党建授课演示：探索 AI 在工作中的应用。",
+      "tags": [
+        "AI",
+        "授课演示"
+      ],
+      "format": "html",
+      "project": {
+        "entry": "uploads/d1576cff841d4a5bac7bc6088064f163/AI如何为工作减负增效_党建授课.html",
+        "entries": [
+          "uploads/d1576cff841d4a5bac7bc6088064f163/AI如何为工作减负增效_党建授课.html"
+        ]
+      },
+      "date": "2026-09-15",
+      "status": "published",
+      "sample": false,
+      "body": "",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": "",
+      "coverImage": "uploads/0a49a38baaad497e961603ecb707bf3d/import-2ab4bf09bd41de3e.jpg",
+      "attachments": [],
+      "links": [],
+      "extractionCode": "",
+      "email": "",
+      "updatedAt": "2026-09-15T08:43:56.356954+00:00"
+    },
+    {
+      "id": "import-55eace6b2b292ac1",
+      "type": "thought",
+      "category": "随想手记",
+      "title": "AI 如何为财务工作减负增效",
+      "description": "面向财务资产部的 AI 应用专题授课演示。",
+      "tags": [
+        "AI",
+        "财务工作"
+      ],
+      "format": "html",
+      "project": {
+        "entry": "uploads/24b0b361e5a94eaf89dcb9278d785a2f/AI如何为财务工作减负增效_授课演示__07.09_.html",
+        "entries": [
+          "uploads/24b0b361e5a94eaf89dcb9278d785a2f/AI如何为财务工作减负增效_授课演示__07.09_.html"
+        ]
+      },
+      "date": "2026-09-15",
+      "status": "published",
+      "sample": false,
+      "body": "",
+      "pinned": false,
+      "pinOrder": 0,
+      "hideFromHome": false,
+      "media": [],
+      "bvid": "",
+      "platform": "",
+      "softwareVersion": "",
+      "coverImage": "uploads/00e87ff68c8943eca47d140769337a1c/import-55eace6b2b292ac1.jpg",
+      "attachments": [],
+      "links": [],
+      "extractionCode": "",
+      "email": "",
+      "updatedAt": "2026-09-15T08:43:56.357592+00:00"
+    }
+  ],
+  "preview": false,
+  "display": {
+    "work": 6,
+    "discover": 6,
+    "thought": 3
+  },
+  "contact": {
+    "available": false,
+    "endpoint": ""
+  }
+}

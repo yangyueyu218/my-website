@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🕐 认识钟表小课堂</title>
+<style>
+:root{
+  --yellow:#ffd166; --pink:#ef476f; --blue:#118ab2; --green:#06d6a0;
+  --dark:#274060; --purple:#9b5de5; --orange:#ff9e40;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:"Yuanti SC","YouYuan","PingFang SC","Microsoft YaHei",sans-serif;
+  background:linear-gradient(180deg,#bfeaff 0%,#e6f7ff 45%,#fff6d8 100%);
+  min-height:100vh; color:var(--dark); overflow-x:hidden;
+}
+.float-deco{position:fixed; font-size:44px; opacity:.55; z-index:0; pointer-events:none;
+  animation:floaty 7s ease-in-out infinite;}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+header{position:relative; z-index:2; text-align:center; padding:18px 12px 4px;}
+h1{
+  margin:0; font-size:clamp(28px,5vw,44px); color:#fff; letter-spacing:2px;
+  text-shadow:0 3px 0 #f79d3c, 0 6px 12px rgba(0,0,0,.18);
+  -webkit-text-stroke:1.5px #f79d3c;
+  animation:bob 3s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1.5deg)}}
+.star-pill{
+  display:inline-flex; align-items:center; gap:6px; margin-top:10px;
+  background:#fff; border-radius:999px; padding:6px 18px; font-size:20px; font-weight:bold;
+  box-shadow:0 4px 0 #f0c94e, 0 6px 14px rgba(0,0,0,.12); color:#c78a00;
+}
+nav{position:relative; z-index:2; display:flex; justify-content:center; gap:10px; flex-wrap:wrap; padding:14px 10px;}
+.tab{
+  border:none; cursor:pointer; font-family:inherit;
+  font-size:clamp(16px,2.5vw,21px); font-weight:bold; color:var(--dark);
+  background:#fff; border-radius:999px; padding:12px 22px;
+  box-shadow:0 5px 0 #d8dbe4, 0 8px 16px rgba(0,0,0,.08);
+  transition:transform .15s;
+}
+.tab:active{transform:translateY(4px); box-shadow:0 1px 0 #d8dbe4;}
+.tab.active{
+  color:#fff; background:linear-gradient(135deg,var(--pink),var(--orange));
+  box-shadow:0 5px 0 #c22e52, 0 8px 16px rgba(239,71,111,.35);
+  transform:scale(1.06);
+}
+main{position:relative; z-index:1; padding:6px 14px 60px;}
+section{display:none; max-width:960px; margin:0 auto;}
+section.active{display:block; animation:pop .35s ease;}
+@keyframes pop{from{opacity:0; transform:scale(.95) translateY(12px)} to{opacity:1; transform:none}}
+.panel{
+  background:rgba(255,255,255,.92); border-radius:30px; padding:22px;
+  box-shadow:0 10px 30px rgba(80,120,200,.18);
+  display:flex; gap:24px; flex-wrap:wrap; justify-content:center; align-items:flex-start;
+}
+.clock-wrap{flex:0 1 340px; max-width:min(340px,88vw); margin:auto; position:relative;}
+.clock-wrap svg{width:100%; height:auto; display:block; filter:drop-shadow(0 8px 14px rgba(0,0,0,.15));}
+.side{flex:1 1 320px; min-width:280px;}
+.bubble{
+  background:#fff8e7; border:3px dashed var(--yellow); border-radius:22px;
+  padding:16px 18px; font-size:clamp(17px,2.4vw,21px); line-height:1.75; min-height:120px;
+}
+.bubble b{color:var(--pink);}
+.bubble .hl-h{color:#e63946; font-weight:bold;}
+.bubble .hl-m{color:#1d6fb8; font-weight:bold;}
+.lesson-title{font-size:clamp(20px,3vw,26px); margin:2px 0 10px; color:var(--purple); font-weight:bold;}
+.dots{display:flex; gap:8px; justify-content:center; margin:14px 0 6px;}
+.dots span{width:12px;height:12px;border-radius:50%;background:#d9dee9;transition:.2s;}
+.dots span.on{background:var(--orange); transform:scale(1.3);}
+.btn{
+  border:none; cursor:pointer; font-family:inherit; font-weight:bold;
+  font-size:clamp(16px,2.4vw,20px); color:#fff; border-radius:999px; padding:12px 24px;
+  margin:6px 4px; transition:transform .12s;
+}
+.btn:active{transform:translateY(4px) scale(.97);}
+.btn-orange{background:linear-gradient(135deg,#ffb347,#ff8c42); box-shadow:0 5px 0 #d96f23;}
+.btn-blue{background:linear-gradient(135deg,#4cc9f0,#118ab2); box-shadow:0 5px 0 #0b6183;}
+.btn-green{background:linear-gradient(135deg,#3ce6b0,#06b98c); box-shadow:0 5px 0 #048f6c;}
+.btn-pink{background:linear-gradient(135deg,#ff5d8f,#ef476f); box-shadow:0 5px 0 #bf2e55;}
+.btn-purple{background:linear-gradient(135deg,#b07df0,#9b5de5); box-shadow:0 5px 0 #7a3fc4;}
+.btn-gray{background:#b9c2d0; box-shadow:0 5px 0 #93a0b3;}
+.btn:disabled{opacity:.5; cursor:not-allowed;}
+.ctrl-row{text-align:center; margin-top:12px;}
+.time-badge{
+  text-align:center; font-size:clamp(22px,3.6vw,30px); font-weight:bold; color:var(--dark);
+  background:#eafcff; border:3px solid #9fe3f5; border-radius:18px; padding:8px 14px; margin:12px auto 0;
+  max-width:340px;
+}
+.time-badge small{display:block; font-size:.6em; color:#5b7a99; font-weight:normal;}
+.target-card{
+  text-align:center; background:linear-gradient(135deg,#fff0f5,#ffe9d6);
+  border-radius:22px; border:3px solid #ffc2d4; padding:14px; margin-bottom:14px;
+  font-size:clamp(18px,2.8vw,24px); font-weight:bold;
+}
+.target-card .big{font-size:1.5em; color:var(--pink); display:block; margin-top:4px;}
+.choices{display:flex; flex-direction:column; gap:12px; margin-top:10px;}
+.choices button{
+  border:none; cursor:pointer; font-family:inherit; font-size:clamp(18px,2.8vw,24px); font-weight:bold;
+  color:var(--dark); background:#f2f6ff; border:3px solid #c9d8f5; border-radius:18px; padding:14px;
+  transition:.15s;
+}
+.choices button:hover{background:#e6eeff;}
+.choices button.right{background:#d3f9e8; border-color:var(--green); color:#037a5c; animation:pulse .4s;}
+.choices button.wrong{background:#ffe0e6; border-color:var(--pink); color:#c2185b; animation:shake .4s;}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.chips{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:0 0 14px;}
+.chip{
+  border:3px solid #cdd7e8; background:#fff; color:var(--dark); border-radius:999px;
+  padding:7px 18px; font-family:inherit; font-size:16px; font-weight:bold; cursor:pointer;
+}
+.chip.active{background:var(--purple); border-color:var(--purple); color:#fff;}
+.streak{ text-align:center; font-size:19px; margin-top:10px; color:#c78a00; font-weight:bold;}
+.progress-outer{background:#e6ebf5; border-radius:999px; height:20px; overflow:hidden; margin:10px 0;}
+.progress-inner{height:100%; width:0%; border-radius:999px;
+  background:linear-gradient(90deg,var(--green),var(--blue)); transition:width .4s;}
+.quiz-head{display:flex; justify-content:space-between; font-weight:bold; font-size:18px;}
+.center{text-align:center; width:100%;}
+.result-stars{font-size:64px; letter-spacing:6px; margin:8px 0;}
+.result-text{font-size:clamp(20px,3vw,28px); font-weight:bold; color:var(--purple);}
+#toast{
+  position:fixed; top:16px; left:50%; transform:translateX(-50%) translateY(-120px);
+  background:#fff; border-radius:999px; padding:12px 28px; font-size:20px; font-weight:bold;
+  box-shadow:0 8px 24px rgba(0,0,0,.2); z-index:99; transition:transform .35s; color:var(--dark);
+  white-space:nowrap;
+}
+#toast.show{transform:translateX(-50%) translateY(0);}
+.confetti{position:fixed; top:-40px; z-index:98; font-size:26px; pointer-events:none;
+  animation:fall linear forwards;}
+@keyframes fall{to{transform:translateY(115vh) rotate(720deg); opacity:.8;}}
+.hint{font-size:15px; color:#7a8aa0; text-align:center; margin-top:8px;}
+.drag-tip{position:absolute; bottom:-4px; left:50%; transform:translateX(-50%);
+  background:#fff; border-radius:999px; padding:3px 14px; font-size:14px; color:#7a8aa0;
+  box-shadow:0 3px 8px rgba(0,0,0,.12); white-space:nowrap;}
+@media (max-width:640px){ .panel{padding:16px 12px;} }
+</style>
+</head>
+<body>
+<div class="float-deco" style="top:8%; left:4%;">☁️</div>
+<div class="float-deco" style="top:18%; right:6%; animation-delay:1.2s;">🌤️</div>
+<div class="float-deco" style="bottom:12%; left:6%; animation-delay:2s;">🎈</div>
+<div class="float-deco" style="bottom:20%; right:5%; animation-delay:.6s;">🌈</div>
+
+<header>
+  <h1>🕐 认识钟表小课堂 ⏰</h1>
+  <div class="star-pill">⭐ 我的星星：<span id="starCount">0</span></div>
+</header>
+
+<nav>
+  <button class="tab active" data-tab="learn">📖 学一学</button>
+  <button class="tab" data-tab="set">🔧 拨一拨</button>
+  <button class="tab" data-tab="choose">🎯 选一选</button>
+  <button class="tab" data-tab="quiz">🏆 大挑战</button>
+</nav>
+
+<main>
+  <!-- 学一学 -->
+  <section id="tab-learn" class="active">
+    <div class="panel">
+      <div class="clock-wrap" id="learnClock"></div>
+      <div class="side">
+        <div class="lesson-title" id="lessonTitle"></div>
+        <div class="bubble" id="lessonText"></div>
+        <div class="dots" id="lessonDots"></div>
+        <div class="ctrl-row">
+          <button class="btn btn-gray" id="prevLesson">⬅ 上一课</button>
+          <button class="btn btn-orange" id="nextLesson">下一课 ➡</button>
+        </div>
+        <div class="ctrl-row">
+          <button class="btn btn-purple" id="speakLesson">🔊 听讲解</button>
+          <button class="btn btn-blue" id="speakTime">🕐 读时间</button>
+          <button class="btn btn-green" id="shuffleTime">🎲 换一个</button>
+        </div>
+        <div class="ctrl-row" id="learnAdjust" style="display:none;">
+          <button class="btn btn-blue" data-d="-5">⏪ 分针 −5分</button>
+          <button class="btn btn-blue" data-d="5">分针 +5分 ⏩</button>
+          <button class="btn btn-pink" data-d="60">时针 +1小时 ⏭</button>
+        </div>
+        <div class="time-badge" id="learnBadge"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 拨一拨 -->
+  <section id="tab-set">
+    <div class="panel">
+      <div class="clock-wrap" id="setClock">
+        <div class="drag-tip">👆 可以直接拖动钟面上的针哦</div>
+      </div>
+      <div class="side">
+        <div class="chips" data-group="diff">
+          <button class="chip active" data-diff="1">🌱 整点</button>
+          <button class="chip" data-diff="2">🌼 半点</button>
+          <button class="chip" data-diff="3">🌟 几点几分</button>
+        </div>
+        <div class="target-card">小闹钟想知道：请把钟拨到
+          <span class="big" id="setTarget"></span>
+        </div>
+        <div class="ctrl-row">
+          <button class="btn btn-blue" data-sd="-5">⏪ 分针 −5分</button>
+          <button class="btn btn-blue" data-sd="5">分针 +5分 ⏩</button>
+          <button class="btn btn-pink" data-sd="60">时针 +1小时 ⏭</button>
+        </div>
+        <div class="ctrl-row">
+          <button class="btn btn-green" id="checkSet" style="font-size:22px; padding:14px 40px;">✅ 拨好啦！</button>
+          <button class="btn btn-gray" id="newSet">🔄 换一题</button>
+        </div>
+        <div class="time-badge" id="setBadge"></div>
+        <div class="streak" id="setStreak"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 选一选 -->
+  <section id="tab-choose">
+    <div class="panel">
+      <div class="clock-wrap" id="chooseClock"></div>
+      <div class="side">
+        <div class="chips" data-group="diff">
+          <button class="chip active" data-diff="1">🌱 整点</button>
+          <button class="chip" data-diff="2">🌼 半点</button>
+          <button class="chip" data-diff="3">🌟 几点几分</button>
+        </div>
+        <div class="target-card">👀 小钟表现在是几点呀？</div>
+        <div class="choices" id="chooseChoices"></div>
+        <div class="streak" id="chooseStreak">已经连对 0 题啦</div>
+        <div class="hint">连续答对 5 题会有惊喜哦 🎉</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 大挑战 -->
+  <section id="tab-quiz">
+    <div class="panel" id="quizStart">
+      <div class="center">
+        <div style="font-size:80px;">🏆</div>
+        <div class="result-text">钟表大挑战</div>
+        <p style="font-size:19px; line-height:1.8;">一共 <b>10</b> 道题，看看你能得几颗星！<br>答对越多，星星越多哦 ⭐⭐⭐</p>
+        <div class="chips" data-group="diff">
+          <button class="chip active" data-diff="1">🌱 整点</button>
+          <button class="chip" data-diff="2">🌼 半点</button>
+          <button class="chip" data-diff="3">🌟 几点几分</button>
+        </div>
+        <button class="btn btn-pink" id="startQuiz" style="font-size:24px; padding:16px 48px;">🚀 开始挑战</button>
+      </div>
+    </div>
+    <div class="panel" id="quizGame" style="display:none;">
+      <div class="side" style="flex:1 1 100%;">
+        <div class="quiz-head"><span id="quizNo"></span><span id="quizScore"></span></div>
+        <div class="progress-outer"><div class="progress-inner" id="quizBar"></div></div>
+      </div>
+      <div class="clock-wrap" id="quizClock"></div>
+      <div class="side">
+        <div class="target-card">🤔 现在是几点呢？</div>
+        <div class="choices" id="quizChoices"></div>
+      </div>
+    </div>
+    <div class="panel" id="quizEnd" style="display:none;">
+      <div class="center">
+        <div class="result-stars" id="quizStars"></div>
+        <div class="result-text" id="quizResultText"></div>
+        <p style="font-size:19px;" id="quizResultSub"></p>
+        <button class="btn btn-orange" id="againQuiz" style="font-size:22px; padding:14px 40px;">🔄 再来一次</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast"></div>
+<script>
+"use strict";
+const $ = s => document.querySelector(s);
+const NS = "http://www.w3.org/2000/svg";
+let stars = 0, diff = 1;
+try{ stars = parseInt(localStorage.getItem("clockStars")||"0")||0; }catch(e){}
+
+/* ---------- 星星 ---------- */
+function renderStars(){ $("#starCount").textContent = stars; }
+function addStars(n){
+  stars += n; renderStars();
+  try{ localStorage.setItem("clockStars", stars); }catch(e){}
+}
+renderStars();
+
+/* ---------- 声音 ---------- */
+let actx = null;
+function beep(freq, dur, type, delay){
+  try{
+    actx = actx || new (window.AudioContext||window.webkitAudioContext)();
+    const t = actx.currentTime + (delay||0);
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.type = type||"sine"; o.frequency.value = freq;
+    g.gain.setValueAtTime(0.22, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t+dur);
+    o.connect(g); g.connect(actx.destination);
+    o.start(t); o.stop(t+dur);
+  }catch(e){}
+}
+function soundRight(){ beep(660,.15); beep(880,.25,"sine",.13); }
+function soundWrong(){ beep(220,.3,"square"); }
+function soundStar(){ beep(523,.12); beep(659,.12,"sine",.1); beep(784,.12,"sine",.2); beep(1046,.3,"sine",.3); }
+
+/* ---------- 语音朗读 ---------- */
+function speak(text){
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "zh-CN"; u.rate = 0.85; u.pitch = 1.2;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+/* ---------- 时间工具 ---------- */
+function timeText(h, m){
+  const hh = ((h-1)%12+12)%12 + 1;
+  if(m === 0) return hh + "点整";
+  if(m === 30) return hh + "点半";
+  return hh + "点" + m + "分";
+}
+function digital(h, m){
+  const hh = ((h-1)%12+12)%12 + 1;
+  return hh + ":" + String(m).padStart(2,"0");
+}
+function randTime(d){
+  const h = 1 + Math.floor(Math.random()*12);
+  let m = 0;
+  if(d === 2) m = Math.random() < 0.5 ? 0 : 30;
+  if(d === 3) m = 5 * Math.floor(Math.random()*12);
+  return {h, m};
+}
+function sameT(a,b){ return a.h%12 === b.h%12 && a.m === b.m; }
+function makeChoices(t, d){
+  const opts = [Object.assign({ok:true}, t)];
+  let guard = 0;
+  while(opts.length < 3 && guard++ < 200){
+    let c; const r = Math.random();
+    if(r < 0.4) c = {h:(t.h%12)+1, m:t.m};
+    else if(r < 0.65) c = {h:((t.h+10)%12)+1, m:t.m};
+    else if(r < 0.85 && d > 1) c = {h:t.h, m:(t.m+30)%60};
+    else c = randTime(d);
+    if(d === 1) c.m = 0;
+    if(!opts.some(o => sameT(o,c))) opts.push(c);
+  }
+  return opts.sort(()=>Math.random()-0.5);
+}
+
+/* ---------- SVG 时钟 ---------- */
+function makeClock(mountId){
+  const mount = document.getElementById(mountId);
+  const svg = document.createElementNS(NS,"svg");
+  svg.setAttribute("viewBox","0 0 200 216");
+  let inner = "";
+  // 闹钟小铃铛和小脚
+  inner += '<circle cx="58" cy="26" r="15" fill="#ffb703" stroke="#e08a00" stroke-width="3"/>';
+  inner += '<circle cx="142" cy="26" r="15" fill="#ffb703" stroke="#e08a00" stroke-width="3"/>';
+  inner += '<rect x="97" y="6" width="6" height="14" rx="3" fill="#e08a00"/>';
+  inner += '<line x1="52" y1="196" x2="38" y2="210" stroke="#e08a00" stroke-width="7" stroke-linecap="round"/>';
+  inner += '<line x1="148" y1="196" x2="162" y2="210" stroke="#e08a00" stroke-width="7" stroke-linecap="round"/>';
+  // 表盘
+  inner += '<circle cx="100" cy="112" r="97" fill="#ffd166"/>';
+  inner += '<circle cx="100" cy="112" r="88" fill="#ffffff" stroke="#ffb703" stroke-width="3"/>';
+  // 刻度
+  for(let i=0;i<60;i++){
+    const a = i*6*Math.PI/180;
+    const big = i%5===0;
+    const r1 = big?78:82, r2 = 86;
+    inner += '<line x1="'+(100+r1*Math.sin(a)).toFixed(1)+'" y1="'+(112-r1*Math.cos(a)).toFixed(1)+
+      '" x2="'+(100+r2*Math.sin(a)).toFixed(1)+'" y2="'+(112-r2*Math.cos(a)).toFixed(1)+
+      '" stroke="'+(big?"#f77f00":"#d9dee9")+'" stroke-width="'+(big?3:1.5)+'" stroke-linecap="round"/>';
+  }
+  // 数字 1-12
+  const numCols = ["#ef476f","#118ab2","#06a37e","#9b5de5"];
+  for(let i=1;i<=12;i++){
+    const a = i*30*Math.PI/180;
+    inner += '<text x="'+(100+64*Math.sin(a)).toFixed(1)+'" y="'+(112-64*Math.cos(a)+7).toFixed(1)+
+      '" text-anchor="middle" font-size="20" font-weight="bold" font-family="inherit" fill="'+
+      numCols[i%4]+'">'+i+'</text>';
+  }
+  // 分钟小数字（绿色，可隐藏）
+  for(let i=1;i<=12;i++){
+    const a = i*30*Math.PI/180;
+    inner += '<text class="minlab" x="'+(100+47*Math.sin(a)).toFixed(1)+'" y="'+(112-47*Math.cos(a)+4).toFixed(1)+
+      '" text-anchor="middle" font-size="10" font-weight="bold" fill="#06a37e">'+(i*5===60?60:i*5)+'</text>';
+  }
+  svg.innerHTML = inner;
+  // 指针
+  const hourG = document.createElementNS(NS,"g");
+  hourG.innerHTML = '<line x1="100" y1="124" x2="100" y2="70" stroke="#e63946" stroke-width="9" stroke-linecap="round"/>' +
+                    '<polygon points="94,74 106,74 100,60" fill="#e63946"/>';
+  const minG = document.createElementNS(NS,"g");
+  minG.innerHTML = '<line x1="100" y1="126" x2="100" y2="42" stroke="#1d6fb8" stroke-width="5.5" stroke-linecap="round"/>' +
+                   '<polygon points="95.5,46 104.5,46 100,33" fill="#1d6fb8"/>';
+  const dot = document.createElementNS(NS,"circle");
+  dot.setAttribute("cx",100); dot.setAttribute("cy",112); dot.setAttribute("r",7);
+  dot.setAttribute("fill","#ff9e40"); dot.setAttribute("stroke","#e07b1f"); dot.setAttribute("stroke-width",2);
+  svg.appendChild(hourG); svg.appendChild(minG); svg.appendChild(dot);
+  mount.prepend(svg);
+  const api = {
+    svg,
+    setTime(h, m){
+      hourG.setAttribute("transform","rotate("+((h%12)*30 + m*0.5)+" 100 112)");
+      minG.setAttribute("transform","rotate("+(m*6)+" 100 112)");
+    },
+    showMinLabels(b){
+      svg.querySelectorAll(".minlab").forEach(t => t.style.display = b ? "" : "none");
+    }
+  };
+  api.showMinLabels(false);
+  return api;
+}
+
+/* ---------- 提示与撒花 ---------- */
+let toastTimer = null;
+function toast(msg){
+  const t = $("#toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove("show"), 1800);
+}
+function confetti(){
+  const emo = ["🎉","⭐","🌟","🎈","✨","💖","🍬"];
+  for(let i=0;i<36;i++){
+    const d = document.createElement("div");
+    d.className = "confetti";
+    d.textContent = emo[Math.floor(Math.random()*emo.length)];
+    d.style.left = Math.random()*100 + "vw";
+    d.style.animationDuration = (1.6 + Math.random()*1.6) + "s";
+    d.style.animationDelay = Math.random()*0.4 + "s";
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(), 3600);
+  }
+}
+
+/* ---------- 标签页 ---------- */
+document.querySelectorAll(".tab").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll("main section").forEach(s=>s.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("tab-"+btn.dataset.tab).classList.add("active");
+    speechSynthesis && speechSynthesis.cancel();
+  });
+});
+
+/* ---------- 难度选择（三处同步） ---------- */
+document.querySelectorAll('[data-group="diff"] .chip').forEach(ch=>{
+  ch.addEventListener("click", ()=>{
+    diff = +ch.dataset.diff;
+    document.querySelectorAll('[data-group="diff"] .chip').forEach(c=>
+      c.classList.toggle("active", +c.dataset.diff === diff));
+    newSetTarget(); newChooseQ();
+  });
+});
+
+/* ================= 学一学 ================= */
+const learnClock = makeClock("learnClock");
+let learnTotal = 180; // 分钟计，3:00
+const lessons = [
+  {title:"🙋 认识钟面", labels:false, gen:()=>({h:3,m:0}),
+   text:'看！这就是<b>钟面</b>。上面有 <b>1 到 12</b> 共 12 个数字，围成一个圆圈。数字 12 在最上面，6 在最下面。数一数，找找你认识的数字吧！'},
+  {title:"👉 认识时针", labels:false, gen:()=>({h:3,m:0}),
+   text:'钟面上<span class="hl-h">又短又粗的红色针</span>叫<span class="hl-h">时针</span>。它走得最慢，告诉我们现在是"<b>几点</b>"。现在时针指着 3，就是 3 点哦！'},
+  {title:"👉 认识分针", labels:false, gen:()=>({h:3,m:0}),
+   text:'<span class="hl-m">又细又长的蓝色针</span>叫<span class="hl-m">分针</span>。它走得比时针快，告诉我们"<b>几分</b>"。分针指着最上面的 12，表示<b>整点</b>！'},
+  {title:"🕗 学看整点", labels:false, gen:()=>({h:1+Math.floor(Math.random()*12), m:0}),
+   text:'当<span class="hl-m">分针指着 12</span> 的时候，就是<b>整点</b>。这时候<span class="hl-h">时针指着几，就是几点整</span>。点"🎲换一个"多看几个整点吧！'},
+  {title:"🕜 学看半点", labels:false, gen:()=>({h:1+Math.floor(Math.random()*12), m:30}),
+   text:'当<span class="hl-m">分针指着 6</span> 的时候，就是<b>半点</b>。<span class="hl-h">时针</span>这时走到了两个数字的<b>中间</b>，刚走过几，就是几点半。'},
+  {title:"⏱️ 认识分钟", labels:true, gen:()=>({h:1+Math.floor(Math.random()*12), m:5*(1+Math.floor(Math.random()*11))}),
+   text:'分针从一个数字走到下一个数字，就是 <b>5 分钟</b>。看钟面里圈的<b>绿色小数字</b>：分针指着 1 是 5 分，指着 2 是 10 分……指着 6 就是 30 分！'},
+  {title:"🛠️ 小小钟表匠", labels:true, gen:null,
+   text:'你来当钟表匠！用下面的按钮<b>自己拨一拨</b>指针，看看时间怎么变化。拨好后点"🕐读时间"，让小闹钟读给你听！'}
+];
+let lessonIdx = 0;
+const dotsBox = $("#lessonDots");
+lessons.forEach(()=>{ const s=document.createElement("span"); dotsBox.appendChild(s); });
+
+function learnHM(){ return {h: Math.floor(learnTotal/60)===0?12:Math.floor(learnTotal/60), m: learnTotal%60}; }
+function setLearnTotal(t){
+  learnTotal = ((t%720)+720)%720;
+  const {h,m} = learnHM();
+  learnClock.setTime(h,m);
+  $("#learnBadge").innerHTML = timeText(h,m) + '<small>电子表写作 ' + digital(h,m) + '</small>';
+}
+function renderLesson(){
+  const L = lessons[lessonIdx];
+  $("#lessonTitle").textContent = "第" + "一二三四五六七"[lessonIdx] + "课 · " + L.title;
+  $("#lessonText").innerHTML = L.text;
+  dotsBox.querySelectorAll("span").forEach((s,i)=>s.classList.toggle("on", i===lessonIdx));
+  $("#prevLesson").disabled = lessonIdx===0;
+  $("#nextLesson").disabled = lessonIdx===lessons.length-1;
+  learnClock.showMinLabels(L.labels);
+  $("#learnAdjust").style.display = L.gen ? "none" : "";
+  $("#shuffleTime").style.display = L.gen ? "" : "none";
+  if(L.gen){ const t=L.gen(); setLearnTotal((t.h%12)*60+t.m); }
+}
+$("#prevLesson").addEventListener("click", ()=>{ if(lessonIdx>0){lessonIdx--; renderLesson();} });
+$("#nextLesson").addEventListener("click", ()=>{ if(lessonIdx<lessons.length-1){lessonIdx++; renderLesson();} });
+$("#speakLesson").addEventListener("click", ()=>speak($("#lessonText").textContent));
+$("#speakTime").addEventListener("click", ()=>{ const{h,m}=learnHM(); speak("现在是"+timeText(h,m)); });
+$("#shuffleTime").addEventListener("click", ()=>{
+  const L=lessons[lessonIdx];
+  if(L.gen){ const t=L.gen(); setLearnTotal((t.h%12)*60+t.m);
+    const{h,m}=learnHM(); speak("现在是"+timeText(h,m)); }
+});
+$("#learnAdjust").querySelectorAll("button").forEach(b=>
+  b.addEventListener("click", ()=>setLearnTotal(learnTotal + +b.dataset.d)));
+renderLesson();
+
+/* ================= 拨一拨 ================= */
+const setClock = makeClock("setClock");
+let setTotal = 0, setTargetT = {h:12,m:0}, setRight = 0;
+function setBadgeUpdate(){
+  const h = Math.floor(setTotal/60)===0?12:Math.floor(setTotal/60), m = setTotal%60;
+  setClock.setTime(h,m);
+  $("#setBadge").innerHTML = "现在拨到了：" + timeText(h,m);
+}
+function changeSet(d){ setTotal = ((setTotal+d)%720+720)%720; setBadgeUpdate(); }
+function newSetTarget(){
+  let t = randTime(diff);
+  while(sameT(t, {h:Math.floor(setTotal/60)||12, m:setTotal%60})) t = randTime(diff);
+  setTargetT = t;
+  $("#setTarget").textContent = timeText(t.h, t.m);
+  $("#setStreak").textContent = setRight > 0 ? "已经拨对 " + setRight + " 次啦 👍" : "";
+  setBadgeUpdate();
+}
+document.querySelectorAll("[data-sd]").forEach(b=>
+  b.addEventListener("click", ()=>changeSet(+b.dataset.sd)));
+$("#newSet").addEventListener("click", newSetTarget);
+$("#checkSet").addEventListener("click", ()=>{
+  const h = Math.floor(setTotal/60)===0?12:Math.floor(setTotal/60), m = setTotal%60;
+  if(sameT({h,m}, setTargetT)){
+    setRight++; addStars(2); soundRight(); confetti();
+    toast("🎉 太棒了！奖励 2 颗星星！");
+    speak("太棒了，现在是" + timeText(h,m));
+    setTimeout(newSetTarget, 1500);
+  }else{
+    soundWrong();
+    toast("还差一点点，看看分针和时针指哪里？");
+    speak("再试试看，先把蓝色的分针拨对哦");
+  }
+});
+/* 拖动指针 */
+(function(){
+  let dragging = false;
+  const svg = setClock.svg;
+  function minuteFromEvent(ev){
+    const pt = svg.createSVGPoint();
+    const e = ev.touches ? ev.touches[0] : ev;
+    pt.x = e.clientX; pt.y = e.clientY;
+    const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+    let ang = Math.atan2(p.x-100, 112-p.y) * 180/Math.PI;
+    if(ang < 0) ang += 360;
+    return (Math.round(ang/30)*5) % 60;
+  }
+  function move(ev){
+    if(!dragging) return;
+    ev.preventDefault();
+    const nm = minuteFromEvent(ev);
+    const om = setTotal % 60;
+    let d = nm - om;
+    if(d > 30) d -= 60; if(d < -30) d += 60;
+    if(d !== 0) changeSet(d);
+  }
+  svg.style.touchAction = "none";
+  svg.addEventListener("pointerdown", ev=>{ dragging = true; move(ev); });
+  window.addEventListener("pointermove", move);
+  window.addEventListener("pointerup", ()=>dragging=false);
+})();
+newSetTarget();
+
+/* ================= 选一选 ================= */
+const chooseClock = makeClock("chooseClock");
+let chooseT = null, chooseStreakN = 0, chooseLock = false;
+function newChooseQ(){
+  chooseLock = false;
+  chooseT = randTime(diff);
+  chooseClock.setTime(chooseT.h, chooseT.m);
+  chooseClock.showMinLabels(diff === 3);
+  const box = $("#chooseChoices");
+  box.innerHTML = "";
+  makeChoices(chooseT, diff).forEach(o=>{
+    const b = document.createElement("button");
+    b.textContent = timeText(o.h, o.m);
+    b.addEventListener("click", ()=>{
+      if(chooseLock) return;
+      if(o.ok){
+        chooseLock = true;
+        b.classList.add("right");
+        soundRight(); addStars(1);
+        chooseStreakN++;
+        $("#chooseStreak").textContent = "已经连对 " + chooseStreakN + " 题啦";
+        if(chooseStreakN % 5 === 0){ confetti(); soundStar(); toast("🎊 连对 " + chooseStreakN + " 题，你是钟表小达人！"); }
+        else toast("✅ 答对啦！+1 ⭐");
+        setTimeout(newChooseQ, 1000);
+      }else{
+        b.classList.add("wrong");
+        soundWrong();
+        chooseStreakN = 0;
+        $("#chooseStreak").textContent = "已经连对 0 题啦";
+        toast("再看看时针和分针指哪里 🤔");
+        setTimeout(()=>b.classList.remove("wrong"), 600);
+      }
+    });
+    box.appendChild(b);
+  });
+}
+newChooseQ();
+
+/* ================= 大挑战 ================= */
+const quizClock = makeClock("quizClock");
+let quiz = {n:0, score:0, t:null, lock:false};
+function startQuiz(){
+  quiz = {n:0, score:0, t:null, lock:false};
+  $("#quizStart").style.display = "none";
+  $("#quizEnd").style.display = "none";
+  $("#quizGame").style.display = "";
+  nextQuizQ();
+}
+function nextQuizQ(){
+  if(quiz.n >= 10) return endQuiz();
+  quiz.n++; quiz.lock = false;
+  quiz.t = randTime(diff);
+  quizClock.setTime(quiz.t.h, quiz.t.m);
+  quizClock.showMinLabels(false);
+  $("#quizNo").textContent = "第 " + quiz.n + " / 10 题";
+  $("#quizScore").textContent = "答对 " + quiz.score + " 题";
+  $("#quizBar").style.width = (quiz.n-1)*10 + "%";
+  const box = $("#quizChoices");
+  box.innerHTML = "";
+  makeChoices(quiz.t, diff).forEach(o=>{
+    const b = document.createElement("button");
+    b.textContent = timeText(o.h, o.m);
+    b.addEventListener("click", ()=>{
+      if(quiz.lock) return;
+      quiz.lock = true;
+      if(o.ok){ b.classList.add("right"); soundRight(); quiz.score++; }
+      else{
+        b.classList.add("wrong"); soundWrong();
+        [...box.children].forEach(x=>{ if(x.textContent === timeText(quiz.t.h,quiz.t.m)) x.classList.add("right"); });
+      }
+      $("#quizScore").textContent = "答对 " + quiz.score + " 题";
+      setTimeout(nextQuizQ, 1100);
+    });
+    box.appendChild(b);
+  });
+}
+function endQuiz(){
+  $("#quizGame").style.display = "none";
+  $("#quizEnd").style.display = "";
+  $("#quizBar").style.width = "100%";
+  const s = quiz.score;
+  const starN = s>=9?3 : s>=6?2 : s>=3?1 : 0;
+  $("#quizStars").textContent = "⭐".repeat(starN) + "☆".repeat(3-starN);
+  const msg = s>=9 ? "哇！你是钟表小博士！🎓" : s>=6 ? "真不错！继续加油！💪" : s>=3 ? "有进步！再练一练吧 🌱" : "没关系，去“学一学”再看看吧 🤗";
+  $("#quizResultText").textContent = "答对 " + s + " / 10 题";
+  $("#quizResultSub").textContent = msg + "（获得 " + s + " 颗星星）";
+  addStars(s);
+  speak("挑战结束，你答对了" + s + "道题。" + (s>=9?"你太厉害啦！":"继续加油哦！"));
+  if(s >= 9){ confetti(); soundStar(); setTimeout(confetti, 700); }
+}
+$("#startQuiz").addEventListener("click", startQuiz);
+$("#againQuiz").addEventListener("click", ()=>{
+  $("#quizEnd").style.display = "none";
+  $("#quizStart").style.display = "";
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>你来比划我来猜｜党建理论热词竞赛</title>
+  <style>
+    :root{
+      --red:#b60000; --red2:#8f0000; --gold:#f7d27a; --text:#2d1a1a;
+      --ok:#0f7a38; --warn:#9a6300; --card:#ffffff; --line:#f1d9c8;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:radial-gradient(circle at top,#fffaf6,#fff2e9 40%,#ffe9dc);color:var(--text)}
+    .top{background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;padding:18px 20px;border-bottom:4px solid var(--gold);box-shadow:0 6px 18px rgba(140,0,0,.25)}
+    .title{font-size:28px;font-weight:800;letter-spacing:1px}.sub{opacity:.92;margin-top:6px;font-size:14px}
+    .wrap{max-width:1360px;margin:0 auto;padding:20px}
+
+    button{border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+    .btn-primary{background:var(--red);color:#fff}.btn-secondary{background:#f2e2d5;color:#6b2e2e}.btn-ok{background:#138a41;color:#fff}.btn-warn{background:#b87900;color:#fff}
+
+    /* 主界面 */
+    #homePanel .rule{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;line-height:1.7}
+    #homePanel .rule b{color:var(--red)}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:1024px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media (max-width:640px){ .grid{grid-template-columns:1fr;} }
+    .team{background:var(--card);border:2px solid #f0d4bd;border-radius:14px;padding:14px;min-height:180px;display:flex;flex-direction:column;justify-content:space-between}
+    .team h3{margin:0 0 10px;color:var(--red);font-size:24px}
+    .meta{font-size:15px;line-height:1.85}.meta .ok{color:var(--ok);font-weight:700}.meta .warn{color:var(--warn);font-weight:700}
+    .board{margin-top:14px;background:#fff;border:2px solid #f0d4bd;border-radius:14px;padding:12px;display:none}
+    table{width:100%;border-collapse:collapse} th,td{border-bottom:1px solid #f3dfcf;padding:8px 6px;text-align:left;font-size:14px} th{color:#7d2c2c}
+
+    /* 答题界面 */
+    #playPanel{display:none}
+    .play{background:#fff;border:2px solid #f0d4bd;border-radius:14px;padding:16px;min-height:72vh}
+    .play-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+    .playTitle{font-size:34px;font-weight:900;color:var(--red)}
+    .pill{background:#fff1d6;border:1px solid #efce94;padding:10px 14px;border-radius:999px;font-weight:700;color:#7d4f00;font-size:18px}
+    .word{margin:24px 0;padding:66px 32px;border-radius:16px;border:3px dashed #e8b48d;text-align:center;font-size:96px;font-weight:900;letter-spacing:2px;color:var(--red);background:linear-gradient(180deg,#fff9f2,#fff3e5);line-height:1.25}
+    .ops{display:flex;gap:12px;flex-wrap:wrap}
+    .ops button{font-size:18px;padding:12px 18px}
+
+    .foot{margin-top:12px;color:#8b5d5d;font-size:13px}
+    @media (max-width:768px){ .word{font-size:44px;padding:36px 18px} .playTitle{font-size:24px} }
+
+    .btn-foul{background:#6b3fa0;color:#fff}
+    .pill.danger{background:#ffe0dc !important;border-color:#e88;color:#9a0000 !important}
+    .pill.warning{background:#fff3cd !important;border-color:#f0c040;color:#7a4f00 !important}
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="title">你来比划我来猜｜党建理论热词竞赛</div>
+    <div class="sub">鄂尔多斯供电公司理论知识竞赛专用（题库1-6，每库10题；先填队伍序号再开赛）</div>
+  </div>
+
+  <div class="wrap">
+    <!-- 主界面 -->
+    <section id="homePanel">
+      <div class="rule">
+        <b>规则摘要：</b>
+        1）共 6 支队伍，每队 10 题；
+        2）每队开始后自动计时；
+        3）每队可跳过 2 次；
+        4）答对 8 题即“过关”；
+        5）所有队伍完成后，按过关队伍中“用时最少”排名。
+      </div>
+      <div class="toolbar">
+        <button class="btn-primary" id="initBtn">开始新一轮（随机分题）</button>
+        <button class="btn-secondary" id="rankBtn">计算胜负排名</button>
+      </div>
+      <div id="teams" class="grid"></div>
+      <div class="board" id="board">
+        <h3 style="margin:0 0 8px;color:var(--red)">胜负排名（过关优先，用时升序）</h3>
+        <table>
+          <thead><tr><th>名次</th><th>队伍</th><th>状态</th><th>答对</th><th>用时(秒)</th></tr></thead>
+          <tbody id="rankBody"></tbody>
+        </table>
+      </div>
+      <div class="foot">题库来源：你提供的 PPT（60个热词，已随机打乱分配）。</div>
+    </section>
+
+    <!-- 答题界面 -->
+    <section id="playPanel">
+      <div class="play">
+        <div class="play-head">
+          <div id="playTitle" class="playTitle"></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span class="pill" id="timer">剩余：300.0s</span>
+            <span class="pill" id="progress">进度：0/10</span>
+            <span class="pill" id="correct">答对：0/8</span>
+            <span class="pill" id="skip">跳过剩余：2</span>
+          </div>
+        </div>
+
+        <div id="word" class="word">准备开始</div>
+
+        <div class="ops">
+          <button class="btn-ok" id="rightBtn">答对</button>
+          <button class="btn-warn" id="skipBtn">跳过</button>
+          <button class="btn-foul" id="foulBtn">违规（不计分）</button>
+          <button class="btn-secondary" id="finishBtn">结束本队</button>
+          <button class="btn-secondary" id="backBtn">返回主界面</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+<script>
+const WORDS = [
+"政绩观","调查研究","稳中求进","两个确立","两山理论","经济双循环","抓早抓小","双碳战略","中国式现代化","四个自信",
+"八项规定","劳模精神","严管厚爱","钉钉子精神","长征精神","削峰填谷","两个结合","纠治“四风”","新质生产力","执政为民",
+"以案促改","四个与共","政治三力","共同富裕","系统观念","能源安全","乡村振兴","工匠精神","一岗双责","未来产业",
+"西电东送","久久为功","刀刃向内","红脸出汗","基层减负","团结奋斗","敢于斗争","回头看","戒骄戒躁","抓铁有痕",
+"风清气正","新型电力系统","补钙壮骨","四个全面","守正创新","两个维护","全面从严治党","铸牢中华民族共同体意识","社会主义核心价值观","四个意识",
+"1435","党建工作体系","党的全面领导","两个维护","五个认同","踏石留印","五四运动","延安整风运动","算电协同","五个共同"
+];
+
+const TEAM_COUNT = 6, QUESTIONS_PER_TEAM = 10, PASS_NEED = 8, MAX_SKIP = 2, MAX_TIME = 300;
+const LIB_COUNT = 6;
+let teams = [], current = null, timerTick = null;
+
+const homePanel = document.getElementById('homePanel');
+const playPanel = document.getElementById('playPanel');
+const teamsEl = document.getElementById('teams');
+const playTitle = document.getElementById('playTitle');
+const timerEl = document.getElementById('timer');
+const progressEl = document.getElementById('progress');
+const correctEl = document.getElementById('correct');
+const skipEl = document.getElementById('skip');
+const wordEl = document.getElementById('word');
+
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function initGame(){
+  const mixed = shuffle(WORDS);
+  teams = Array.from({length:TEAM_COUNT}, (_,i)=>({
+    id:i+1,name:`题库${i+1}`,libId:i+1,ownerTeam:"",words:mixed.slice(i*QUESTIONS_PER_TEAM,(i+1)*QUESTIONS_PER_TEAM),
+    index:0,correct:0,skipLeft:MAX_SKIP,violations:0,started:false,finished:false,passed:false,elapsed:0,timedOut:false,_startAt:0
+  }));
+  current = null; clearInterval(timerTick);
+  showHome(); renderTeams(); document.getElementById('board').style.display='none';
+}
+
+function showHome(){ homePanel.style.display='block'; playPanel.style.display='none'; }
+function showPlay(){ homePanel.style.display='none'; playPanel.style.display='block'; }
+
+function renderTeams(){
+  teamsEl.innerHTML = teams.map(t=>{
+    const status = t.finished ? (t.passed ? '<span class="ok">已过关</span>' : '<span class="warn">未过关</span>') : (t.started ? '<span class="warn">进行中</span>' : '未开始');
+    return `<div class="team"><h3>${t.name}</h3><div class="meta">归属队伍：${t.ownerTeam||"未指定"}<br/>状态：${status}${t.timedOut?' <span class=\'warn\'>[超时]</span>':''}<br/>答对：${t.correct}/${PASS_NEED} ｜ 进度：${t.index}/${QUESTIONS_PER_TEAM}<br/>跳过剩余：${t.skipLeft} ｜ 违规：${t.violations} 次<br/>用时：${t.elapsed.toFixed(1)}s / 300s</div><div style="margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input id="teamNo_${t.id}" type="text" placeholder="填写队伍序号(如1)" style="flex:1;min-width:130px;border:1px solid #d7b79d;border-radius:8px;padding:8px 10px;font-size:14px"><button class="btn-primary" onclick="openTeam(${t.id})">开始该题库</button></div></div>`;
+  }).join('');
+}
+
+function openTeam(id){
+  const t = teams.find(x=>x.id===id); if(!t) return;
+  const input = document.getElementById(`teamNo_${id}`);
+  const teamNo = (input?.value||'').trim();
+  if(!teamNo){ alert('请先填写队伍序号，再开始该题库。'); return; }
+  if(t.finished){ alert(`${t.name}（队伍${t.ownerTeam||teamNo}）已结束，用时 ${t.elapsed.toFixed(1)} 秒。`); return; }
+  if(!t.started){ t.ownerTeam = teamNo; t.started=true; t._startAt=Date.now(); }
+  else if(t.ownerTeam && t.ownerTeam!==teamNo){ alert(`该题库已被队伍${t.ownerTeam}使用，不能改为队伍${teamNo}。`); return; }
+  current = t;
+  playTitle.textContent = `队伍${t.ownerTeam} · ${t.name} 答题中`;
+  showPlay(); startTimer(); refreshPlay(); renderTeams();
+}
+
+function startTimer(){
+  clearInterval(timerTick);
+  timerTick = setInterval(()=>{
+    if(!current || current.finished) return;
+    current.elapsed = (Date.now()-current._startAt)/1000;
+    const remaining = Math.max(0, MAX_TIME - current.elapsed);
+    timerEl.textContent = `剩余：${remaining.toFixed(1)}s`;
+    timerEl.className = 'pill' + (remaining <= 30 ? ' danger' : remaining <= 60 ? ' warning' : '');
+    if(remaining <= 0){ finishCurrent(true, true); }
+  },100);
+}
+
+function refreshPlay(){
+  if(!current) return;
+  progressEl.textContent = `进度：${current.index}/${QUESTIONS_PER_TEAM}`;
+  correctEl.textContent = `答对：${current.correct}/${PASS_NEED}`;
+  skipEl.textContent = `跳过剩余：${current.skipLeft}`;
+  const remaining = Math.max(0, MAX_TIME - current.elapsed);
+  timerEl.textContent = `剩余：${remaining.toFixed(1)}s`;
+  if(current.index >= QUESTIONS_PER_TEAM || current.correct >= PASS_NEED){ finishCurrent(true); return; }
+  if(remaining <= 0){ finishCurrent(true, true); return; }
+  wordEl.textContent = current.words[current.index] || '本队题目已完成';
+}
+
+function answerRight(){ if(!current || current.finished) return; current.correct += 1; current.index += 1; refreshPlay(); renderTeams(); }
+function answerSkip(){
+  if(!current || current.finished) return;
+  if(current.skipLeft<=0){ alert('本队跳过次数已用完（共2次）。'); return; }
+  current.skipLeft -= 1; current.index += 1; refreshPlay(); renderTeams();
+}
+
+/** 违规：题目作废跳过，不计入答对，也不扣跳过次数 */
+function answerFoul(){
+  if(!current || current.finished) return;
+  current.violations += 1;
+  current.index += 1;
+  refreshPlay(); renderTeams();
+}
+
+function finishCurrent(auto=false, timeout=false){
+  if(!current || current.finished) return;
+  current.finished = true;
+  current.passed = current.correct >= PASS_NEED;
+  current.elapsed = Math.min((Date.now()-current._startAt)/1000, MAX_TIME);
+  current.timedOut = timeout;
+  clearInterval(timerTick);
+  timerEl.className = 'pill';
+  if(timeout){
+    wordEl.textContent = '⏰ 时间到！';
+    alert(`⏰ 时间到！${current.name} 已结束。\n答对：${current.correct} 题 ｜ 违规：${current.violations} 次\n结果：${current.passed?'✅ 过关':'❌ 未过关'}`);
+  } else if(!auto){
+    alert(`${current.name} 已结束。\n答对：${current.correct} 题 ｜ 违规：${current.violations} 次\n用时：${current.elapsed.toFixed(1)} 秒\n结果：${current.passed?'✅ 过关':'❌ 未过关'}`);
+  }
+  playTitle.textContent = `队伍${current.ownerTeam||'-'} · ${current.name} 已结束`;
+  wordEl.textContent = (timeout ? '⏰ 时间到 · ' : '') + (current.passed ? '✅ 本队过关' : '❌ 本队未过关');
+  renderTeams();
+}
+
+function rankTeams(){
+  const arr=[...teams].sort((a,b)=>{ if(a.passed!==b.passed) return a.passed?-1:1; return a.elapsed-b.elapsed; });
+  const body = document.getElementById('rankBody');
+  body.innerHTML = arr.map((t,i)=>`<tr><td>${i+1}</td><td>队伍${t.ownerTeam||'-'} / ${t.name}</td><td>${t.passed?'过关':'未过关'}</td><td>${t.correct}</td><td>${t.elapsed?t.elapsed.toFixed(1):'-'}</td></tr>`).join('');
+  document.getElementById('board').style.display='block';
+}
+
+document.getElementById('initBtn').onclick = initGame;
+document.getElementById('rankBtn').onclick = rankTeams;
+document.getElementById('rightBtn').onclick = answerRight;
+document.getElementById('skipBtn').onclick = answerSkip;
+document.getElementById('foulBtn').onclick = answerFoul;
+document.getElementById('finishBtn').onclick = ()=>finishCurrent(false);
+document.getElementById('backBtn').onclick = showHome;
+
+initGame();
+</script>
+</body>
+</html>

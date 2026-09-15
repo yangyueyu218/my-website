@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI如何为财务工作减负增效 · 财务资产部专题授课</title>
+
+<!-- ============ 字体：思源宋体（标题）+ 思源黑体（正文） ============ -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+
+<style>
+/* ===========================================
+   主题变量：改这里即可换整体配色
+   =========================================== */
+:root{
+  --outer:#2b2926;        /* 桌面深色底 */
+  --paper:#f8f5ee;        /* 账本纸面 */
+  --ink:#22201c;          /* 墨色 */
+  --dim:#6b675e;          /* 次要文字 */
+  --red:#c2453a;          /* 账本红 */
+  --mint:#9fd0b7; --sky:#a5cbe0; --pink:#f0b9c1; --cream:#f3dfa0; --lav:#c9bce6;
+  --font-display:'Noto Serif SC',serif;
+  --font-body:'Noto Sans SC',sans-serif;
+  --stage-bg:var(--outer); --slide-bg:var(--outer);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-body);color:var(--ink)}
+
+/* ===========================================
+   固定16:9舞台基础样式（viewport-base.css 全文）
+   =========================================== */
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--stage-bg,#000)}
+.deck-viewport{position:fixed;inset:0;overflow:hidden;background:var(--stage-bg,#000)}
+.deck-stage{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;background:var(--slide-bg,#fff)}
+.slide{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden;display:block;visibility:hidden;opacity:0;pointer-events:none;background:var(--slide-bg,#fff)}
+.slide.active,.slide.visible{visibility:visible;opacity:1;pointer-events:auto;z-index:1}
+img,video,canvas,svg{max-width:100%;max-height:100%}
+.deck-controls{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:1000}
+@media print{
+  html,body{width:1920px;height:auto;overflow:visible;background:#fff}
+  .deck-viewport{position:static;overflow:visible;background:#fff}
+  .deck-stage{position:static;width:auto;height:auto;transform:none!important;background:none}
+  .slide{position:relative;display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;width:1920px;height:1080px;break-after:page;page-break-after:always}
+  .slide:last-child{break-after:auto;page-break-after:auto}
+  .deck-controls{display:none!important}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}}
+
+/* ===========================================
+   账本纸面：每页共用的容器
+   =========================================== */
+.paper{
+  position:absolute;inset:44px 60px;background:var(--paper);border-radius:8px;
+  box-shadow:0 26px 70px rgba(0,0,0,.5);overflow:hidden;
+  background-image:repeating-linear-gradient(transparent 0 47px, rgba(34,32,28,.05) 47px 48px);
+}
+/* 账本红色纵线 */
+.paper::before{content:'';position:absolute;top:0;bottom:0;left:150px;width:2px;background:rgba(194,69,58,.35)}
+/* 装订孔（JS注入） */
+.holes{position:absolute;left:48px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;z-index:2}
+.holes i{width:20px;height:20px;border-radius:50%;background:var(--outer);box-shadow:inset 0 3px 5px rgba(0,0,0,.6)}
+/* 右侧章节索引标签（JS注入，当前章节展开） */
+.tabs{position:absolute;right:0;top:56px;display:flex;flex-direction:column;gap:10px;z-index:3}
+.tab{writing-mode:vertical-rl;font-size:17px;letter-spacing:.2em;color:var(--ink);padding:13px 8px;border-radius:6px 0 0 6px;opacity:.5;transition:all .3s}
+.tab.on{opacity:1;padding-right:15px;font-weight:700;box-shadow:-4px 3px 10px rgba(0,0,0,.12)}
+/* 页脚页码（JS注入） */
+.pageno{position:absolute;right:64px;bottom:26px;font-size:19px;color:var(--dim);letter-spacing:.15em;z-index:3}
+/* 内容区：避开红线与标签 */
+.inner{position:absolute;inset:0;padding:78px 120px 70px 210px;display:flex;flex-direction:column}
+
+/* ===========================================
+   通用排版组件
+   =========================================== */
+.kicker{font-size:22px;letter-spacing:.42em;color:var(--red);font-weight:500;margin-bottom:14px}
+h2.head{font-family:var(--font-display);font-weight:900;font-size:58px;line-height:1.2;margin-bottom:34px}
+h2.head mark,h1 mark{background:linear-gradient(transparent 60%,var(--cream) 60%);color:var(--ink);padding:0 .06em}
+.lead{font-size:27px;color:var(--dim);font-weight:300;line-height:1.7}
+b,strong{font-weight:700}
+.accent{color:var(--red)}
+
+/* 印章 */
+.stamp{position:absolute;border:4px double var(--red);border-radius:50%;color:var(--red);display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--font-display);line-height:1.45;transform:rotate(-12deg);opacity:.88;z-index:4}
+/* 便签卡片 */
+.card{background:#fffdf7;border:1.5px solid rgba(34,32,28,.14);border-radius:10px;box-shadow:0 8px 22px rgba(0,0,0,.08);padding:34px 38px;position:relative}
+.card .cap{position:absolute;top:0;left:0;right:0;height:10px;border-radius:10px 10px 0 0}
+/* 提示词收据框 */
+.prompt{background:#fffef8;border:2px dashed rgba(194,69,58,.5);border-radius:10px;padding:26px 34px;font-size:24px;line-height:1.75;position:relative;margin-top:auto}
+.prompt::before{content:'✂ 提示词 · 现场直接复制';position:absolute;top:-16px;left:28px;background:var(--paper);color:var(--red);font-size:18px;letter-spacing:.2em;padding:0 12px}
+/* 演示徽章 */
+.demo-badge{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--cream);font-size:20px;letter-spacing:.25em;padding:9px 22px;border-radius:30px;width:max-content}
+.demo-badge::before{content:'';width:11px;height:11px;border-radius:50%;background:#e8554d;animation:rec 1.4s infinite}
+@keyframes rec{50%{opacity:.25}}
+
+/* ===========================================
+   入场动画：当前页加 .visible 后依次浮现
+   =========================================== */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+.slide.visible .reveal{opacity:1;transform:none}
+.slide.visible .reveal.r1{transition-delay:.08s}.slide.visible .reveal.r2{transition-delay:.2s}
+.slide.visible .reveal.r3{transition-delay:.32s}.slide.visible .reveal.r4{transition-delay:.44s}
+.slide.visible .reveal.r5{transition-delay:.56s}.slide.visible .reveal.r6{transition-delay:.68s}
+.reveal-stamp{opacity:0;transform:rotate(-12deg) scale(1.7)}
+.slide.visible .reveal-stamp{animation:stampin .45s .9s cubic-bezier(.2,1.6,.4,1) forwards}
+@keyframes stampin{to{opacity:.88;transform:rotate(-12deg) scale(1)}}
+
+/* ===========================================
+   S1 封面
+   =========================================== */
+.s1 .inner{justify-content:center}
+.s1 h1{font-family:var(--font-display);font-weight:900;font-size:108px;line-height:1.22;margin:18px 0 26px}
+.s1 .byline{margin-top:56px;font-size:24px;color:var(--dim);letter-spacing:.14em;display:flex;gap:56px}
+.s1 .byline b{color:var(--ink);font-weight:500}
+.s1 .stamp{right:190px;bottom:120px;width:190px;height:190px;font-size:30px}
+
+/* ===========================================
+   S2 开场三问
+   =========================================== */
+.qrow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:36px;margin-top:16px}
+.qcard{padding:40px 34px 44px;font-size:26px;line-height:1.65}
+.qcard .num{font-family:var(--font-display);font-weight:900;font-size:74px;color:var(--red);display:block;margin-bottom:14px}
+.qcard:nth-child(1){transform:rotate(-1deg)}.qcard:nth-child(2){transform:rotate(.6deg)}.qcard:nth-child(3){transform:rotate(-.5deg)}
+.s2 .stamp{right:150px;top:90px;width:150px;height:150px;font-size:26px}
+.s2 .foot{margin-top:auto;font-size:26px;color:var(--dim)}
+.s2 .foot mark{font-size:28px}
+
+/* ===========================================
+   S3 课程科目表（记账凭证式菜单）
+   =========================================== */
+.ledger{width:100%;border-collapse:collapse;font-size:25px;margin-top:6px}
+.ledger th{font-family:var(--font-display);font-size:23px;letter-spacing:.2em;color:var(--red);border-bottom:2.5px solid var(--red);padding:12px 18px;text-align:left;font-weight:600}
+.ledger td{border-bottom:1px solid rgba(34,32,28,.14);padding:15px 18px}
+.ledger td:last-child,.ledger th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.ledger .sec{display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:14px;vertical-align:baseline}
+.ledger tr.sum td{border-bottom:none;font-weight:700;padding-top:20px}
+.s3 .note{margin-top:26px;font-size:24px;color:var(--dim)}
+
+/* ===========================================
+   S4 保密红线
+   =========================================== */
+.s4 .rule{font-family:var(--font-display);font-weight:900;font-size:62px;line-height:1.5;margin:30px 0 40px}
+.s4 .rule .accent{border-bottom:6px solid var(--red)}
+.s4 .method{max-width:1150px;font-size:28px;line-height:1.8}
+.s4 .stamp{right:170px;top:110px;width:210px;height:210px;font-size:34px;border-width:5px}
+
+/* ===========================================
+   S5 十二字口诀
+   =========================================== */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:8px;flex:1}
+.tile{display:flex;align-items:center;gap:30px;padding:30px 40px}
+.tile .zi{font-family:var(--font-display);font-weight:900;font-size:56px;white-space:nowrap}
+.tile p{font-size:24px;color:var(--dim);line-height:1.6}
+.s5 .chant{margin-top:28px;text-align:center;font-size:26px;color:var(--red);letter-spacing:.2em}
+
+/* ===========================================
+   S6 正反对比
+   =========================================== */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:40px;flex:1;margin-top:4px}
+.vs .col{padding:36px 40px;display:flex;flex-direction:column;gap:20px}
+.vs .tagline{font-size:24px;font-weight:700;letter-spacing:.12em}
+.vs .bad .tagline{color:#a33}.vs .good .tagline{color:#2c6e49}
+.vs .ask{font-size:25px;line-height:1.7;background:rgba(34,32,28,.05);border-radius:8px;padding:20px 24px}
+.vs .res{font-size:24px;color:var(--dim);line-height:1.65;margin-top:auto}
+.vs .bad{background:#fdf3f1;border:1.5px solid rgba(194,69,58,.3);border-radius:10px;transform:rotate(-.6deg)}
+.vs .good{background:#f2f8f2;border:1.5px solid rgba(44,110,73,.3);border-radius:10px;transform:rotate(.5deg)}
+
+/* ===========================================
+   S7 案例一 前后对比
+   =========================================== */
+.beforeafter{display:grid;grid-template-columns:1fr 120px 1fr;align-items:center;gap:0;flex:1;margin-top:6px}
+.scatter{position:relative;height:520px}
+.scrap{position:absolute;background:#fffdf7;border:1.5px solid rgba(34,32,28,.2);border-radius:6px;padding:16px 22px;font-size:22px;box-shadow:0 6px 16px rgba(0,0,0,.1)}
+.arrowbig{font-size:76px;color:var(--red);text-align:center}
+.onepage{background:#fffdf7;border:2px solid var(--ink);border-radius:12px;height:520px;padding:30px 34px;box-shadow:10px 10px 0 rgba(194,69,58,.18);display:flex;flex-direction:column;gap:14px}
+.onepage .bar{height:16px;border-radius:8px}
+.onepage h4{font-family:var(--font-display);font-size:30px;margin-bottom:4px}
+.onepage .row{display:flex;gap:12px}.onepage .row .bar{flex:1}
+
+/* ===========================================
+   S8 三步做法
+   =========================================== */
+.steps3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:34px;margin-top:10px}
+.step{padding:36px 34px 40px;font-size:25px;line-height:1.65}
+.step .no{font-family:var(--font-display);font-weight:900;font-size:44px;color:var(--red);display:block;margin-bottom:10px}
+.s8 .punch{margin-top:44px;font-family:var(--font-display);font-weight:900;font-size:52px;text-align:center}
+.s8 .sub2{text-align:center;margin-top:16px;font-size:24px;color:var(--dim)}
+
+/* ===========================================
+   S9/S10 Excel 宏
+   =========================================== */
+.split-sheet{display:grid;grid-template-columns:1fr 110px 1fr;align-items:center;flex:1;margin-top:2px}
+.sheet{background:#fffdf7;border:1.5px solid rgba(34,32,28,.25);border-radius:8px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.1)}
+.sheet .thead{background:var(--sky);font-weight:700}
+.sheet .r{display:grid;grid-template-columns:1.4fr 1fr .8fr;font-size:21px;border-bottom:1px solid rgba(34,32,28,.1)}
+.sheet .r span{padding:11px 16px;border-right:1px solid rgba(34,32,28,.08)}
+.minis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.mini{background:#fffdf7;border:1.5px solid rgba(34,32,28,.22);border-radius:6px;padding:14px 10px 12px;text-align:center;font-size:19px;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+.mini i{display:block;height:5px;border-radius:3px;margin-top:8px}
+.timing{display:flex;gap:40px;margin-top:26px}
+.timing .t{flex:1;text-align:center;padding:22px}
+.timing .big{font-family:var(--font-display);font-weight:900;font-size:52px;display:block}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:8px}
+.flow .f{padding:28px 26px;font-size:23px;line-height:1.6;text-align:center}
+.flow .f .ic{font-size:42px;display:block;margin-bottom:10px}
+.s10 .punchline{margin-top:26px;text-align:center;font-size:30px}
+
+/* ===========================================
+   S11 BI 看板（CSS 模拟看板）
+   =========================================== */
+.dash{background:#23303f;border-radius:14px;padding:30px 36px;flex:1;display:flex;flex-direction:column;gap:22px;color:#eef3f8;box-shadow:0 14px 34px rgba(0,0,0,.25)}
+.dash .kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.dash .kpi{background:rgba(255,255,255,.07);border-radius:10px;padding:18px 24px}
+.dash .kpi b{font-size:40px;font-weight:700;display:block;font-variant-numeric:tabular-nums}
+.dash .kpi span{font-size:19px;color:#9fb2c5}
+.dash .bars{flex:1;display:flex;flex-direction:column;gap:13px;justify-content:center}
+.dash .brow{display:grid;grid-template-columns:150px 1fr 90px;align-items:center;gap:16px;font-size:20px}
+.dash .track{height:22px;background:rgba(255,255,255,.1);border-radius:11px;overflow:hidden}
+.dash .fill{height:100%;border-radius:11px;background:#7fc8a9;width:0;transition:width 1.1s .5s var(--ease)}
+.dash .fill.hot{background:#e8746a}
+.slide.visible .dash .fill{width:var(--w)}
+.dash .pct{text-align:right;font-variant-numeric:tabular-nums;color:#9fb2c5}
+.s11 .quipline{margin-top:22px;font-size:26px;display:flex;justify-content:space-between;align-items:baseline}
+.s11 .quipline .warn{font-size:22px;color:var(--dim)}
+
+/* ===========================================
+   S12 概念页：问答 → 派活
+   =========================================== */
+.concept{display:grid;grid-template-columns:1fr 130px 1fr;align-items:stretch;gap:0;flex:1;margin-top:6px}
+.mode{padding:44px 46px;display:flex;flex-direction:column;gap:18px;border-radius:12px}
+.mode h3{font-family:var(--font-display);font-weight:900;font-size:46px}
+.mode p{font-size:25px;line-height:1.75;color:var(--dim)}
+.mode.old{background:rgba(34,32,28,.05);border:1.5px dashed rgba(34,32,28,.3)}
+.mode.new{background:#fffdf7;border:2.5px solid var(--red);box-shadow:8px 8px 0 rgba(194,69,58,.15)}
+.mode .chip{width:max-content;font-size:20px;letter-spacing:.25em;padding:6px 18px;border-radius:20px}
+.mode.old .chip{background:rgba(34,32,28,.12)}
+.mode.new .chip{background:var(--red);color:#fff}
+.s12 .oneliner{margin-top:26px;text-align:center;font-family:var(--font-display);font-weight:900;font-size:44px}
+
+/* ===========================================
+   S13 WorkBuddy 演示
+   =========================================== */
+.wbflow{display:grid;grid-template-columns:1fr 90px 1.1fr 90px 1fr;align-items:center;margin:6px 0 30px}
+.wb{padding:26px 24px;text-align:center;font-size:23px;line-height:1.6}
+.wb .ic{font-size:52px;display:block;margin-bottom:8px}
+.wb small{color:var(--dim);font-size:20px}
+.arr{font-size:50px;color:var(--red);text-align:center}
+
+/* ===========================================
+   S14 批量场景四宫格
+   =========================================== */
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:28px;flex:1;margin-top:4px}
+.quad .card{padding:28px 34px;font-size:24px;line-height:1.6}
+.quad .card h4{font-family:var(--font-display);font-size:31px;margin-bottom:8px}
+.s14 .motto{margin-top:26px;display:flex;justify-content:space-between;align-items:baseline}
+.s14 .motto .m{font-family:var(--font-display);font-weight:900;font-size:40px}
+.s14 .motto .safe{font-size:22px;color:var(--red)}
+
+/* ===========================================
+   S15 审核员三句话
+   =========================================== */
+.three{display:flex;flex-direction:column;gap:26px;margin-top:8px;flex:1;justify-content:center}
+.say{display:grid;grid-template-columns:210px 1fr;align-items:center;gap:34px;padding:26px 40px}
+.say .k{font-family:var(--font-display);font-weight:900;font-size:44px}
+.say p{font-size:26px;line-height:1.6}
+.s15 .stamp{right:150px;top:100px;width:170px;height:170px;font-size:26px}
+.s15 .cost{margin-top:22px;text-align:center;font-size:25px;color:var(--dim)}
+
+/* ===========================================
+   S16 四个小作业
+   =========================================== */
+.homework{display:flex;flex-direction:column;gap:24px;margin-top:6px;flex:1;justify-content:center}
+.hw{display:flex;align-items:center;gap:28px;padding:24px 38px;font-size:27px}
+.hw .box{width:44px;height:44px;border:3px solid var(--ink);border-radius:8px;flex-shrink:0;position:relative}
+.hw .box::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:34px;color:var(--red);opacity:0;transform:scale(2)}
+.slide.visible .hw:nth-child(1) .box::after{animation:tick .3s 1.2s forwards}
+.slide.visible .hw:nth-child(2) .box::after{animation:tick .3s 1.45s forwards}
+.slide.visible .hw:nth-child(3) .box::after{animation:tick .3s 1.7s forwards}
+.slide.visible .hw:nth-child(4) .box::after{animation:tick .3s 1.95s forwards}
+@keyframes tick{to{opacity:1;transform:scale(1)}}
+.s16 .deadline{margin-top:24px;text-align:center;font-size:24px;color:var(--dim)}
+
+/* ===========================================
+   S17 下期预告 票根
+   =========================================== */
+.tickets{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;flex:1;align-content:center;margin-top:6px}
+.ticket{background:#fffdf7;border:1.5px solid rgba(34,32,28,.25);border-radius:10px;padding:34px 18px 30px;text-align:center;position:relative;font-size:22px;box-shadow:0 8px 18px rgba(0,0,0,.09)}
+.ticket::before,.ticket::after{content:'';position:absolute;width:22px;height:22px;border-radius:50%;background:var(--paper);border:1.5px solid rgba(34,32,28,.25);top:50%;transform:translateY(-50%)}
+.ticket::before{left:-12px}.ticket::after{right:-12px}
+.ticket .ic{font-size:48px;display:block;margin-bottom:14px}
+.ticket h4{font-family:var(--font-display);font-size:27px;margin-bottom:8px}
+.ticket small{color:var(--dim);font-size:19px;line-height:1.5;display:block}
+.ticket:nth-child(odd){transform:rotate(-1.2deg)}.ticket:nth-child(even){transform:rotate(1deg)}
+.s17 .order{margin-top:26px;text-align:center;font-size:26px}
+
+/* ===========================================
+   S18 金句收尾
+   =========================================== */
+.s18 .inner{justify-content:center;align-items:center;text-align:center;padding-right:210px}
+.s18 blockquote{font-family:var(--font-display);font-weight:900;font-size:64px;line-height:1.7;max-width:1250px}
+.s18 .thanks{margin-top:60px;font-size:28px;color:var(--dim);letter-spacing:.3em}
+.s18 .stamp{right:230px;bottom:130px;width:170px;height:170px;font-size:30px}
+
+/* ===========================================
+   底部翻页控件（舞台之外的界面元素）
+   =========================================== */
+.deck-controls{display:flex;align-items:center;gap:18px;background:rgba(20,18,16,.75);backdrop-filter:blur(8px);border-radius:30px;padding:8px 22px;color:#cfc9bf;font-size:14px;letter-spacing:.1em;user-select:none}
+.deck-controls button{background:none;border:none;color:#cfc9bf;font-size:18px;cursor:pointer;padding:4px 8px}
+.deck-controls button:hover{color:#fff}
+
+/* ===========================================
+   在线编辑：左上角热区 + 铅笔按钮
+   =========================================== */
+.edit-hotzone{position:fixed;top:0;left:0;width:80px;height:80px;z-index:10000;cursor:pointer}
+.edit-toggle{position:fixed;top:18px;left:18px;z-index:10001;width:46px;height:46px;border-radius:50%;border:none;background:var(--cream);font-size:20px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .3s}
+.edit-toggle.show,.edit-toggle.active{opacity:1;pointer-events:auto}
+.edit-toggle.active{background:var(--red);color:#fff}
+body.editing .ed{outline:2px dashed rgba(194,69,58,.55);outline-offset:3px;cursor:text;min-width:1em}
+.edit-tip{position:fixed;top:24px;left:76px;z-index:10001;background:rgba(20,18,16,.85);color:#f3dfa0;font-size:13px;padding:8px 16px;border-radius:20px;opacity:0;pointer-events:none;transition:opacity .3s;letter-spacing:.05em}
+body.editing .edit-tip{opacity:1}
+</style>
+</head>
+<body class="">
+
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage" style="transform: translate(0px, 19.1875px) scale(0.763542);">
+
+<!-- ============ S1 封面 ============ -->
+<section class="slide s1" data-ch="0">
+  <div class="paper">
+    <div class="inner">
+      <p class="kicker reveal r1 ed" data-ed-i="0">鄂尔多斯供电公司 · 财务资产部 AI 应用专题授课</p>
+      <h1 class="reveal r2 ed" data-ed-i="1">AI如何为财务工作<br><mark>减负增效</mark></h1>
+      <p class="lead reveal r3 ed" data-ed-i="2">从"你问我答"到"批量干活"——四个真实案例，把繁琐记进 AI 的账</p>
+      <div class="byline reveal r4"><span class="ed" data-ed-i="3">主讲 <b>杨越宇</b></span><span class="ed" data-ed-i="4">2026 年</span><span class="ed" data-ed-i="5"><font color="#22201c">7 月</font></span></div>
+      <div class="stamp reveal-stamp ed" data-ed-i="6">AI-未来已来</div>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab on" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 1 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab on" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 1 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S2 开场三问 ============ -->
+<section class="slide s2" data-ch="0">
+  <div class="paper">
+    <div class="inner">
+      <p class="kicker reveal r1 ed" data-ed-i="7">环节一 · 开场 3'</p>
+      <h2 class="head reveal r1 ed" data-ed-i="8">正式开始前，先问三个问题</h2>
+      <div class="qrow">
+        <div class="card qcard reveal r2"><i class="cap" style="background:var(--mint)"></i><span class="num">①</span><span class="ed" data-ed-i="9">月底月初结账对账，各种表核对好几遍，<b>对到眼睛发花</b>的？</span></div>
+        <div class="card qcard reveal r3"><i class="cap" style="background:var(--sky)"></i><span class="num">②</span><span class="ed" data-ed-i="10">"这个怎么报销""商旅怎么填"——同一个问题<b>一天答八遍</b>的？</span></div>
+        <div class="card qcard reveal r4"><i class="cap" style="background:var(--pink)"></i><span class="num">③</span><span class="ed" data-ed-i="11">领导临时要个数据分析个图表，<b>心里咯噔一下</b>的？</span></div>
+      </div>
+      <p class="foot reveal r5 ed" data-ed-i="12">这三件事的共同点：不难，但<mark>繁琐、重复、耗时间</mark>——恰恰是 AI 最擅长接手的活儿。</p>
+      <div class="stamp reveal-stamp ed" data-ed-i="13">请举手</div>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab on" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 2 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab on" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 2 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S3 课程科目表 ============ -->
+<section class="slide s3" data-ch="0">
+  <div class="paper">
+    <div class="inner">
+      <p class="kicker reveal r1 ed" data-ed-i="14">今天讲什么</p>
+      <h2 class="head reveal r1 ed" data-ed-i="15">本节课"记账凭证"</h2>
+      <table class="ledger reveal r2">
+        <tbody><tr><th>科目</th><th>摘要</th><th>时长</th></tr>
+        <tr><td class="ed" data-ed-i="16"><i class="sec" style="background:var(--sky)"></i>基本功 · 十二字口诀</td><td class="ed" data-ed-i="17">同一个AI，会问和不会问，天差地别</td><td class="ed" data-ed-i="18">5'</td></tr>
+        <tr><td class="ed" data-ed-i="19"><i class="sec" style="background:var(--mint)"></i>案例一 · 报账指南</td><td class="ed" data-ed-i="20">散落的文档，串成一个页面</td><td class="ed" data-ed-i="21">5'</td></tr>
+        <tr><td class="ed" data-ed-i="22"><i class="sec" style="background:var(--pink)"></i>案例二 · Excel 宏</td><td class="ed" data-ed-i="23">重复的表格活，交出去</td><td class="ed" data-ed-i="24">5'</td></tr>
+        <tr><td class="ed" data-ed-i="25"><i class="sec" style="background:var(--cream)"></i>案例三 · BI 看板</td><td class="ed" data-ed-i="26">同样的数据，讲出更好的故事</td><td class="ed" data-ed-i="27">5'</td></tr>
+        <tr><td class="ed" data-ed-i="28"><i class="sec" style="background:var(--lav)"></i>案例四 · 批量干活</td><td class="ed" data-ed-i="29">从"你问我答"到"派活给智能体"</td><td class="ed" data-ed-i="30">8'</td></tr>
+        <tr><td class="ed" data-ed-i="31"><i class="sec" style="background:var(--red)"></i>心法 · AI 当审核员</td><td class="ed" data-ed-i="32">发文之前，让它挑挑毛病</td><td class="ed" data-ed-i="33">3'</td></tr>
+        <tr class="sum"><td class="ed" data-ed-i="34">借：30 分钟</td><td class="ed" data-ed-i="35">贷：无数个加班的夜晚</td><td class="accent ed" data-ed-i="36">√ 平</td></tr>
+      </tbody></table>
+      <p class="note reveal r4 ed" data-ed-i="37">前三个案例教大家<b>怎么问</b>，第四个教大家<b>怎么派活</b>。</p>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab on" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 3 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab on" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 3 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S4 保密红线 ============ -->
+<section class="slide s4" data-ch="0">
+  <div class="paper">
+    <div class="inner">
+      <p class="kicker reveal r1 ed" data-ed-i="38">开讲前 · 先立规矩 2'</p>
+      <h2 class="head reveal r1 ed" data-ed-i="39">保密红线</h2>
+      <p class="rule reveal r2 ed" data-ed-i="40">银行卡号、身份证号、工资薪酬、合同金额<br><span class="accent">绝对不能</span>往公网 AI 里传</p>
+      <div class="method reveal r3 ed" data-ed-i="41">
+        <p>一个最简单的判断法：这段内容，<mark>敢不敢直接发到单位公众号上？</mark></p>
+        <p style="margin-top:14px;color:var(--dim)">敢 → 能用；不敢 → 先脱敏：单位换成"XX公司"，人名换成张三李四，真实金额换假数。</p><p style="margin-top:14px;color:var(--dim)">或者和ai 说给我留个模板接口，先用虚假数据形成模板，然后本地运行时上传真实数据</p><p style="margin-top:14px;color:var(--dim)">叠个甲：今天我演示的数据，全是编的。</p>
+      </div>
+      <div class="stamp reveal-stamp ed" data-ed-i="42">涉密<br>不上网</div>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab on" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 4 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab on" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 4 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S5 十二字口诀 ============ -->
+<section class="slide s5" data-ch="1">
+  <div class="paper">
+    <div class="inner">
+      <p class="kicker reveal r1 ed" data-ed-i="43">环节三 · 基本功 5'</p>
+      <h2 class="head reveal r1 ed" data-ed-i="44">十二字提问口诀 <span style="font-size:30px;color:var(--dim);font-weight:400">九成的问题不在 AI，在问法</span></h2>
+      <div class="tiles">
+        <div class="card tile reveal r2"><i class="cap" style="background:var(--mint)"></i><span class="zi ed" data-ed-i="45">交代身份</span><p class="ed" data-ed-i="46">告诉它"你是财务资产部的会计、预算专责"，口吻立刻就对了</p></div>
+        <div class="card tile reveal r3"><i class="cap" style="background:var(--sky)"></i><span class="zi ed" data-ed-i="47">说清背景</span><p class="ed" data-ed-i="48">这份材料给谁看、什么场合用、手头有什么数</p></div>
+        <div class="card tile reveal r4"><i class="cap" style="background:var(--pink)"></i><span class="zi ed" data-ed-i="49">提出要求</span><p class="ed" data-ed-i="50">字数、格式、口吻，越具体越好</p></div>
+        <div class="card tile reveal r5"><i class="cap" style="background:var(--cream)"></i><span class="zi ed" data-ed-i="51">给个样子</span><p class="ed" data-ed-i="52">有模板、有往期材料，直接丢给它照着学（注意保密）</p></div>
+      </div>
+      <p class="chant reveal r6 ed" data-ed-i="53">交代身份 · 说清背景 · 提出要求 · 给个样子</p>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab on" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 5 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab on" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 5 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S6 正反对比 ============ -->
+<section class="slide s6" data-ch="1">
+  <div class="paper">
+    <div class="inner">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+        <div><p class="kicker ed" style="margin-bottom:8px" data-ed-i="54">同一个 AI · 两种问法</p><h2 class="head reveal r1 ed" style="margin-bottom:0" data-ed-i="55">现场对比演示</h2></div>
+        <span class="demo-badge reveal r1 ed" data-ed-i="56">现场演示 LIVE</span>
+      </div>
+      <div class="vs">
+        <div class="col bad reveal r2">
+          <span class="tagline ed" data-ed-i="57">✗ 大多数人的问法</span>
+          <div class="ask ed" data-ed-i="58">"帮我写一份预算执行情况说明。"</div>
+          <p class="res ed" data-ed-i="59">→ 写是写了，全是<b>正确的废话</b>：哪个项目、执行多少、为何偏差，一个能落地的都没有。</p>
+        </div>
+        <div class="col good reveal r3">
+          <span class="tagline ed" data-ed-i="60">✓ 十二字口诀的问法</span>
+          <div class="ask ed" style="font-size:22px" data-ed-i="61">"<b>你是供电公司财务资产部的预算专责</b>。写一份2026年上半年成本类预算执行说明，用于部门月度例会。已知：年度预算X万元、执行率X%，检修费偏快因春检提前……<b>公文口吻，先总后分，500字以内</b>。"</div>
+          <p class="res ed" data-ed-i="62">→ 有总有分、有原因有建议，<mark>改改数就能用</mark>。</p>
+        </div>
+      </div>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab on" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 6 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab on" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 6 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S7 案例一 前后对比 ============ -->
+<section class="slide s7" data-ch="2">
+  <div class="paper">
+    <div class="inner">
+      <p class="kicker reveal r1 ed" data-ed-i="63">环节四 · 案例一 5'</p>
+      <h2 class="head reveal r1 ed" data-ed-i="64">报账指南：从一堆文档，到一个页面</h2>
+      <div class="beforeafter">
+        <div class="scatter reveal r2">
+          <div class="scrap ed" style="top:8%;left:4%;transform:rotate(-6deg)" data-ed-i="65">商旅注册.docx</div>
+          <div class="scrap ed" style="top:26%;left:38%;transform:rotate(4deg)" data-ed-i="66">出差申请单填报.pdf</div>
+          <div class="scrap ed" style="top:46%;left:8%;transform:rotate(-3deg)" data-ed-i="67">ERP端报销流程.docx</div>
+          <div class="scrap ed" style="top:62%;left:42%;transform:rotate(7deg)" data-ed-i="68">订票问题热线.txt</div>
+          <div class="scrap ed" style="top:80%;left:12%;transform:rotate(-5deg)" data-ed-i="69">"喂，请问一下……"</div>
+          <div class="scrap ed" style="top:5%;left:55%;transform:rotate(9deg)" data-ed-i="70">ECP合同签订.pptx</div>
+        </div>
+        <div class="arrowbig reveal r3">→</div>
+        <div class="onepage reveal r4">
+          <h4 class="ed" data-ed-i="71">鄂尔多斯供电公司报账指南</h4>
+          <div class="row"><span class="bar" style="background:var(--mint)"></span><span class="bar" style="background:var(--sky)"></span><span class="bar" style="background:var(--pink)"></span></div>
+          <p class="ed" style="font-size:21px;color:var(--dim)" data-ed-i="72">第一次用商旅 / 我要出差 / 回来报销 / 有合同的服务费……</p>
+          <div class="bar" style="background:rgba(34,32,28,.12);width:88%"></div>
+          <div class="bar" style="background:rgba(34,32,28,.12);width:72%"></div>
+          <div class="bar" style="background:rgba(34,32,28,.12);width:80%"></div>
+          <p class="ed" style="font-size:21px;color:var(--dim);margin-top:auto" data-ed-i="73">按"人遇到的问题"组织，不是按文件名组织。<br>发群里置顶，新员工自助查询。</p>
+        </div>
+      </div>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab on" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 7 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab on" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 7 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S8 案例一 三步做法 ============ -->
+<section class="slide s8" data-ch="2">
+  <div class="paper">
+    <div class="inner">
+      <p class="kicker reveal r1 ed" data-ed-i="74">案例一 · 怎么做出来的</p>
+      <h2 class="head reveal r1 ed" data-ed-i="75">三步，全程用"嘴"完成</h2>
+      <div class="steps3">
+        <div class="card step reveal r2"><i class="cap" style="background:var(--mint)"></i><span class="no">第一步</span><span class="ed" data-ed-i="76">把散落的操作文档、截图，<b>全部丢给 AI</b></span></div>
+        <div class="card step reveal r3"><i class="cap" style="background:var(--sky)"></i><span class="no">第二步</span><span class="ed" data-ed-i="77">用嘴描述想要的样子："做成一个网页，<b>按使用场景分类</b>，新员工能自助查询"</span></div>
+        <div class="card step reveal r4"><i class="cap" style="background:var(--pink)"></i><span class="no">第三步</span><span class="ed" data-ed-i="78">哪里不满意接着提："字太小""热线挪到最后"——<b>它改，我看，改到满意</b></span></div>
+      </div>
+      <p class="punch reveal r5 ed" data-ed-i="79">这个页面，我<mark>一行代码都没写</mark>。</p>
+      <p class="sub2 reveal r6 ed" data-ed-i="80">同样的思路可复制：制度汇编 · 开票指引 · 系统操作手册——凡是"反复被人问"的知识，都能串成一个页面。</p>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab on" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 8 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab on" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 8 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S9 案例二 场景 ============ -->
+<section class="slide s9" data-ch="3">
+  <div class="paper">
+    <div class="inner">
+      <p class="kicker reveal r1 ed" data-ed-i="81">环节五 · 案例二 5'</p>
+      <h2 class="head reveal r1 ed" data-ed-i="82">Excel 省力术：一张总表拆成二十几个 sheet</h2>
+      <div class="split-sheet">
+        <div class="sheet reveal r2">
+          <div class="r thead"><span>部门</span><span>费用科目</span><span>金额</span></div>
+          <div class="r"><span class="ed" data-ed-i="83">输电管理处</span><span class="ed" data-ed-i="84">差旅费</span><span class="ed" data-ed-i="85">12,400</span></div>
+          <div class="r"><span class="ed" data-ed-i="86">变电运维</span><span class="ed" data-ed-i="87">办公费</span><span class="ed" data-ed-i="88">3,180</span></div>
+          <div class="r"><span class="ed" data-ed-i="89">营销部</span><span class="ed" data-ed-i="90">会议费</span><span class="ed" data-ed-i="91">8,600</span></div>
+          <div class="r"><span class="ed" data-ed-i="92">财务资产部</span><span class="ed" data-ed-i="93">差旅费</span><span class="ed" data-ed-i="94">5,270</span></div>
+          <div class="r"><span style="color:var(--dim)">……</span><span style="color:var(--dim)">共 800 行</span><span></span></div>
+        </div>
+        <div class="arr reveal r3">→</div>
+        <div class="reveal r4">
+          <div class="minis">
+            <div class="mini">输电<i style="background:var(--mint)"></i></div><div class="mini">变电<i style="background:var(--sky)"></i></div>
+            <div class="mini">营销<i style="background:var(--pink)"></i></div><div class="mini">财务<i style="background:var(--cream)"></i></div>
+            <div class="mini">调度<i style="background:var(--lav)"></i></div><div class="mini">安监<i style="background:var(--mint)"></i></div>
+            <div class="mini">人资<i style="background:var(--sky)"></i></div><div class="mini">+ 16 …<i style="background:var(--pink)"></i></div>
+          </div>
+          <div class="timing">
+            <div class="card t reveal r5"><span class="big ed" style="color:#a33" data-ed-i="95">一下午</span><span class="ed" data-ed-i="96">手工复制粘贴</span></div>
+            <div class="card t reveal r6"><span class="big ed" style="color:#2c6e49" data-ed-i="97">2 分钟</span><span class="ed" data-ed-i="98">AI 写宏 + 运行</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab on" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 9 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab on" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 9 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S10 案例二 步骤+提示词 ============ -->
+<section class="slide s10" data-ch="3">
+  <div class="paper">
+    <div class="inner">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <h2 class="head reveal r1 ed" style="margin-bottom:0" data-ed-i="99">四步现场实操</h2>
+        <span class="demo-badge reveal r1 ed" data-ed-i="100">现场演示 LIVE</span>
+      </div>
+      <div class="flow">
+        <div class="card f reveal r2"><span class="ic">📋</span><span class="ed" data-ed-i="101">打开模拟费用总表</span></div>
+        <div class="card f reveal r3"><span class="ic">💬</span><span class="ed" data-ed-i="102">把需求说给 AI，拿到宏代码</span></div>
+        <div class="card f reveal r4"><span class="ic">⌨️</span><span class="ed" data-ed-i="103">Excel 里 <b>Alt + F11</b>，粘贴</span></div>
+        <div class="card f reveal r5"><span class="ic">▶️</span><span class="ed" data-ed-i="104">运行——二十几个 sheet 秒出</span></div>
+      </div>
+      <div class="prompt reveal r5 ed" data-ed-i="105">"我有一张Excel费用总表，第一行是表头，包含部门、费用科目、金额、月份四列。请写一段VBA宏：按'部门'列把数据拆分到以部门名称命名的多个工作表，每个表都保留表头。写完之后，告诉我在Excel里怎么运行它。"</div>
+      <p class="punchline reveal r6 ed" data-ed-i="106">不用学 VBA，<mark>会描述需求就行</mark>。报错了？把错误提示复制回去，它自己会改。</p>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab on" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 10 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab on" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 10 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S11 BI 看板 ============ -->
+<section class="slide s11" data-ch="4">
+  <div class="paper">
+    <div class="inner">
+      <p class="kicker reveal r1 ed" data-ed-i="107">环节六 · 案例三 5'</p>
+      <h2 class="head reveal r1 ed" style="margin-bottom:22px" data-ed-i="108">BI 看板：让数据自己说话</h2>
+      <div class="dash reveal r2">
+        <div class="kpis">
+          <div class="kpi"><b class="ed" data-ed-i="109">8,600<small style="font-size:20px"> 万</small></b><span class="ed" data-ed-i="110">年度预算</span></div>
+          <div class="kpi"><b class="ed" data-ed-i="111">4,988<small style="font-size:20px"> 万</small></b><span class="ed" data-ed-i="112">上半年执行</span></div>
+          <div class="kpi"><b class="ed" style="color:#7fc8a9" data-ed-i="113">58%</b><span class="ed" data-ed-i="114">总执行率</span></div>
+        </div>
+        <div class="bars">
+          <div class="brow"><span class="ed" data-ed-i="115">检修费</span><div class="track"><div class="fill hot" style="--w:78%"></div></div><span class="pct">78%</span></div>
+          <div class="brow"><span class="ed" data-ed-i="116">材料费</span><div class="track"><div class="fill" style="--w:63%"></div></div><span class="pct">63%</span></div>
+          <div class="brow"><span class="ed" data-ed-i="117">差旅费</span><div class="track"><div class="fill" style="--w:55%"></div></div><span class="pct">55%</span></div>
+          <div class="brow"><span class="ed" data-ed-i="118">办公费</span><div class="track"><div class="fill hot" style="--w:41%"></div></div><span class="pct">41%</span></div>
+        </div>
+      </div>
+      <div class="quipline reveal r4"><span class="ed" data-ed-i="119"><b>下次汇报：别人贴表格，你放看板。</b>做一次，每月换数据源复用。</span><span class="warn ed" data-ed-i="120">⚠ AI 负责呈现，数字准不准还得咱们把关</span></div>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab on" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 11 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab on" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 11 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S12 概念页 问答→派活 ============ -->
+<section class="slide s12" data-ch="5">
+  <div class="paper">
+    <div class="inner">
+      <p class="kicker reveal r1 ed" data-ed-i="121">环节七 · 案例四 8' · 今天的压轴</p>
+      <h2 class="head reveal r1 ed" data-ed-i="122">AI 已经进化到下一个阶段：<mark>智能体</mark></h2>
+      <div class="concept">
+        <div class="mode old reveal r2">
+          <span class="chip ed" data-ed-i="123">以前 · 问答</span>
+          <h3 class="ed" data-ed-i="124">你问一句<br>它答一句</h3>
+          <p class="ed" data-ed-i="125">你把材料喂给它，它还你一个结果。每一步都要你来教、你来盯。</p>
+        </div>
+        <div class="arr reveal r3">→</div>
+        <div class="mode new reveal r4">
+          <span class="chip ed" data-ed-i="126">现在 · 派活</span>
+          <h3 class="ed" data-ed-i="127">你给个目标<br>它批量干完</h3>
+          <p class="ed" data-ed-i="128">像给下属布置任务：它自己拆解步骤、自己打开文件、自己动手，干完向你汇报。</p>
+        </div>
+      </div>
+      <p class="oneliner reveal r5 ed" data-ed-i="129">以前是"问答"，现在是<span class="accent">"派活"</span>。</p>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab on" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 12 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab on" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 12 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S13 WorkBuddy 演示 ============ -->
+<section class="slide s13" data-ch="5">
+  <div class="paper">
+    <div class="inner">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <div><p class="kicker ed" style="margin-bottom:8px" data-ed-i="130">国内就能用 · 读本地文件 · 做批处理</p><h2 class="head reveal r1 ed" style="margin-bottom:0" data-ed-i="131">WorkBuddy：一句话，汇总一个文件夹</h2></div>
+        <span class="demo-badge reveal r1 ed" data-ed-i="132">现场演示 LIVE</span>
+      </div>
+      <div class="wbflow">
+        <div class="card wb reveal r2"><span class="ic">🗂️</span><span class="ed" data-ed-i="133"><b>一个文件夹</b><br>30 张部门报销明细表</span><br><small class="ed" data-ed-i="134">格式还不完全统一</small></div>
+        <div class="arr reveal r3">→</div>
+        <div class="card wb reveal r3" style="border:2px solid var(--red)"><span class="ic">🗣️</span><span class="ed" data-ed-i="135"><b>我只说了一句话</b></span><br><small class="ed" data-ed-i="136">它自己：挨个打开 → 找合计 → 汇总 → 排版</small></div>
+        <div class="arr reveal r4">→</div>
+        <div class="card wb reveal r4"><span class="ic">📊</span><span class="ed" data-ed-i="137"><b>一张汇总总表</b><br>按金额排序</span><br><small class="ed" data-ed-i="138">格式异常的表，单独列出</small></div>
+      </div>
+      <div class="prompt reveal r5 ed" data-ed-i="139">"读取这个文件夹里所有部门的报销明细表，把每个部门的合计金额提取出来，汇总成一张总表，按金额从大到小排序；格式不规范或者合计对不上的表，单独列出来告诉我。"</div>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab on" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 13 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab on" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 13 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S14 批量场景 ============ -->
+<section class="slide s14" data-ch="5">
+  <div class="paper">
+    <div class="inner">
+      <p class="kicker reveal r1 ed" data-ed-i="140">案例四 · "批量"的思路一旦打开</p>
+      <h2 class="head reveal r1 ed" style="margin-bottom:24px" data-ed-i="141">能干的事就多了</h2>
+      <div class="quad">
+        <div class="card reveal r2"><i class="cap" style="background:var(--mint)"></i><h4 class="ed" data-ed-i="142">批量汇总</h4><span class="ed" data-ed-i="143">几十张表合成一张——刚才演示的</span></div>
+        <div class="card reveal r3"><i class="cap" style="background:var(--sky)"></i><h4 class="ed" data-ed-i="144">批量识别</h4><span class="ed" data-ed-i="145">一沓发票、凭证扫描后，批量提取金额、日期、单位，整理成台账</span></div>
+        <div class="card reveal r4"><i class="cap" style="background:var(--pink)"></i><h4 class="ed" data-ed-i="146">批量核对</h4><span class="ed" data-ed-i="147">两份清单互相比对，找出缺了哪张、差在哪里</span></div>
+        <div class="card reveal r5"><i class="cap" style="background:var(--cream)"></i><h4 class="ed" data-ed-i="148">批量整理</h4><span class="ed" data-ed-i="149">几百个文件按规则重命名、归档到对应文件夹</span></div>
+      </div>
+      <div class="motto reveal r6"><span class="m ed" data-ed-i="150">你出目标，它出体力。</span><span class="safe ed" data-ed-i="151">⚠ 老规矩：读本地文件前，先想敏不敏感，该脱敏先脱敏</span></div>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab on" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 14 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab on" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 14 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S15 审核员 ============ -->
+<section class="slide s15" data-ch="6">
+  <div class="paper">
+    <div class="inner">
+      <p class="kicker reveal r1 ed" data-ed-i="152">环节八 · 升级心法 3'</p>
+      <h2 class="head reveal r1 ed" data-ed-i="153">发文之前，把这三句话甩给 AI</h2>
+      <div class="three">
+        <div class="card say reveal r2"><i class="cap" style="background:var(--mint)"></i><span class="k ed" data-ed-i="154">问 错</span><p class="ed" data-ed-i="155">"这份材料里有没有数据口径不一致、前后矛盾、站不住脚的表述？"</p></div>
+        <div class="card say reveal r3"><i class="cap" style="background:var(--sky)"></i><span class="k ed" data-ed-i="156">问 好</span><p class="ed" data-ed-i="157">"如果要再上一个档次，你建议从哪儿改进？"</p></div>
+        <div class="card say reveal r4"><i class="cap" style="background:var(--pink)"></i><span class="k ed" data-ed-i="158">换 位</span><p class="ed" data-ed-i="159">"如果你是审计人员、上级财务部门，看到这份材料会提什么问题？"</p></div>
+      </div>
+      <p class="cost reveal r5 ed" data-ed-i="160">成本是<b>一分钟</b>，省下的可能是一次返工、一次尴尬。</p>
+      <div class="stamp reveal-stamp ed" data-ed-i="161">复核<br>无误</div>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab on" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 15 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab on" style="background: var(--sky);">心法</span><span class="tab" style="background: var(--pink);">收尾</span></div><span class="pageno">第 15 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S16 四个小作业 ============ -->
+<section class="slide s16" data-ch="7">
+  <div class="paper">
+    <div class="inner">
+      <p class="kicker reveal r1 ed" data-ed-i="162">环节九 · 收尾 4'</p>
+      <h2 class="head reveal r1 ed" data-ed-i="163">四个小作业</h2>
+      <div class="homework">
+        <div class="card hw reveal r2"><span class="box"></span><span class="ed" data-ed-i="164">装一个 AI 工具，用<b>十二字口诀</b>问它一个工作里的真问题</span></div>
+        <div class="card hw reveal r3"><span class="box"></span><span class="ed" data-ed-i="165">找一个你最烦的重复表格活，让 AI 给你<b>写个宏</b>试一试</span></div>
+        <div class="card hw reveal r4"><span class="box"></span><span class="ed" data-ed-i="166">把手头"总被人问"的文档，让 AI <b>串成一个页面</b></span></div>
+        <div class="card hw reveal r5"><span class="box"></span><span class="ed" data-ed-i="167">挑一批要汇总、要核对的表，用 WorkBuddy 让 AI <b>批量干一次</b></span></div>
+      </div>
+      <p class="deadline reveal r6 ed" data-ed-i="168">每件不超过半小时。下个月碰上我，聊聊哪件成了、哪件卡住了。</p>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab on" style="background: var(--pink);">收尾</span></div><span class="pageno">第 16 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab on" style="background: var(--pink);">收尾</span></div><span class="pageno">第 16 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S17 下期预告 ============ -->
+<section class="slide s17" data-ch="7">
+  <div class="paper">
+    <div class="inner">
+      <p class="kicker reveal r1 ed" data-ed-i="169">冰山一角</p>
+      <h2 class="head reveal r1 ed" data-ed-i="170">下期点单菜单</h2>
+      <div class="tickets">
+        <div class="ticket reveal r2"><span class="ic">🎨</span><h4 class="ed" data-ed-i="171">文生图</h4><small class="ed" data-ed-i="172">海报、配图<br>一句话生成</small></div>
+        <div class="ticket reveal r3"><span class="ic">🎬</span><h4 class="ed" data-ed-i="173">文生视频</h4><small class="ed" data-ed-i="174">宣传短片<br>不求人</small></div>
+        <div class="ticket reveal r4"><span class="ic">📑</span><h4 class="ed" data-ed-i="175">专业 PPT</h4><small class="ed" data-ed-i="176">汇报级排版<br>直接出片</small></div>
+        <div class="ticket reveal r5"><span class="ic">✍️</span><h4 class="ed" data-ed-i="177">文字排版</h4><small class="ed" data-ed-i="178">长材料自动<br>美化定稿</small></div>
+        <div class="ticket reveal r6"><span class="ic">🧰</span><h4 class="ed" data-ed-i="179">Skills 制作</h4><small class="ed" data-ed-i="180">把经验做成技能包<br>AI 一劳永逸学会</small></div>
+      </div>
+      <p class="order reveal r6 ed" data-ed-i="181">大家提需求，下次有机会，咱们再互相交流。</p>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab on" style="background: var(--pink);">收尾</span></div><span class="pageno">第 17 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab on" style="background: var(--pink);">收尾</span></div><span class="pageno">第 17 页 · 共 18 页</span></div>
+</section>
+
+<!-- ============ S18 金句收尾 ============ -->
+<section class="slide s18 active visible" data-ch="7">
+  <div class="paper">
+    <div class="inner">
+      <blockquote class="reveal r2 ed" data-ed-i="182">AI 不会取代财务人，<br>但<mark>会用 AI 的财务人</mark>，<br>会慢慢取代不用 AI 的财务人。</blockquote>
+      <p class="thanks reveal r4 ed" data-ed-i="183">把繁琐交出去 · 把时间留给专业判断 —— 谢谢大家</p>
+      <div class="stamp reveal-stamp ed" data-ed-i="184">下课<br>愉快</div>
+    </div>
+  <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab on" style="background: var(--pink);">收尾</span></div><span class="pageno">第 18 页 · 共 18 页</span><div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tabs"><span class="tab" style="background: var(--mint);">开场</span><span class="tab" style="background: var(--sky);">口诀</span><span class="tab" style="background: var(--pink);">报账指南</span><span class="tab" style="background: var(--cream);">表格宏</span><span class="tab" style="background: var(--lav);">BI看板</span><span class="tab" style="background: var(--mint);">批量干活</span><span class="tab" style="background: var(--sky);">心法</span><span class="tab on" style="background: var(--pink);">收尾</span></div><span class="pageno">第 18 页 · 共 18 页</span></div>
+</section>
+
+</main>
+</div>
+
+<!-- ============ 翻页控件（舞台外） ============ -->
+<nav class="deck-controls" aria-label="翻页">
+  <button id="btnPrev" aria-label="上一页">‹</button>
+  <span id="pageInfo">18 / 18</span>
+  <button id="btnNext" aria-label="下一页">›</button>
+  <span style="opacity:.55">←/→ · 空格 · 滚轮 · 触屏滑动</span>
+</nav>
+
+<!-- ============ 在线编辑入口 ============ -->
+<div class="edit-hotzone" id="editHotzone"></div>
+<button class="edit-toggle active show" id="editToggle" title="编辑模式（E）">✏️</button>
+<span class="edit-tip">编辑模式：点击任意文字修改 · 自动保存 · Ctrl+S 导出文件 · 再按 E 退出</span>
+
+<script>
+/* ===========================================
+   账本装饰注入：装订孔 / 章节标签 / 页码
+   =========================================== */
+const CHAPTERS = [
+  {name:'开场', color:'var(--mint)'},
+  {name:'口诀', color:'var(--sky)'},
+  {name:'报账指南', color:'var(--pink)'},
+  {name:'表格宏', color:'var(--cream)'},
+  {name:'BI看板', color:'var(--lav)'},
+  {name:'批量干活', color:'var(--mint)'},
+  {name:'心法', color:'var(--sky)'},
+  {name:'收尾', color:'var(--pink)'},
+];
+const slides = document.querySelectorAll('.slide');
+slides.forEach((slide, idx) => {
+  const paper = slide.querySelector('.paper');
+  const ch = parseInt(slide.dataset.ch || 0, 10);
+  // 装订孔
+  const holes = document.createElement('div'); holes.className = 'holes';
+  for (let i = 0; i < 7; i++) holes.appendChild(document.createElement('i'));
+  paper.appendChild(holes);
+  // 章节标签
+  const tabs = document.createElement('div'); tabs.className = 'tabs';
+  CHAPTERS.forEach((c, i) => {
+    const t = document.createElement('span');
+    t.className = 'tab' + (i === ch ? ' on' : '');
+    t.style.background = c.color; t.textContent = c.name;
+    tabs.appendChild(t);
+  });
+  paper.appendChild(tabs);
+  // 页码
+  const pn = document.createElement('span'); pn.className = 'pageno';
+  pn.textContent = `第 ${idx + 1} 页 · 共 ${slides.length} 页`;
+  paper.appendChild(pn);
+});
+
+/* ===========================================
+   演示控制器：缩放 / 键盘 / 滚轮 / 触屏
+   =========================================== */
+class SlidePresentation {
+  constructor() {
+    this.slides = slides;
+    this.current = 0;
+    this.stage = document.getElementById('deckStage');
+    this.wheelLock = false;
+    this.setupScale(); this.setupKeys(); this.setupWheel(); this.setupTouch(); this.setupButtons();
+    this.show(0);
+  }
+  setupScale() {
+    const scale = () => {
+      const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+      const x = (innerWidth - 1920 * f) / 2, y = (innerHeight - 1080 * f) / 2;
+      this.stage.style.transform = `translate(${x}px,${y}px) scale(${f})`;
+    };
+    scale(); addEventListener('resize', scale);
+  }
+  setupKeys() {
+    addEventListener('keydown', e => {
+      if (e.target.getAttribute && e.target.getAttribute('contenteditable')) return;
+      if (['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)) { e.preventDefault(); this.show(this.current + 1); }
+      if (['ArrowLeft','ArrowUp','PageUp'].includes(e.key)) { e.preventDefault(); this.show(this.current - 1); }
+      if (e.key === 'Home') this.show(0);
+      if (e.key === 'End') this.show(this.slides.length - 1);
+    });
+  }
+  setupWheel() {
+    addEventListener('wheel', e => {
+      if (document.body.classList.contains('editing')) return;
+      if (this.wheelLock) return;
+      if (Math.abs(e.deltaY) < 24) return;
+      this.wheelLock = true; setTimeout(() => this.wheelLock = false, 650);
+      this.show(this.current + (e.deltaY > 0 ? 1 : -1));
+    }, { passive: true });
+  }
+  setupTouch() {
+    let x0 = null, y0 = null;
+    addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+    addEventListener('touchend', e => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) this.show(this.current + (dx < 0 ? 1 : -1));
+      x0 = y0 = null;
+    }, { passive: true });
+  }
+  setupButtons() {
+    document.getElementById('btnPrev').onclick = () => this.show(this.current - 1);
+    document.getElementById('btnNext').onclick = () => this.show(this.current + 1);
+  }
+  show(i) {
+    this.current = Math.max(0, Math.min(i, this.slides.length - 1));
+    this.slides.forEach((s, k) => {
+      s.classList.toggle('active', k === this.current);
+      s.classList.toggle('visible', k === this.current);
+    });
+    document.getElementById('pageInfo').textContent = `${this.current + 1} / ${this.slides.length}`;
+  }
+}
+const deck = new SlidePresentation();
+
+/* ===========================================
+   在线编辑器：contenteditable + localStorage + 导出
+   =========================================== */
+const STORE_KEY = 'ai-finance-deck-edits-v1';
+const editables = document.querySelectorAll('.ed');
+editables.forEach((el, i) => el.dataset.edI = i);
+// 恢复已保存的修改
+try {
+  const saved = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+  Object.entries(saved).forEach(([i, html]) => {
+    const el = document.querySelector(`[data-ed-i="${i}"]`);
+    if (el) el.innerHTML = html;
+  });
+} catch (e) { /* localStorage 不可用时静默跳过 */ }
+
+const editor = {
+  isActive: false,
+  toggleEditMode() {
+    this.isActive = !this.isActive;
+    document.body.classList.toggle('editing', this.isActive);
+    document.getElementById('editToggle').classList.toggle('active', this.isActive);
+    editables.forEach(el => el.contentEditable = this.isActive ? 'true' : 'false');
+  },
+  save() {
+    const data = {};
+    editables.forEach(el => data[el.dataset.edI] = el.innerHTML);
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (e) {}
+  },
+  exportFile() {
+    this.save();
+    const clone = document.documentElement.cloneNode(true);
+    clone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+    clone.querySelector('body').classList.remove('editing');
+    const blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'AI如何为财务工作减负增效_授课演示_已编辑.html';
+    a.click(); URL.revokeObjectURL(a.href);
+  }
+};
+document.addEventListener('input', e => { if (e.target.closest('.ed')) editor.save(); });
+
+// 编辑按钮：热区悬停 + 400ms 宽限（勿用 CSS ~ 选择器方案）
+const hotzone = document.getElementById('editHotzone');
+const editToggle = document.getElementById('editToggle');
+let hideTimeout = null;
+const showBtn = () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); };
+const hideBtn = () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); };
+hotzone.addEventListener('mouseenter', showBtn); hotzone.addEventListener('mouseleave', hideBtn);
+editToggle.addEventListener('mouseenter', showBtn); editToggle.addEventListener('mouseleave', hideBtn);
+editToggle.addEventListener('click', () => editor.toggleEditMode());
+hotzone.addEventListener('click', () => editor.toggleEditMode());
+document.addEventListener('keydown', e => {
+  if ((e.key === 'e' || e.key === 'E') && !(e.target.getAttribute && e.target.getAttribute('contenteditable') === 'true')) editor.toggleEditMode();
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); editor.exportFile(); }
+});
+</script>
+
+
+</body></html>
