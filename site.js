@@ -6,10 +6,10 @@ const page=document.body.dataset.page||'home', params=new URLSearchParams(locati
 if($('.skip'))$('.skip').href=location.pathname+location.search+'#main';
 $$('.back-top').forEach(a=>a.href=location.pathname+location.search+'#');
 const bookmark='<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3h10v14l-5-3-5 3z"/></svg>';
-let entries=[],profile={},saved=new Set(),noticeTimer;
+let entries=[],profile={},saved=new Set(),noticeTimer,previewAssets={};
 try{saved=new Set(JSON.parse(localStorage.getItem('yueyu-saved-v1')||'[]'));}catch{}
 function url(value,{email=false}={}){if(typeof value!=='string'||!value.trim())return '';try{const u=new URL(value,location.href);return ['http:','https:'].includes(u.protocol)||(email&&u.protocol==='mailto:')?u.href:'';}catch{return '';}}
-function fileUrl(value){return typeof value==='string'&&/^uploads\/[a-zA-Z0-9_-]+\//.test(value)&&!value.split('/').includes('..')?value:'';}
+function fileUrl(value){if(typeof value!=='string'||!/^uploads\/[a-zA-Z0-9_-]+\//.test(value)||value.split('/').includes('..'))return '';const parts=value.split('/'),prefix=previewAssets[parts[1]];return prefix?prefix+parts.slice(2).join('/'):value;}
 function entryUrl(item){return `entries/${encodeURIComponent(item.id)}.html`;}
 function toast(message){$('.toast').textContent=message;$('.toast').classList.add('show');clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>$('.toast').classList.remove('show'),2600);}
 window.closeMenus=()=>{$('.mobile-nav').hidden=true;$('.menu-backdrop').hidden=true;$('.mobile-toggle').setAttribute('aria-expanded','false');document.body.classList.remove('nav-menu-open');document.dispatchEvent(new CustomEvent('yueyu:menuchange'));};
@@ -136,8 +136,11 @@ function mediaMarkup(item){
  if(images.length)html+=`<div class="entry-gallery">${images.map(m=>`<figure><a href="${esc(m.url)}" target="_blank" rel="noopener"><img src="${esc(m.url)}" alt="${esc(m.caption||m.name||'作品图片')}" loading="lazy"></a>${m.caption?`<figcaption>${esc(m.caption)}</figcaption>`:''}</figure>`).join('')}</div>`;
  for(const m of item.media||[]){if(!fileUrl(m.url)||!['audio','video'].includes(m.kind))continue;html+=`<figure class="media-player"><${m.kind} controls preload="metadata" ${m.kind==='video'?'playsinline':''} ${m.kind==='video'&&coverSource(item)?`poster="${esc(coverSource(item))}"`:''} src="${esc(m.url)}">浏览器无法播放，可下载文件。</${m.kind}><figcaption>${esc(m.caption||m.name)} <a href="${esc(m.url)}" download>下载原文件 ↓</a></figcaption></figure>`;}
  if(item.bvid&&/^BV[0-9A-Za-z]{10}$/.test(item.bvid))html+=`<div data-bvid="${item.bvid}"></div>`;
- if(item.type!=='work'&&fileUrl(item.project?.entry))html+=`<div class="project-stage"><div class="project-toolbar"><span>在线体验</span><a href="${esc(item.project.entry)}" target="_blank" rel="noopener">独立打开 ↗</a></div><iframe src="${esc(item.project.entry)}" title="${esc(item.title)}" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads allow-modals" loading="lazy"></iframe></div>`;
+ if(item.type!=='work'&&fileUrl(item.project?.entry))html+=`<div class="project-stage"><div class="project-toolbar"><span>在线体验</span><a href="${esc(fileUrl(item.project.entry))}" target="_blank" rel="noopener">独立打开 ↗</a></div><iframe src="${esc(fileUrl(item.project.entry))}" title="${esc(item.title)}" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads allow-modals" loading="lazy"></iframe></div>`;
  return html;
+}
+function setupManagement(value){
+ if(!value)return;try{const target=new URL(value);if(target.protocol!=='https:'||target.username||target.password||target.pathname!=='/'||target.search||target.hash)return;const launch=$('#manager-launch');launch.href=target.href;launch.hidden=false;launch.textContent='登录内容管家';$('#manage-state').textContent='站主管理';$('#manage-description').textContent='使用管理密码登录，编辑内容、上传作品和查看私密留言。';$('#manage-note').textContent='仅站主可访问。';}catch{}
 }
 function setupContact(contact,preview){
  const form=$('#contact-form');if(!form)return;const status=$('#contact-status'),button=$('button[type="submit"]',form);
@@ -147,7 +150,7 @@ function setupContact(contact,preview){
 }
 
 async function load(){
-  try{const response=await fetch('data/content.json',{cache:'no-store'});if(!response.ok)throw new Error('load');const data=await response.json();entries=data.entries.filter(x=>cfg[x.type]);profile=data.profile||{};for(const [key,count] of Object.entries(data.display||{})){if(cfg[key])cfg[key].limit=Math.max(1,Math.min(12,Number(count)||cfg[key].limit));}setupContact(data.contact,data.preview);
+  try{const response=await fetch('data/content.json',{cache:'no-store'});if(!response.ok)throw new Error('load');const data=await response.json();previewAssets={};if(data.preview){for(const [folder,prefix] of Object.entries(data.previewAssets||{})){try{const u=new URL(prefix);if(u.origin===location.origin&&/^\/asset\/[A-Za-z0-9_-]+\/$/.test(u.pathname))previewAssets[folder]=u.href;}catch{}}}setupManagement(data.adminUrl);entries=data.entries.filter(x=>cfg[x.type]);profile=data.profile||{};for(const [key,count] of Object.entries(data.display||{})){if(cfg[key])cfg[key].limit=Math.max(1,Math.min(12,Number(count)||cfg[key].limit));}setupContact(data.contact,data.preview);
     for(const [view,c] of Object.entries(cfg)){states[view]={category:page===view&&c.categories.includes(params.get('category'))?params.get('category'):'全部',page:Math.max(1,Math.floor(Number(params.get('page')))||1),q:page===view?params.get('q')||'':'',savedOnly:false};render(view);}
     if(page==='entry')renderEntry();renderAbout();document.dispatchEvent(new CustomEvent('yueyu:ready'));const input=$('[data-list-search]');if(input){input.value=states[page].q;input.addEventListener('input',()=>{states[page].q=input.value;update(page);});}
   }catch{const root=$('#entry-content')||$('main');root.insertAdjacentHTML('afterbegin','<div class="empty-state"><strong>内容暂时未能加载</strong><p>请刷新页面重试。</p></div>');}
