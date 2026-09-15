@@ -576,7 +576,7 @@
       "links": [],
       "extractionCode": "",
       "email": "",
-      "updatedAt": "2026-09-15T08:43:56.355213+00:00"
+      "updatedAt": "2026-09-15T14:58:18.042040+00:00"
     },
     {
       "id": "import-9d5257e50e98851e",
@@ -724,10 +724,5 @@
     "work": 6,
     "discover": 6,
     "thought": 3
-  },
-  "contact": {
-    "available": false,
-    "endpoint": ""
-  },
-  "adminUrl": ""
+  }
 }

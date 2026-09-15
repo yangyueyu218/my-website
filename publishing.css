@@ -215,3 +215,17 @@ html:has(body.studio-edit),body.studio-edit{overflow-anchor:none}
 @media(prefers-reduced-motion:no-preference){.qr-dialog[open]{animation:desk-open .24s ease-out}.qr-dialog[open]::backdrop{animation:veil-open .2s ease-out}}
 @media(max-width:760px){.site-name{flex-direction:column;gap:1px;align-items:flex-start}.site-name span:first-child{font-size:21px}.site-name span:last-child{font-size:10px;letter-spacing:.065em}}
 @media(max-width:620px){.studio-edit .nav-meta{gap:12px}.studio-edit .header-actions{width:auto;gap:12px}.studio-edit .header-actions .search-open{width:40px;padding:0;justify-content:center}.studio-edit .search-open .search-word{display:none}.site-name span:first-child{font-size:20px}.site-name span:last-child{font-size:9px}.studio-edit .mobile-toggle{gap:5px}}
+/* A compact closing spread: portrait, signature, three clear places to follow. */
+.studio-edit .about-layout.has-portrait{grid-template-columns:minmax(240px,.8fr) minmax(0,1.2fr);gap:clamp(40px,6vw,88px);max-width:1050px;margin:26px auto 0;padding:0 24px;align-items:center}
+.studio-edit .about-portrait{height:390px;max-width:340px;border-bottom:0}
+.studio-edit .about-portrait img{width:285px;bottom:-28px}
+.studio-edit .about-details{padding:20px 0}
+.studio-edit .about-identity>h3{font-size:clamp(44px,5vw,64px)}
+.studio-edit .about-identity>p{margin-top:23px;font-size:17px}
+.studio-edit .about-details .follow-platforms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:32px;padding-top:0;border:0}
+.studio-edit .about-details .follow-platform{width:auto;min-width:0;padding:17px 10px 14px;border:1px solid #dfe3d7;border-radius:10px;background:#ffffff50;align-items:center;gap:13px;transition:transform .3s,border-color .3s,box-shadow .3s}
+.studio-edit .about-details .follow-platform:hover{border-color:#b8c6b3;box-shadow:0 8px 22px #445b3010;transform:translateY(-4px)}
+.studio-edit .about-details .qr-enlarge{width:96px;height:96px;max-width:100%;aspect-ratio:1;border:0;background:white;padding:4px;border-radius:4px}
+.studio-edit .about-details .follow-platform h3{font-size:13px;font-weight:500;letter-spacing:.06em;margin:0}
+@media(max-width:900px){.studio-edit .about-layout.has-portrait{grid-template-columns:minmax(190px,.75fr) minmax(0,1.25fr);gap:30px;padding:0}.studio-edit .about-portrait{height:355px}.studio-edit .about-portrait img{width:260px}.studio-edit .about-details .follow-platforms{gap:9px}.studio-edit .about-details .follow-platform{padding:13px 7px}.studio-edit .about-details .qr-enlarge{width:84px;height:84px}}
+@media(max-width:620px){.studio-edit .about-layout.has-portrait{grid-template-columns:1fr;gap:12px;margin-top:20px}.studio-edit .about-portrait{height:270px;max-width:285px}.studio-edit .about-portrait img{width:214px;bottom:-34px}.studio-edit .about-details{padding:10px 0 0;max-width:390px;text-align:center}.studio-edit .about-identity>h3{font-size:43px}.studio-edit .about-identity>p{font-size:14px;margin-top:18px}.studio-edit .about-details .follow-platforms{margin-top:26px;gap:10px}.studio-edit .about-details .qr-enlarge{width:82px;height:82px}.studio-edit .about-details .follow-platform{padding:14px 8px}.studio-edit .about-details .follow-platform h3{font-size:12px}}
