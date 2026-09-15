@@ -200,54 +200,6 @@
       "softwareVersion": ""
     },
     {
-      "id": "r-sharex",
-      "type": "discover",
-      "category": "软件工具",
-      "title": "ShareX",
-      "description": "截图、录屏、标注，让教程里的每一步更清楚。",
-      "tags": [
-        "开源",
-        "Windows"
-      ],
-      "icon": "S",
-      "bg": "#e1e9ec",
-      "fg": "#456d7f",
-      "url": "https://getsharex.com/",
-      "download": "https://getsharex.com/downloads",
-      "detail": "免费开源的截图与录屏工具，适合制作图文教程的操作截图和简短演示。前往官方页面选择需要的版本。",
-      "status": "published",
-      "sample": false,
-      "date": "2026-09-15",
-      "updatedAt": "2026-09-15T04:15:24.542164+00:00",
-      "attachments": [],
-      "links": [
-        {
-          "label": "访问官网",
-          "url": "https://getsharex.com/"
-        },
-        {
-          "label": "官方下载",
-          "url": "https://getsharex.com/downloads"
-        }
-      ],
-      "body": "",
-      "coverImage": "",
-      "project": {
-        "entry": "",
-        "entries": []
-      },
-      "extractionCode": "",
-      "email": "",
-      "format": "link",
-      "pinned": false,
-      "pinOrder": 0,
-      "hideFromHome": false,
-      "media": [],
-      "bvid": "",
-      "platform": "",
-      "softwareVersion": ""
-    },
-    {
       "id": "r-appinn",
       "type": "discover",
       "category": "网站精选",
