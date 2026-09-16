@@ -286,41 +286,6 @@
       "softwareVersion": ""
     },
     {
-      "id": "import-3b4b50de194b8327",
-      "type": "work",
-      "category": "工作实践",
-      "title": "2026 党建考核全景解读",
-      "description": "党建考核内容的交互式全景解读。",
-      "tags": [
-        "考核解读",
-        "交互网页"
-      ],
-      "format": "html",
-      "project": {
-        "entry": "uploads/ebecac6d89d44b289374e3dce1df532d/2026党建考核全景解读_6.html",
-        "entries": [
-          "uploads/ebecac6d89d44b289374e3dce1df532d/2026党建考核全景解读_6.html"
-        ]
-      },
-      "date": "2026-09-15",
-      "status": "published",
-      "sample": false,
-      "body": "",
-      "pinned": false,
-      "pinOrder": 0,
-      "hideFromHome": false,
-      "media": [],
-      "bvid": "",
-      "platform": "",
-      "softwareVersion": "",
-      "coverImage": "uploads/83921df26a234083a309dd5592b777f6/import-3b4b50de194b8327.jpg",
-      "attachments": [],
-      "links": [],
-      "extractionCode": "",
-      "email": "",
-      "updatedAt": "2026-09-15T08:43:56.349471+00:00"
-    },
-    {
       "id": "import-3c6a1c1ee093b012",
       "type": "work",
       "category": "工作实践",
@@ -424,41 +389,6 @@
       "extractionCode": "",
       "email": "",
       "updatedAt": "2026-09-15T08:43:56.353201+00:00"
-    },
-    {
-      "id": "import-f4c722037140d80e",
-      "type": "work",
-      "category": "工作实践",
-      "title": "备用人选积分分析看板",
-      "description": "备用人选积分的可视化分析，展示数据已脱敏。",
-      "tags": [
-        "BI 看板",
-        "脱敏数据"
-      ],
-      "format": "html",
-      "project": {
-        "entry": "uploads/9f50bc82c62a49afb26b92db350f87d9/备用人选积分分析看板_脱敏版.html",
-        "entries": [
-          "uploads/9f50bc82c62a49afb26b92db350f87d9/备用人选积分分析看板_脱敏版.html"
-        ]
-      },
-      "date": "2026-09-15",
-      "status": "published",
-      "sample": false,
-      "body": "",
-      "pinned": false,
-      "pinOrder": 0,
-      "hideFromHome": false,
-      "media": [],
-      "bvid": "",
-      "platform": "",
-      "softwareVersion": "",
-      "coverImage": "uploads/6366bfc60c434824b11aa69ca96273d8/import-f4c722037140d80e.jpg",
-      "attachments": [],
-      "links": [],
-      "extractionCode": "",
-      "email": "",
-      "updatedAt": "2026-09-15T08:43:56.353776+00:00"
     },
     {
       "id": "import-8793cbac55e52d8a",
