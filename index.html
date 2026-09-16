@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="navigation.css?v=6">
   <link rel="stylesheet" href="studio.css?v=7">
   <link rel="stylesheet" href="hero-composition.css?v=9">
-  <link rel="stylesheet" href="publishing.css?v=20">
+  <link rel="stylesheet" href="publishing.css?v=21">
 </head>
 <body class="refined-nav studio-edit" data-style="studio" data-layout="sections" data-page="home">
   <a class="skip" href="#main">跳到主要内容</a>
@@ -91,13 +91,14 @@
 
     </section>
   </main>
-  <footer class="site-footer wrap"><span>© 2026 杨越宇</span><button class="manage-link" data-manage-open>内容管家</button><a href="#" class="back-top">回到顶部</a></footer>
+  <footer class="site-footer wrap"><span>© 2026 杨越宇</span><button class="manage-link" data-manage-open>内容管家</button><button class="manage-link vault-toggle" data-vault-open>管理员模式</button><a href="#" class="back-top">回到顶部</a></footer>
   <dialog id="qr-dialog" class="qr-dialog" aria-labelledby="qr-title"><div class="overlay-title"><h2 id="qr-title">二维码</h2><button class="overlay-close" data-close-dialog aria-label="关闭二维码">×</button></div><div id="qr-view" class="qr-view"></div><div class="qr-actions"><a id="qr-download">保存原图</a></div></dialog>
   <dialog id="detail-dialog" class="detail-dialog"><div class="dialog-top"><span class="dialog-eyebrow">详情</span><button class="dialog-close icon-button" aria-label="关闭详情"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><div id="detail-content"></div></dialog>
+  <dialog id="vault-dialog" class="vault-dialog" aria-labelledby="vault-title"><button class="overlay-close" data-close-dialog aria-label="关闭管理员模式">×</button><div class="vault-emblem" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="12" y="22" width="24" height="19" rx="4"/><path d="M17 22v-7a7 7 0 0 1 14 0v7"/><path d="M24 29v5"/></svg></div><h2 id="vault-title">开启管理员模式</h2><p id="vault-intro">输入密码，查看仅管理员可见的内容。</p><form id="vault-form"><label for="vault-password">解锁密码</label><input id="vault-password" type="password" autocomplete="current-password" required maxlength="128" placeholder="输入你的密码"><button type="submit" class="button-dark">解锁内容</button></form><p id="vault-message" role="status" aria-live="polite"></p><button id="vault-lock" class="button-dark" hidden>退出并锁定</button></dialog>
   <dialog id="search-dialog" class="search-dialog" aria-labelledby="search-title"><div class="overlay-title"><div><span class="overlay-kicker">EXPLORE THE STUDIO</span><h2 id="search-title">找点什么<span>？</span></h2></div><button type="button" class="overlay-close" data-close-dialog aria-label="关闭搜索">×</button></div><div class="search-head"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="search-input" type="search" placeholder="搜索作品、文章、工具…" aria-label="搜索创作、文章或发现" autocomplete="off"><button type="button" id="search-clear" aria-label="清空搜索" hidden>清空</button></div><div class="search-toolbar"><div class="search-scopes" role="group" aria-label="搜索范围"><button data-search-scope="all" aria-pressed="true">全部</button><button data-search-scope="work" aria-pressed="false">创作</button><button data-search-scope="discover" aria-pressed="false">发现</button><button data-search-scope="thought" aria-pressed="false">思考</button></div><span id="search-count" role="status" aria-live="polite"></span></div><div id="search-results"></div><div class="search-footer"><span><kbd>↑</kbd> <kbd>↓</kbd> 选择　<kbd>↵</kbd> 打开</span><span><kbd>ESC</kbd> 关闭</span></div></dialog>
   <dialog id="manage-dialog" class="manage-dialog" aria-labelledby="manage-title"><div class="overlay-title"><div><span class="overlay-kicker">OWNER’S DESK</span><h2 id="manage-title">内容管家</h2></div><button class="overlay-close" data-close-dialog aria-label="关闭管理入口">×</button></div><div class="manage-status"><span class="status-dot"></span><strong id="manage-state">本地内容管家</strong></div><p id="manage-description">在 Mac 上整理作品、编写文章和发布更新。</p><a id="manager-launch" class="button-dark" href="yueyu-manager://open">打开 Mac 内容管家</a><p class="manage-note" id="manage-note">请先在 Mac 上安装「越宇内容管家」，打开后即可本地编辑。</p></dialog>
   <div class="toast" role="status" aria-live="polite"></div>
-  <script src="site.js?v=20" type="module"></script>
+  <script src="site.js?v=21" type="module"></script>
   <script src="page-navigation.js?v=12" defer></script>
   <script src="studio.js?v=7" defer></script>
   <script src="hero-composition.js?v=9" defer></script>

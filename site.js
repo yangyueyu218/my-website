@@ -1,3 +1,5 @@
+import {initVault} from './vault.js';
+import {mountPrivateProjects} from './private-project.js';
 import {studioArt} from './render-art.js';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -6,11 +8,11 @@ const page=document.body.dataset.page||'home', params=new URLSearchParams(locati
 if($('.skip'))$('.skip').href=location.pathname+location.search+'#main';
 $$('.back-top').forEach(a=>a.href=location.pathname+location.search+'#');
 const bookmark='<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3h10v14l-5-3-5 3z"/></svg>';
-let entries=[],profile={},saved=new Set(),noticeTimer,previewAssets={};
+let publicEntries=[],entries=[],profile={},saved=new Set(),noticeTimer,previewAssets={};
 try{saved=new Set(JSON.parse(localStorage.getItem('yueyu-saved-v1')||'[]'));}catch{}
 function url(value,{email=false}={}){if(typeof value!=='string'||!value.trim())return '';try{const u=new URL(value,location.href);return ['http:','https:'].includes(u.protocol)||(email&&u.protocol==='mailto:')?u.href:'';}catch{return '';}}
-function fileUrl(value){if(typeof value!=='string'||!/^uploads\/[a-zA-Z0-9_-]+\//.test(value)||value.split('/').includes('..'))return '';const parts=value.split('/'),prefix=previewAssets[parts[1]];return prefix?prefix+parts.slice(2).join('/'):value;}
-function entryUrl(item){return `entries/${encodeURIComponent(item.id)}.html`;}
+function fileUrl(value){if(typeof value!=='string'||! /^(?:__private__\/)?uploads\/[a-zA-Z0-9_-]+\//.test(value)||value.split('/').includes('..'))return '';const parts=value.split('/'),prefix=previewAssets[parts[1]];return prefix?prefix+parts.slice(2).join('/'):value;}
+function entryUrl(item){return item.visibility==='private'?`entry.html?private=${encodeURIComponent(item.id)}`:`entries/${encodeURIComponent(item.id)}.html`;}
 function toast(message){$('.toast').textContent=message;$('.toast').classList.add('show');clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>$('.toast').classList.remove('show'),2600);}
 window.closeMenus=()=>{$('.mobile-nav').hidden=true;$('.menu-backdrop').hidden=true;$('.mobile-toggle').setAttribute('aria-expanded','false');document.body.classList.remove('nav-menu-open');document.dispatchEvent(new CustomEvent('yueyu:menuchange'));};
 $('.mobile-toggle').addEventListener('click',()=>{const open=$('.mobile-nav').hidden;closeMenus();$('.mobile-nav').hidden=!open;$('.menu-backdrop').hidden=!open;$('.mobile-toggle').setAttribute('aria-expanded',String(open));document.body.classList.toggle('nav-menu-open',open);if(open)$('a',$('.mobile-nav'))?.focus();});
@@ -19,8 +21,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){const inside=$('.mo
 if(['127.0.0.1','localhost'].includes(location.hostname))$$('[data-local-manager]').forEach(a=>a.hidden=false);
 function coverLegacy(item){if(fileUrl(item.coverImage))return `<div class="card-art uploaded-cover"><img src="${esc(fileUrl(item.coverImage))}" alt="" loading="lazy"></div>`;return item.type==='work'?studioArt(item):'';}
 function card(item){
-  if(item.type==='discover')return `<article class="resource-card" data-item-id="${esc(item.id)}"><a class="resource-open" href="${entryUrl(item)}"><div class="resource-head"><span class="resource-icon" style="--iconbg:#e7edda;--iconfg:#607344">${esc(item.icon||item.title.slice(0,1))}</span></div>${hasCover(item)?cover(item):''}<h3>${esc(item.title)}</h3><p>${esc(item.description)}</p></a></article>`;
-  return `<article data-item-id="${esc(item.id)}" class="content-card ${hasCover(item)||['audio','video','html','download'].includes(item.format)?'with-media':''}"><a class="card-open" href="${entryUrl(item)}">${cover(item)}<div class="card-meta"><span>${esc(item.category)}${item.pinned?' · 置顶':''}</span><span>${item.status==='draft'?'本地草稿':item.sample?'示例内容':esc(item.date||'')}</span></div><h3>${esc(item.title)}</h3><p>${esc(item.description)}</p></a></article>`;
+  if(item.type==='discover')return `<article class="resource-card" data-item-id="${esc(item.id)}"><a class="resource-open" href="${entryUrl(item)}"><div class="resource-head"><span class="resource-icon" style="--iconbg:#e7edda;--iconfg:#607344">${esc(item.icon||item.title.slice(0,1))}</span></div>${hasCover(item)?cover(item):''}<h3>${item.visibility==='private'?'<span class="private-badge" aria-label="仅管理员可见">私有</span>':''}${esc(item.title)}</h3><p>${esc(item.description)}</p></a></article>`;
+  return `<article data-item-id="${esc(item.id)}" class="content-card ${hasCover(item)||['audio','video','html','download'].includes(item.format)?'with-media':''}"><a class="card-open" href="${entryUrl(item)}">${cover(item)}<div class="card-meta"><span>${esc(item.category)}${item.visibility==='private'?' · 私有':''}${item.pinned?' · 置顶':''}</span><span>${item.status==='draft'?'本地草稿':item.sample?'示例内容':esc(item.date||'')}</span></div><h3>${item.visibility==='private'?'<span class="private-badge" aria-label="仅管理员可见">私有</span>':''}${esc(item.title)}</h3><p>${esc(item.description)}</p></a></article>`;
 }
 function matching(view,state){return entries.filter(item=>item.type===view&&(state.category==='全部'||item.category===state.category)&&(!state.savedOnly||saved.has(item.id))&&(!state.q||[item.title,item.description,...(item.tags||[])].join(' ').toLowerCase().includes(state.q.toLowerCase()))).filter(item=>page!=='home'||!item.hideFromHome).sort((a,b)=>Number(b.pinned||false)-Number(a.pinned||false)||(a.pinned&&b.pinned?(Number(a.pinOrder)||0)-(Number(b.pinOrder)||0):0)||Number(!!a.sample)-Number(!!b.sample)||String(b.date).localeCompare(String(a.date))||String(b.updatedAt||'').localeCompare(String(a.updatedAt||'')));}
 function render(view,transition=false){
@@ -83,13 +85,14 @@ function hydrateVideos(){
   $$('.article-body img').forEach(img=>{img.loading='lazy';if(!img.alt)img.alt='文章配图';});
 }
 function renderEntry(){
-  const item=entries.find(x=>x.id===(document.body.dataset.entryId||params.get('id'))),root=$('#entry-content');
+  const item=entries.find(x=>x.id===(params.get('private')||document.body.dataset.entryId||params.get('id'))),root=$('#entry-content');
+  if(!item&&params.get('private')){document.title='私有内容 · 杨越宇';$('meta[name="description"]').content='';root.innerHTML='<div class="entry-error"><h1>内容已上锁</h1><p>开启管理员模式后查看。</p><button class="button-dark" data-unlock-entry>开启管理员模式</button></div>';root.querySelector('[data-unlock-entry]').onclick=()=>$('[data-vault-open]').click();return;}
   if(!item){root.innerHTML='<div class="entry-error"><h1>内容不存在或尚未发布</h1><a href="index.html">回到首页 →</a></div>';return;}
   document.title=`${item.title} · 杨越宇`;$('meta[name="description"]').content=item.description||item.title;document.body.dataset.current=item.type;document.dispatchEvent(new CustomEvent('yueyu:entryview',{detail:{view:item.type}}));
-  let html=`<div class="breadcrumb"><a href="index.html">首页</a><span>/</span><a href="${cfg[item.type].url}">${cfg[item.type].name}</a><span>/</span><span>${esc(item.category)}</span></div><div class="detail-tag">${esc(item.date||'')}${item.status==='draft'?' · 本地草稿':item.sample?' · 示例内容':''}${item.pinned?' · 置顶':''}</div><h1 class="detail-title">${esc(item.title)}</h1><p class="detail-description">${esc(item.description)}</p>`;
+  let html=`<div class="breadcrumb"><a href="index.html">首页</a><span>/</span><a href="${cfg[item.type].url}">${cfg[item.type].name}</a><span>/</span><span>${esc(item.category)}</span></div><div class="detail-tag">${esc(item.date||'')}${item.visibility==='private'?' · 仅管理员可见':''}${item.status==='draft'?' · 本地草稿':item.sample?' · 示例内容':''}${item.pinned?' · 置顶':''}</div><h1 class="detail-title">${esc(item.title)}</h1><p class="detail-description">${esc(item.description)}</p>`;
   if(item.type==='work'){
     const entry=fileUrl(item.project?.entry);
-    if(entry)html+=`<div class="project-stage"><div class="project-toolbar"><span>在线体验</span><a href="${esc(entry)}" target="_blank" rel="noopener noreferrer">独立打开 ↗</a></div><iframe src="${esc(entry)}" title="${esc(item.title)}" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads allow-modals" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>`;
+    if(entry)html+=`<div class="project-stage"><div class="project-toolbar"><span>在线体验</span><a href="${esc(item.encrypted?entryUrl(item)+'&project=1':entry)}" target="_blank" rel="noopener noreferrer">独立打开 ↗</a></div><iframe ${item.encrypted?`data-private-project="${esc(entry)}"`:`src="${esc(entry)}"`} title="${esc(item.title)}" sandbox="allow-scripts ${item.encrypted?'':'allow-same-origin allow-popups'} allow-forms allow-downloads allow-modals" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>`;
     else if(!(item.media||[]).length&&!item.bvid)html+=`<div class="detail-visual">${cover(item)}</div>`;
     html+=body(item);
     if(!item.body&&(item.process||item.learn))html+=`<div class="detail-columns">${item.process?`<div><h3>从哪里开始</h3><p>${esc(item.process)}</p></div>`:''}${item.learn?`<div><h3>想解决什么</h3><p>${esc(item.learn)}</p></div>`:''}</div>`;
@@ -104,7 +107,7 @@ function renderEntry(){
     if(item.email&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(item.email))html+=`<div class="resource-access"><span>联系邮箱：<a href="mailto:${esc(item.email)}">${esc(item.email)}</a></span><button data-copy="${esc(item.email)}">复制邮箱</button></div>`;
   }
   html+=((item.platform||item.softwareVersion)?`<p class="package-meta">${esc(item.platform)} ${esc(item.softwareVersion)}</p>`:'')+attachments(item)+`<div class="entry-end"><a href="${cfg[item.type].url}">← 全部${cfg[item.type].name}</a><button data-copy="${esc(location.href)}">复制分享链接</button></div>`;
-  root.innerHTML=html;hydrateVideos();
+  root.innerHTML=html;document.body.classList.toggle('private-project-view',!!item.encrypted&&params.get('project')==='1');hydrateVideos();if(item.encrypted)void mountPrivateProjects(root);
 }
 function qrArtwork(s){
  const c=s.qrCrop;
@@ -121,7 +124,7 @@ function renderAbout(){
 
 const formatNames={text:'文字',article:'图文长文',image:'图片集',audio:'音频',video:'视频',html:'HTML 网页',download:'下载文件',link:'外部链接'};
 function cardTags(item){return [...(item.format==='download'?[item.platform,item.softwareVersion,item.attachments?.[0]?.size?(item.attachments[0].size/1024/1024).toFixed(1)+' MiB':'']:[]),...(item.tags||[])].filter(Boolean);}
-function coverSource(item){const first=(item.media||[]).find(m=>m.kind==='image');const bodyImage=(item.body||'').match(/<img[^>]+src="(uploads\/[^"<>]+)"/);return fileUrl(item.coverImage)||fileUrl(first?.url)||fileUrl(bodyImage?.[1]);}
+function coverSource(item){const first=(item.media||[]).find(m=>m.kind==='image');const bodyImage=(item.body||'').match(/<img[^>]+src="((?:__private__\/)?uploads\/[^"<>]+)"/);return fileUrl(item.coverImage)||fileUrl(first?.url)||fileUrl(bodyImage?.[1]);}
 function hasCover(item){return Boolean(coverSource(item));}
 function cover(item){
  const src=coverSource(item),format=item.format||'text',label=formatNames[format]||'文字';
@@ -135,13 +138,14 @@ function mediaMarkup(item){
  if(images.length)html+=`<div class="entry-gallery">${images.map(m=>`<figure><a href="${esc(m.url)}" target="_blank" rel="noopener"><img src="${esc(m.url)}" alt="${esc(m.caption||m.name||'作品图片')}" loading="lazy"></a>${m.caption?`<figcaption>${esc(m.caption)}</figcaption>`:''}</figure>`).join('')}</div>`;
  for(const m of item.media||[]){if(!fileUrl(m.url)||!['audio','video'].includes(m.kind))continue;html+=`<figure class="media-player"><${m.kind} controls preload="metadata" ${m.kind==='video'?'playsinline':''} ${m.kind==='video'&&coverSource(item)?`poster="${esc(coverSource(item))}"`:''} src="${esc(m.url)}">浏览器无法播放，可下载文件。</${m.kind}><figcaption>${esc(m.caption||m.name)} <a href="${esc(m.url)}" download>下载原文件 ↓</a></figcaption></figure>`;}
  if(item.bvid&&/^BV[0-9A-Za-z]{10}$/.test(item.bvid))html+=`<div data-bvid="${item.bvid}"></div>`;
- if(item.type!=='work'&&fileUrl(item.project?.entry))html+=`<div class="project-stage"><div class="project-toolbar"><span>在线体验</span><a href="${esc(fileUrl(item.project.entry))}" target="_blank" rel="noopener">独立打开 ↗</a></div><iframe src="${esc(fileUrl(item.project.entry))}" title="${esc(item.title)}" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads allow-modals" loading="lazy"></iframe></div>`;
+ if(item.type!=='work'&&fileUrl(item.project?.entry))html+=`<div class="project-stage"><div class="project-toolbar"><span>在线体验</span><a href="${esc(item.encrypted?entryUrl(item)+'&project=1':fileUrl(item.project.entry))}" target="_blank" rel="noopener">独立打开 ↗</a></div><iframe ${item.encrypted?`data-private-project="${esc(fileUrl(item.project.entry))}"`:`src="${esc(fileUrl(item.project.entry))}"`} title="${esc(item.title)}" sandbox="allow-scripts ${item.encrypted?'':'allow-same-origin allow-popups'} allow-forms allow-downloads allow-modals" loading="lazy"></iframe></div>`;
  return html;
 }
 async function load(){
-  try{const response=await fetch('data/content.json',{cache:'no-store'});if(!response.ok)throw new Error('load');const data=await response.json();previewAssets={};if(data.preview){for(const [folder,prefix] of Object.entries(data.previewAssets||{})){try{const u=new URL(prefix);if(u.origin===location.origin&&/^\/asset\/[A-Za-z0-9_-]+\/$/.test(u.pathname))previewAssets[folder]=u.href;}catch{}}}entries=data.entries.filter(x=>cfg[x.type]);profile=data.profile||{};for(const [key,count] of Object.entries(data.display||{})){if(cfg[key])cfg[key].limit=Math.max(1,Math.min(12,Number(count)||cfg[key].limit));}
+  try{const response=await fetch('data/content.json',{cache:'no-store'});if(!response.ok)throw new Error('load');const data=await response.json();previewAssets={};if(data.preview){for(const [folder,prefix] of Object.entries(data.previewAssets||{})){try{const u=new URL(prefix);if(u.origin===location.origin&&/^\/asset\/[A-Za-z0-9_-]+\/$/.test(u.pathname))previewAssets[folder]=u.href;}catch{}}}publicEntries=data.entries.filter(x=>cfg[x.type]);entries=publicEntries;profile=data.profile||{};for(const [key,count] of Object.entries(data.display||{})){if(cfg[key])cfg[key].limit=Math.max(1,Math.min(12,Number(count)||cfg[key].limit));}
     for(const [view,c] of Object.entries(cfg)){states[view]={category:page===view&&c.categories.includes(params.get('category'))?params.get('category'):'全部',page:Math.max(1,Math.floor(Number(params.get('page')))||1),q:page===view?params.get('q')||'':'',savedOnly:false};render(view);}
-    if(page==='entry')renderEntry();renderAbout();document.dispatchEvent(new CustomEvent('yueyu:ready'));const input=$('[data-list-search]');if(input){input.value=states[page].q;input.addEventListener('input',()=>{states[page].q=input.value;update(page);});}
+    if(page==='entry')renderEntry();renderAbout();
+    await initVault(privateItems=>{entries=[...publicEntries,...privateItems];for(const view of Object.keys(cfg))render(view);if(page==='entry')renderEntry();if(search.open)searchResults($('#search-input').value);else $('#search-results').innerHTML='';},{preview:!!data.preview});document.dispatchEvent(new CustomEvent('yueyu:ready'));const input=$('[data-list-search]');if(input){input.value=states[page].q;input.addEventListener('input',()=>{states[page].q=input.value;update(page);});}
   }catch{const root=$('#entry-content')||$('main');root.insertAdjacentHTML('afterbegin','<div class="empty-state"><strong>内容暂时未能加载</strong><p>请刷新页面重试。</p></div>');}
 }
 load();
