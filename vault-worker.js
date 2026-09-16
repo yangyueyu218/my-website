@@ -5,7 +5,7 @@ const AAD=new TextEncoder().encode('yueyu-vault-v1:');
 let session=null,revision=0;
 const bytes=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
 const aad=name=>new TextEncoder().encode('yueyu-vault-v1:'+name);
-const pageAllowed=client=>{try{const u=new URL(client.url);return u.origin===BASE.origin&&SHELL.has(u.pathname.slice(BASE.pathname.length))&&u.pathname.startsWith(BASE.pathname);}catch{return false;}};
+const pageAllowed=client=>{try{const u=new URL(client.url),path=u.pathname.slice(BASE.pathname.length);return u.origin===BASE.origin&&u.pathname.startsWith(BASE.pathname)&&(SHELL.has(path)||/^entries\/[A-Za-z0-9_-]{1,80}\.html$/.test(path));}catch{return false;}};
 self.addEventListener('install',()=>self.skipWaiting());
 self.addEventListener('activate',event=>event.waitUntil(self.clients.claim()));
 async function lock(){session=null;revision++;for(const client of await self.clients.matchAll({type:'window'}))client.postMessage({type:'vault-locked'});}
